@@ -2,6 +2,6 @@
 
 Design your dream resume easily with AI-powered tools
 
-Estimated time to complete 20/12 - 31/12
+Estimated time to complete 30/12 - 10/01
 
 Make it free for all and other paid version using Stripe.
