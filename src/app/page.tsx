@@ -1,12 +1,12 @@
 
 
 
-
+type Props = {}
 
 export default function Home() {
   return (
     <div>
-      <h1 className="text-purple-500">AI RESUME BUILDER</h1>
+      <h1 className={`font-mono`}>AI RESUME BUILDER</h1>
 
     </div>
   );
