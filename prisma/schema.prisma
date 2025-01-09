@@ -20,15 +20,16 @@ enum Role {
 }
 
 model User {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  email     String   @unique
-  name      String
-  image     String?
-  role      Role     @default(USER)
-  resume    Resume[]
-  stripe    Stripe?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String              @id @default(auto()) @map("_id") @db.ObjectId
+  email       String              @unique
+  name        String
+  image       String?
+  role        Role                @default(USER)
+  resume      Resume[]
+  stripe      billingStripe?
+  mercadoPago billingMercadoPago?
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
 }
 
 model Resume {
@@ -37,9 +38,9 @@ model Resume {
   userId          String           @db.ObjectId
   title           String
   description     String
-  photoUrl        String?
-  colorHex        String?          @default("#000000")
-  borderStyle     String?          @default("squircle")
+  photoUrl        String           @default("/avatar.png")
+  colorHex        String           @default("#000000")
+  borderStyle     String           @default("squircle")
   summary         String?
   firstName       String
   lastName        String
@@ -81,7 +82,7 @@ model Education {
   updateAt  DateTime  @updatedAt
 }
 
-model Stripe {
+model billingStripe {
   id                      String   @id @default(auto()) @map("_id") @db.ObjectId
   userId                  String   @unique @db.ObjectId
   user                    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -90,4 +91,14 @@ model Stripe {
   stripePriceId           String
   stripeCurrentPeriodEnd  DateTime
   stripeCancelAtPeriodEnd Boolean  @default(false)
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+}
+
+model billingMercadoPago {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @unique @db.ObjectId
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

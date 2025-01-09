@@ -20,3 +20,4 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 export const db = prisma // ? we export the prisma client instance enabling their use in any part of our app.
+// export default db

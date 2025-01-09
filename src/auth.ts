@@ -27,15 +27,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       } catch (error) {
         console.error("We found the following error: ", error)
         return false
-
       }
-
-
+    },
+    async redirect({ url, baseUrl }: { url: string; baseUrl: string }) {
+      if (url?.startsWith(baseUrl!)) return url
+      return '/resumes'
     }
   },
   pages: {
     signIn: '/',
-    signOut: '/',
-    error: '/'
+    signOut: '/'
   }
 })
