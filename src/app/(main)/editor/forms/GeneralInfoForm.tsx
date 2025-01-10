@@ -38,9 +38,9 @@ export default function GeneralInfoForm({
   return (
     <div className="mx-auto max-w-xl space-y-6">
       <div className="space-y-1.5 text-center">
-        <h2 className="text-2xl font-semibold">General info</h2>
+        <h2 className="text-2xl font-semibold">Informacion General</h2>
         <p className="text-sm text-muted-foreground">
-          This will not appear on your resume.
+          Estos datos no apareceran en tu curriculum.
         </p>
       </div>
       <Form {...form}>
@@ -50,9 +50,9 @@ export default function GeneralInfoForm({
             name="title"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Project name</FormLabel>
+                <FormLabel>Nombre del Proyecto</FormLabel>
                 <FormControl>
-                  <Input {...field} placeholder="My cool resume" autoFocus />
+                  <Input {...field} placeholder="my curriculum vitae" autoFocus />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -63,12 +63,12 @@ export default function GeneralInfoForm({
             name="description"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Description</FormLabel>
+                <FormLabel>Descripcion</FormLabel>
                 <FormControl>
                   <Input {...field} placeholder="A resume for my next job" />
                 </FormControl>
                 <FormDescription>
-                  Describe what this resume is for.
+                  Describe para que posiciones utilizaras este curriculum.
                 </FormDescription>
                 <FormMessage />
               </FormItem>

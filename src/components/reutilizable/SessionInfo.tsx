@@ -8,13 +8,15 @@ type SessionProps = {
 const SessionInfo = ({ session }: SessionProps) => {
   const isSession = isSessionActive(parseInt(session?.user.exp!));
   return (
-    <div className="flex flex-col w-[500px]">
-
-      <pre>
+    <div className="absolute bottom-0 right-0 mr-1 mb-1 w-max bg-opacity-50 bg-black dark:text-muted-foreground text-gray-300 text-xs p-8">
+      <pre className="">
+        SESSION INFO &nbsp;
         {
           JSON.stringify(session?.user, null, 2)
         }
       </pre>
+      <br />
+      <pre className="underline">CUSTOM FUNCTIONS</pre>
       <pre className="">
         {
           isSession ? "session status: active" : "session status: inactive"
@@ -59,7 +61,7 @@ const SessionInfo = ({ session }: SessionProps) => {
       <pre className="">
 
         {
-          `total time remaining: ${getFormattedTimeRemaining(parseInt(session?.user.exp!))}`
+          `total session time remaining: ${getFormattedTimeRemaining(parseInt(session?.user.exp!))}`
         }
       </pre>
 

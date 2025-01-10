@@ -14,10 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 
-export default function PersonalInfoForm({
-  resumeData,
-  setResumeData,
-}: EditorFormProps) {
+export default function PersonalInfoForm({ resumeData, setResumeData }: EditorFormProps) {
   const form = useForm<PersonalInfoValues>({
     resolver: zodResolver(personalInfoSchema),
     defaultValues: {
@@ -35,9 +32,10 @@ export default function PersonalInfoForm({
     const { unsubscribe } = form.watch(async (values) => {
       const isValid = await form.trigger();
       if (!isValid) return;
-      setResumeData({ ...resumeData, ...values });
+
+      setResumeData({ ...resumeData, ...values }) // ? Update resume data
     });
-    return unsubscribe;
+    return unsubscribe // ? unsubscribe from the watch before the component unmounts and create a new one
   }, [form, resumeData, setResumeData]);
 
   const photoInputRef = useRef<HTMLInputElement>(null);
@@ -45,8 +43,8 @@ export default function PersonalInfoForm({
   return (
     <div className="mx-auto max-w-xl space-y-6">
       <div className="space-y-1.5 text-center">
-        <h2 className="text-2xl font-semibold">Personal info</h2>
-        <p className="text-sm text-muted-foreground">Tell us about yourself.</p>
+        <h2 className="text-2xl font-semibold">Informacion Personal</h2>
+        <p className="text-sm text-muted-foreground">Escribe sobre ti mismo.</p>
       </div>
       <Form {...form}>
         <form className="space-y-3">
@@ -55,7 +53,7 @@ export default function PersonalInfoForm({
             name="photo"
             render={({ field: { value, ...fieldValues } }) => (
               <FormItem>
-                <FormLabel>Your photo</FormLabel>
+                <FormLabel>Tu imagen</FormLabel>
                 <div className="flex items-center gap-2">
                   <FormControl>
                     <Input
@@ -79,7 +77,7 @@ export default function PersonalInfoForm({
                       }
                     }}
                   >
-                    Remove
+                    Borrar
                   </Button>
                 </div>
                 <FormMessage />
@@ -92,7 +90,7 @@ export default function PersonalInfoForm({
               name="firstName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>First name</FormLabel>
+                  <FormLabel>Nombre</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
@@ -105,7 +103,7 @@ export default function PersonalInfoForm({
               name="lastName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Last name</FormLabel>
+                  <FormLabel>Apellido</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
@@ -119,7 +117,7 @@ export default function PersonalInfoForm({
             name="jobTitle"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Job title</FormLabel>
+                <FormLabel>Titulo del Trabajo</FormLabel>
                 <FormControl>
                   <Input {...field} />
                 </FormControl>
@@ -133,7 +131,7 @@ export default function PersonalInfoForm({
               name="city"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>City</FormLabel>
+                  <FormLabel>Ciudad</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
@@ -146,7 +144,7 @@ export default function PersonalInfoForm({
               name="country"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Country</FormLabel>
+                  <FormLabel>Pais</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
@@ -160,7 +158,7 @@ export default function PersonalInfoForm({
             name="phone"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Phone</FormLabel>
+                <FormLabel>Telefono</FormLabel>
                 <FormControl>
                   <Input {...field} type="tel" />
                 </FormControl>

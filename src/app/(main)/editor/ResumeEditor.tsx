@@ -37,17 +37,15 @@ export default function ResumeEditor({ resumeToEdit }: ResumeEditorProps) {
     window.history.pushState(null, "", `?${newSearchParams.toString()}`);
   }
 
-  const FormComponent = steps.find(
-    (step) => step.key === currentStep,
-  )?.component;
+  const FormComponent = steps.find((step) => step.key === currentStep)?.component
 
   return (
     <div className="flex grow flex-col">
       <header className="space-y-1.5 border-b px-3 py-5 text-center">
-        <h1 className="text-2xl font-bold">Design your resume</h1>
+        <h1 className="text-2xl font-bold">Diseña tu curriculum</h1>
         <p className="text-sm text-muted-foreground">
-          Follow the steps below to create your resume. Your progress will be
-          saved automatically.
+          Sigue los pasos a continuación para crear tu curriculum. Tu progreso
+          sera guardado automaticamente.
         </p>
       </header>
       <main className="relative grow">
@@ -59,12 +57,13 @@ export default function ResumeEditor({ resumeToEdit }: ResumeEditorProps) {
             )}
           >
             <Breadcrumbs currentStep={currentStep} setCurrentStep={setStep} />
-            {FormComponent && (
-              <FormComponent
-                resumeData={resumeData}
-                setResumeData={setResumeData}
-              />
-            )}
+            {
+              FormComponent && (
+                <FormComponent
+                  resumeData={resumeData}
+                  setResumeData={setResumeData}
+                />
+              )}
           </div>
           <div className="grow md:border-r" />
           <ResumePreviewSection

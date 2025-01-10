@@ -73,12 +73,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return session;
     },
     async redirect({ url, baseUrl }: { url: string; baseUrl: string }) {
-      //if (url?.startsWith(baseUrl)) return url
+      if (url?.startsWith(baseUrl)) return url
       return '/resumes'
-    },
+    }
   },
   pages: {
     signIn: '/resumes',
-    signOut: '/'
+    signOut: '/',
+    error: '/'
   }
 })

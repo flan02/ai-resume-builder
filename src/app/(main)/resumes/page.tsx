@@ -58,7 +58,7 @@ export default async function Page() {
         <p>Total: {totalCount}</p>
       </div>
       <div className="flex w-full grid-cols-2 flex-col gap-3 sm:grid md:grid-cols-3 lg:grid-cols-4">
-        <SessionInfo session={session!} />
+
         {/* {resumes.map((resume) => (
           <ResumeItem key={resume.id} resume={resume} />
         ))} */}
