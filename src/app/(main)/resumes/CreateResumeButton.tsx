@@ -7,19 +7,18 @@ import Link from "next/link";
 
 interface CreateResumeButtonProps {
   canCreate: boolean;
+  totalCount: number;
 }
 
-export default function CreateResumeButton({
-  canCreate,
-}: CreateResumeButtonProps) {
+export default function CreateResumeButton({ canCreate, totalCount }: CreateResumeButtonProps) {
   const premiumModal = usePremiumModal();
 
   if (canCreate) {
     return (
-      <Button asChild className="mx-auto flex w-fit gap-2">
+      <Button asChild className="mx-auto flex w-fit gap-2" disabled={totalCount > 1}>
         <Link href="/editor">
           <PlusSquare className="size-5" />
-          New resume
+          Nuevo Curriculum
         </Link>
       </Button>
     );

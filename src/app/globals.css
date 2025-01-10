@@ -5,7 +5,7 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
-
+/*
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -62,8 +62,8 @@ body {
     --chart-5: 340 75% 55%;
   }
 }
+*/
 
-/*
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -119,12 +119,16 @@ body {
     --chart-5: 340 75% 55%;
   }
 }
-*/
+
 @layer base {
   * {
     @apply border-border;
   }
   body {
     @apply bg-background text-foreground;
+  }
+
+  .td {
+    @apply text-yellow-50;
   }
 }

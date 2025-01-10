@@ -19,12 +19,14 @@ export default async function Page({ searchParams }: PageProps) {
 
   const session = await auth();
 
+
   if (!session) {
     return null;
   }
 
   const userId = session.user?.id;
 
+  // ! THIS QUERY MUST BE ADAPTED TO MONGODB SCHEMA
   const resumeToEdit = resumeId
     ? await db.resume.findUnique({
       where: { id: resumeId, userId },
