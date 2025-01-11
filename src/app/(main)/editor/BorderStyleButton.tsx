@@ -7,7 +7,7 @@ import { useSubscriptionLevel } from "@/app/(main)/SubscriptionLevelProvider";
 export const BorderStyles = {
   SQUARE: "square",
   CIRCLE: "circle",
-  SQUIRCLE: "squircle",
+  SQUIRCLE: "squircle"
 };
 
 const borderStyles = Object.values(BorderStyles);
@@ -17,10 +17,8 @@ interface BorderStyleButtonProps {
   onChange: (borderStyle: string) => void;
 }
 
-export default function BorderStyleButton({
-  borderStyle,
-  onChange,
-}: BorderStyleButtonProps) {
+export default function BorderStyleButton({ borderStyle, onChange }: BorderStyleButtonProps) {
+
   const subscriptionLevel = useSubscriptionLevel();
 
   const premiumModal = usePremiumModal();

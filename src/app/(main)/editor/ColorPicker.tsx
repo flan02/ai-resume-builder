@@ -1,27 +1,28 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
-import usePremiumModal from "@/hooks/usePremiumModal";
-import { canUseCustomizations } from "@/lib/permissions";
-import { PaletteIcon } from "lucide-react";
+} from "@/components/ui/popover"
+import usePremiumModal from "@/hooks/usePremiumModal"
+import { canUseCustomizations } from "@/lib/permissions"
+import { PaletteIcon } from "lucide-react"
 import { useState } from "react";
-import { Color, ColorChangeHandler, TwitterPicker } from "react-color";
-import { useSubscriptionLevel } from "@/app/(main)/SubscriptionLevelProvider";
+import { Color, ColorChangeHandler, TwitterPicker } from "react-color"
+import { useSubscriptionLevel } from "@/app/(main)/SubscriptionLevelProvider"
 
 interface ColorPickerProps {
-  color: Color | undefined;
-  onChange: ColorChangeHandler;
+  color: Color | undefined
+  onChange: ColorChangeHandler
 }
 
 export default function ColorPicker({ color, onChange }: ColorPickerProps) {
-  const subscriptionLevel = useSubscriptionLevel();
 
-  const premiumModal = usePremiumModal();
+  const subscriptionLevel = useSubscriptionLevel()
 
-  const [showPopover, setShowPopover] = useState(false);
+  const premiumModal = usePremiumModal()
+
+  const [showPopover, setShowPopover] = useState(false)
 
   return (
     <Popover open={showPopover} onOpenChange={setShowPopover}>
@@ -29,22 +30,19 @@ export default function ColorPicker({ color, onChange }: ColorPickerProps) {
         <Button
           variant="outline"
           size="icon"
-          title="Change resume color"
+          title="Modifica el color"
           onClick={() => {
             if (!canUseCustomizations(subscriptionLevel)) {
-              premiumModal.setOpen(true);
-              return;
+              premiumModal.setOpen(true)
+              return
             }
-            setShowPopover(true);
+            setShowPopover(true)
           }}
         >
           <PaletteIcon className="size-5" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent
-        className="border-none bg-transparent shadow-none"
-        align="end"
-      >
+      <PopoverContent className="border-none bg-transparent shadow-none" align="end" >
         <TwitterPicker color={color} onChange={onChange} triangle="top-right" />
       </PopoverContent>
     </Popover>
