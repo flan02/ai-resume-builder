@@ -13,36 +13,32 @@ interface GenerateSummaryButtonProps {
   onSummaryGenerated: (summary: string) => void;
 }
 
-export default function GenerateSummaryButton({
-  resumeData,
-  onSummaryGenerated,
-}: GenerateSummaryButtonProps) {
-  const subscriptionLevel = useSubscriptionLevel();
+export default function GenerateSummaryButton({ resumeData, onSummaryGenerated }: GenerateSummaryButtonProps) {
 
-  const premiumModal = usePremiumModal();
+  const subscriptionLevel = useSubscriptionLevel()
+  const premiumModal = usePremiumModal()
 
-  const { toast } = useToast();
-
-  const [loading, setLoading] = useState(false);
+  const { toast } = useToast()
+  const [loading, setLoading] = useState(false)
 
   async function handleClick() {
     if (!canUseAITools(subscriptionLevel)) {
-      premiumModal.setOpen(true);
-      return;
+      premiumModal.setOpen(true)
+      return
     }
 
     try {
-      setLoading(true);
+      setLoading(true)
       const aiResponse = await generateSummary(resumeData);
-      onSummaryGenerated(aiResponse);
+      onSummaryGenerated(aiResponse)
     } catch (error) {
       console.error(error);
       toast({
         variant: "destructive",
-        description: "Something went wrong. Please try again.",
+        description: "Algo salio mal. Por favor intenta de nuevo.",
       });
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
   }
 
@@ -54,7 +50,7 @@ export default function GenerateSummaryButton({
       loading={loading}
     >
       <WandSparklesIcon className="size-4" />
-      Generate (AI)
+      Generar (IA)
     </LoadingButton>
   );
 }

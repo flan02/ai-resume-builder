@@ -14,15 +14,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
-export default function GeneralInfoForm({
-  resumeData,
-  setResumeData,
-}: EditorFormProps) {
+export default function GeneralInfoForm({ resumeData, setResumeData }: EditorFormProps) {
   const form = useForm<GeneralInfoValues>({
     resolver: zodResolver(generalInfoSchema),
     defaultValues: {
       title: resumeData.title || "",
-      description: resumeData.description || "",
+      description: resumeData.description || ""
     },
   });
 
@@ -33,7 +30,7 @@ export default function GeneralInfoForm({
       setResumeData({ ...resumeData, ...values });
     });
     return unsubscribe;
-  }, [form, resumeData, setResumeData]);
+  }, [form, resumeData, setResumeData])
 
   return (
     <div className="mx-auto max-w-xl space-y-6">

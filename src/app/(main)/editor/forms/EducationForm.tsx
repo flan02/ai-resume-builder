@@ -34,16 +34,14 @@ import { GripHorizontal } from "lucide-react";
 import { useEffect } from "react";
 import { useFieldArray, useForm, UseFormReturn } from "react-hook-form";
 
-export default function EducationForm({
-  resumeData,
-  setResumeData,
-}: EditorFormProps) {
+export default function EducationForm({ resumeData, setResumeData }: EditorFormProps) {
+
   const form = useForm<EducationValues>({
     resolver: zodResolver(educationSchema),
     defaultValues: {
-      educations: resumeData.educations || [],
-    },
-  });
+      educations: resumeData.educations || []
+    }
+  })
 
   useEffect(() => {
     const { unsubscribe } = form.watch(async (values) => {
@@ -51,21 +49,21 @@ export default function EducationForm({
       if (!isValid) return;
       setResumeData({
         ...resumeData,
-        educations: values.educations?.filter((edu) => edu !== undefined) || [],
-      });
-    });
-    return unsubscribe;
-  }, [form, resumeData, setResumeData]);
+        educations: values.educations?.filter((edu) => edu !== undefined) || []
+      })
+    })
+    return unsubscribe // ? Cleanup the watcher
+  }, [form, resumeData, setResumeData])
 
   const { fields, append, remove, move } = useFieldArray({
     control: form.control,
-    name: "educations",
+    name: "educations"
   });
 
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
+      coordinateGetter: sortableKeyboardCoordinates
     }),
   );
 
@@ -133,21 +131,15 @@ export default function EducationForm({
 }
 
 interface EducationItemProps {
-  id: string;
-  form: UseFormReturn<EducationValues>;
-  index: number;
-  remove: (index: number) => void;
+  id: string
+  form: UseFormReturn<EducationValues>
+  index: number
+  remove: (index: number) => void
 }
 
 function EducationItem({ id, form, index, remove }: EducationItemProps) {
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({ id });
+
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id })
 
   return (
     <div
@@ -156,18 +148,11 @@ function EducationItem({ id, form, index, remove }: EducationItemProps) {
         isDragging && "relative z-50 cursor-grab shadow-xl",
       )}
       ref={setNodeRef}
-      style={{
-        transform: CSS.Transform.toString(transform),
-        transition,
-      }}
+      style={{ transform: CSS.Transform.toString(transform), transition }}
     >
       <div className="flex justify-between gap-2">
         <span className="font-semibold">Educacion {index + 1}</span>
-        <GripHorizontal
-          className="size-5 cursor-grab text-muted-foreground focus:outline-none"
-          {...attributes}
-          {...listeners}
-        />
+        <GripHorizontal className="size-5 cursor-grab text-muted-foreground focus:outline-none" {...attributes} {...listeners} />
       </div>
       <FormField
         control={form.control}
@@ -232,7 +217,7 @@ function EducationItem({ id, form, index, remove }: EducationItemProps) {
         />
       </div>
       <Button variant="destructive" type="button" onClick={() => remove(index)}>
-        Borrar
+        Eliminar
       </Button>
     </div>
   );

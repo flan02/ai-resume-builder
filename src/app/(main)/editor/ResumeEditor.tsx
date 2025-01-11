@@ -19,9 +19,7 @@ interface ResumeEditorProps {
 export default function ResumeEditor({ resumeToEdit }: ResumeEditorProps) {
   const searchParams = useSearchParams();
 
-  const [resumeData, setResumeData] = useState<ResumeValues>(
-    resumeToEdit ? mapToResumeValues(resumeToEdit) : {},
-  );
+  const [resumeData, setResumeData] = useState<ResumeValues>(resumeToEdit ? mapToResumeValues(resumeToEdit) : {})
 
   const [showSmResumePreview, setShowSmResumePreview] = useState(false);
 

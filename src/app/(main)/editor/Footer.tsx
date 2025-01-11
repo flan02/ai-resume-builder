@@ -5,17 +5,16 @@ import Link from "next/link";
 import { steps } from "./steps";
 
 interface FooterProps {
-  currentStep: string;
-  setCurrentStep: (step: string) => void;
-  showSmResumePreview: boolean;
-  setShowSmResumePreview: (show: boolean) => void;
-  isSaving: boolean;
+  currentStep: string
+  showSmResumePreview: boolean
+  isSaving: boolean
+  setCurrentStep: (step: string) => void
+  setShowSmResumePreview: (show: boolean) => void
 }
 
 export default function Footer({ currentStep, setCurrentStep, showSmResumePreview, setShowSmResumePreview, isSaving }: FooterProps) {
 
   const previousStep = steps.find((_, index) => steps[index + 1]?.key === currentStep)?.key;
-
   const nextStep = steps.find((_, index) => steps[index - 1]?.key === currentStep)?.key;
 
   return (
@@ -24,9 +23,7 @@ export default function Footer({ currentStep, setCurrentStep, showSmResumePrevie
         <div className="flex items-center gap-3">
           <Button
             variant="secondary"
-            onClick={
-              previousStep ? () => setCurrentStep(previousStep) : undefined
-            }
+            onClick={previousStep ? () => setCurrentStep(previousStep) : undefined}
             disabled={!previousStep}
           >
             Previous step
@@ -43,9 +40,7 @@ export default function Footer({ currentStep, setCurrentStep, showSmResumePrevie
           size="icon"
           onClick={() => setShowSmResumePreview(!showSmResumePreview)}
           className="md:hidden"
-          title={
-            showSmResumePreview ? "Show input form" : "Show resume preview"
-          }
+          title={showSmResumePreview ? "Show input form" : "Show resume preview"}
         >
           {showSmResumePreview ? <PenLineIcon /> : <FileUserIcon />}
         </Button>
@@ -53,11 +48,9 @@ export default function Footer({ currentStep, setCurrentStep, showSmResumePrevie
           <Button variant="secondary" asChild>
             <Link href="/resumes">Close</Link>
           </Button>
-          <p
-            className={cn(
-              "text-muted-foreground opacity-0",
-              isSaving && "opacity-100",
-            )}
+          <p className={cn("text-muted-foreground opacity-0",
+            isSaving && "opacity-100",
+          )}
           >
             Saving...
           </p>

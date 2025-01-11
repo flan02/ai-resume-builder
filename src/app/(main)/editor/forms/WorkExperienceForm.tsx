@@ -38,16 +38,14 @@ import { useEffect } from "react";
 import { useFieldArray, useForm, UseFormReturn } from "react-hook-form";
 import GenerateWorkExperienceButton from "./GenerateWorkExperienceButton";
 
-export default function WorkExperienceForm({
-  resumeData,
-  setResumeData,
-}: EditorFormProps) {
+export default function WorkExperienceForm({ resumeData, setResumeData }: EditorFormProps) {
+
   const form = useForm<WorkExperienceValues>({
     resolver: zodResolver(workExperienceSchema),
     defaultValues: {
-      workExperiences: resumeData.workExperiences || [],
-    },
-  });
+      workExperiences: resumeData.workExperiences || []
+    }
+  })
 
   useEffect(() => {
     const { unsubscribe } = form.watch(async (values) => {
@@ -55,13 +53,13 @@ export default function WorkExperienceForm({
       if (!isValid) return;
       setResumeData({
         ...resumeData,
-        workExperiences:
-          values.workExperiences?.filter((exp) => exp !== undefined) || [],
-      });
-    });
-    return unsubscribe;
-  }, [form, resumeData, setResumeData]);
+        workExperiences: values.workExperiences?.filter((exp) => exp !== undefined) || [],
+      })
+    })
+    return unsubscribe
+  }, [form, resumeData, setResumeData])
 
+  // ? useFieldArray is a hook provided by react-hook-form
   const { fields, append, remove, move } = useFieldArray({
     control: form.control,
     name: "workExperiences",
@@ -88,9 +86,9 @@ export default function WorkExperienceForm({
   return (
     <div className="mx-auto max-w-xl space-y-6">
       <div className="space-y-1.5 text-center">
-        <h2 className="text-2xl font-semibold">Work experience</h2>
+        <h2 className="text-2xl font-semibold">Experiencia Laboral</h2>
         <p className="text-sm text-muted-foreground">
-          Add as many work experiences as you like.
+          Agrega todas los trabajos previos que necesites.
         </p>
       </div>
       <Form {...form}>
@@ -101,19 +99,18 @@ export default function WorkExperienceForm({
             onDragEnd={handleDragEnd}
             modifiers={[restrictToVerticalAxis]}
           >
-            <SortableContext
-              items={fields}
-              strategy={verticalListSortingStrategy}
-            >
-              {fields.map((field, index) => (
-                <WorkExperienceItem
-                  id={field.id}
-                  key={field.id}
-                  index={index}
-                  form={form}
-                  remove={remove}
-                />
-              ))}
+            <SortableContext items={fields} strategy={verticalListSortingStrategy} >
+              {
+                fields.map((field, index) => (
+                  <WorkExperienceItem
+                    id={field.id}
+                    key={field.id}
+                    index={index}
+                    form={form}
+                    remove={remove}
+                  />
+                ))
+              }
             </SortableContext>
           </DndContext>
           <div className="flex justify-center">
@@ -129,7 +126,7 @@ export default function WorkExperienceForm({
                 })
               }
             >
-              Add work experience
+              Agrega una experiencia laboral
             </Button>
           </div>
         </form>
@@ -145,46 +142,26 @@ interface WorkExperienceItemProps {
   remove: (index: number) => void;
 }
 
-function WorkExperienceItem({
-  id,
-  form,
-  index,
-  remove,
-}: WorkExperienceItemProps) {
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({ id });
+function WorkExperienceItem({ id, form, index, remove }: WorkExperienceItemProps) {
+
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id })
 
   return (
     <div
       className={cn(
         "space-y-3 rounded-md border bg-background p-3",
-        isDragging && "relative z-50 cursor-grab shadow-xl",
+        isDragging && "relative z-50 cursor-grab shadow-xl"
       )}
       ref={setNodeRef}
-      style={{
-        transform: CSS.Transform.toString(transform),
-        transition,
-      }}
+      style={{ transform: CSS.Transform.toString(transform), transition }}
     >
       <div className="flex justify-between gap-2">
-        <span className="font-semibold">Work experience {index + 1}</span>
-        <GripHorizontal
-          className="size-5 cursor-grab text-muted-foreground focus:outline-none"
-          {...attributes}
-          {...listeners}
-        />
+        <span className="font-semibold">Experiencia laboral {index + 1}</span>
+        <GripHorizontal className="size-5 cursor-grab text-muted-foreground focus:outline-none" {...attributes} {...listeners} />
       </div>
       <div className="flex justify-center">
         <GenerateWorkExperienceButton
-          onWorkExperienceGenerated={(exp) =>
-            form.setValue(`workExperiences.${index}`, exp)
-          }
+          onWorkExperienceGenerated={(exp) => form.setValue(`workExperiences.${index}`, exp)}
         />
       </div>
       <FormField
@@ -192,7 +169,7 @@ function WorkExperienceItem({
         name={`workExperiences.${index}.position`}
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Job title</FormLabel>
+            <FormLabel>Titulo del Puesto</FormLabel>
             <FormControl>
               <Input {...field} autoFocus />
             </FormControl>
@@ -205,7 +182,7 @@ function WorkExperienceItem({
         name={`workExperiences.${index}.company`}
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Company</FormLabel>
+            <FormLabel>Empresa</FormLabel>
             <FormControl>
               <Input {...field} />
             </FormControl>
@@ -219,7 +196,7 @@ function WorkExperienceItem({
           name={`workExperiences.${index}.startDate`}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Start date</FormLabel>
+              <FormLabel>Fecha de Inicio</FormLabel>
               <FormControl>
                 <Input
                   {...field}
@@ -236,7 +213,7 @@ function WorkExperienceItem({
           name={`workExperiences.${index}.endDate`}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>End date</FormLabel>
+              <FormLabel>Fecha de Finalizacion</FormLabel>
               <FormControl>
                 <Input
                   {...field}
@@ -250,15 +227,15 @@ function WorkExperienceItem({
         />
       </div>
       <FormDescription>
-        Leave <span className="font-semibold">end date</span> empty if you are
-        currently working here.
+        Deja la <span className="font-semibold">fecha de finalizacion</span> sin completar si
+        actualmente continuas en este trabajo.
       </FormDescription>
       <FormField
         control={form.control}
         name={`workExperiences.${index}.description`}
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Description</FormLabel>
+            <FormLabel>Descripcion</FormLabel>
             <FormControl>
               <Textarea {...field} />
             </FormControl>
@@ -267,7 +244,7 @@ function WorkExperienceItem({
         )}
       />
       <Button variant="destructive" type="button" onClick={() => remove(index)}>
-        Remove
+        Eliminar
       </Button>
     </div>
   );

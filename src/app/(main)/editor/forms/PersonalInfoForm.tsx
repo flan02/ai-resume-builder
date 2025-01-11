@@ -36,7 +36,7 @@ export default function PersonalInfoForm({ resumeData, setResumeData }: EditorFo
       setResumeData({ ...resumeData, ...values }) // ? Update resume data
     });
     return unsubscribe // ? unsubscribe from the watch before the component unmounts and create a new one
-  }, [form, resumeData, setResumeData]);
+  }, [form, resumeData, setResumeData])
 
   const photoInputRef = useRef<HTMLInputElement>(null);
 
