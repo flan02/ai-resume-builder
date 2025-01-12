@@ -1,13 +1,12 @@
 import { SubscriptionLevel } from "./subscription";
 
-export function canCreateResume(
-  subscriptionLevel: SubscriptionLevel,
-  currentResumeCount: number,
-) {
+// TODO: Check resume count for non-premium users
+
+export function canCreateResume(subscriptionLevel: SubscriptionLevel, currentResumeCount: number) {
   const maxResumeMap: Record<SubscriptionLevel, number> = {
     free: 1,
     pro: 3,
-    pro_plus: Infinity,
+    pro_plus: Infinity
   };
 
   const maxResumes = maxResumeMap[subscriptionLevel];
@@ -16,9 +15,9 @@ export function canCreateResume(
 }
 
 export function canUseAITools(subscriptionLevel: SubscriptionLevel) {
-  return subscriptionLevel !== "free";
+  return subscriptionLevel !== "free"
 }
 
 export function canUseCustomizations(subscriptionLevel: SubscriptionLevel) {
-  return subscriptionLevel === "pro_plus";
+  return subscriptionLevel === "pro_plus"
 }

@@ -16,7 +16,7 @@ export function fileReplacer(key: unknown, value: unknown) {
       type: value.type,
       lastModified: value.lastModified,
     }
-    : value;
+    : value
 }
 
 export function isSessionActive(exp: number): boolean {

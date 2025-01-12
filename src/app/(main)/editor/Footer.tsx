@@ -26,13 +26,13 @@ export default function Footer({ currentStep, setCurrentStep, showSmResumePrevie
             onClick={previousStep ? () => setCurrentStep(previousStep) : undefined}
             disabled={!previousStep}
           >
-            Previous step
+            Atras
           </Button>
           <Button
             onClick={nextStep ? () => setCurrentStep(nextStep) : undefined}
             disabled={!nextStep}
           >
-            Next step
+            Siguiente
           </Button>
         </div>
         <Button
@@ -46,13 +46,11 @@ export default function Footer({ currentStep, setCurrentStep, showSmResumePrevie
         </Button>
         <div className="flex items-center gap-3">
           <Button variant="secondary" asChild>
-            <Link href="/resumes">Close</Link>
+            <Link href="/resumes">Cerrar</Link>
           </Button>
-          <p className={cn("text-muted-foreground opacity-0",
-            isSaving && "opacity-100",
-          )}
+          <p className={cn("text-muted-foreground opacity-0", isSaving && "opacity-100")}
           >
-            Saving...
+            Guardando...
           </p>
         </div>
       </div>

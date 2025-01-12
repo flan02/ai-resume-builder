@@ -21,7 +21,7 @@ import {
   KeyboardSensor,
   PointerSensor,
   useSensor,
-  useSensors,
+  useSensors
 } from "@dnd-kit/core";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import {
@@ -29,7 +29,7 @@ import {
   SortableContext,
   sortableKeyboardCoordinates,
   useSortable,
-  verticalListSortingStrategy,
+  verticalListSortingStrategy
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -62,24 +62,24 @@ export default function WorkExperienceForm({ resumeData, setResumeData }: Editor
   // ? useFieldArray is a hook provided by react-hook-form
   const { fields, append, remove, move } = useFieldArray({
     control: form.control,
-    name: "workExperiences",
-  });
+    name: "workExperiences"
+  })
 
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    }),
-  );
+      coordinateGetter: sortableKeyboardCoordinates
+    })
+  )
 
   function handleDragEnd(event: DragEndEvent) {
-    const { active, over } = event;
+    const { active, over } = event
 
     if (over && active.id !== over.id) {
-      const oldIndex = fields.findIndex((field) => field.id === active.id);
-      const newIndex = fields.findIndex((field) => field.id === over.id);
-      move(oldIndex, newIndex);
-      return arrayMove(fields, oldIndex, newIndex);
+      const oldIndex = fields.findIndex((field) => field.id === active.id)
+      const newIndex = fields.findIndex((field) => field.id === over.id)
+      move(oldIndex, newIndex)
+      return arrayMove(fields, oldIndex, newIndex)
     }
   }
 
@@ -113,6 +113,7 @@ export default function WorkExperienceForm({ resumeData, setResumeData }: Editor
               }
             </SortableContext>
           </DndContext>
+
           <div className="flex justify-center">
             <Button
               type="button"

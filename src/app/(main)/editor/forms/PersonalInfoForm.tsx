@@ -31,14 +31,14 @@ export default function PersonalInfoForm({ resumeData, setResumeData }: EditorFo
   useEffect(() => {
     const { unsubscribe } = form.watch(async (values) => {
       const isValid = await form.trigger();
-      if (!isValid) return;
+      if (!isValid) return
 
       setResumeData({ ...resumeData, ...values }) // ? Update resume data
     });
     return unsubscribe // ? unsubscribe from the watch before the component unmounts and create a new one
   }, [form, resumeData, setResumeData])
 
-  const photoInputRef = useRef<HTMLInputElement>(null);
+  const photoInputRef = useRef<HTMLInputElement>(null)
 
   return (
     <div className="mx-auto max-w-xl space-y-6">
@@ -61,8 +61,8 @@ export default function PersonalInfoForm({ resumeData, setResumeData }: EditorFo
                       type="file"
                       accept="image/*"
                       onChange={(e) => {
-                        const file = e.target.files?.[0];
-                        fieldValues.onChange(file);
+                        const file = e.target.files?.[0]
+                        fieldValues.onChange(file)
                       }}
                       ref={photoInputRef}
                     />
@@ -71,13 +71,13 @@ export default function PersonalInfoForm({ resumeData, setResumeData }: EditorFo
                     variant="secondary"
                     type="button"
                     onClick={() => {
-                      fieldValues.onChange(null);
+                      fieldValues.onChange(null)
                       if (photoInputRef.current) {
-                        photoInputRef.current.value = "";
+                        photoInputRef.current.value = ""
                       }
                     }}
                   >
-                    Borrar
+                    Eliminar
                   </Button>
                 </div>
                 <FormMessage />
@@ -182,5 +182,5 @@ export default function PersonalInfoForm({ resumeData, setResumeData }: EditorFo
         </form>
       </Form>
     </div>
-  );
+  )
 }

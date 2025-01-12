@@ -21,18 +21,18 @@ export default function ResumeEditor({ resumeToEdit }: ResumeEditorProps) {
 
   const [resumeData, setResumeData] = useState<ResumeValues>(resumeToEdit ? mapToResumeValues(resumeToEdit) : {})
 
-  const [showSmResumePreview, setShowSmResumePreview] = useState(false);
+  const [showSmResumePreview, setShowSmResumePreview] = useState(false)
 
-  const { isSaving, hasUnsavedChanges } = useAutoSaveResume(resumeData);
+  const { isSaving, hasUnsavedChanges } = useAutoSaveResume(resumeData)
 
-  useUnloadWarning(hasUnsavedChanges);
+  useUnloadWarning(hasUnsavedChanges)
 
-  const currentStep = searchParams.get("step") || steps[0].key;
+  const currentStep = searchParams.get("step") || steps[0].key
 
   function setStep(key: string) {
-    const newSearchParams = new URLSearchParams(searchParams);
-    newSearchParams.set("step", key);
-    window.history.pushState(null, "", `?${newSearchParams.toString()}`);
+    const newSearchParams = new URLSearchParams(searchParams)
+    newSearchParams.set("step", key)
+    window.history.pushState(null, "", `?${newSearchParams.toString()}`)
   }
 
   const FormComponent = steps.find((step) => step.key === currentStep)?.component

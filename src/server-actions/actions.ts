@@ -118,35 +118,44 @@ export async function createCheckoutSession(priceId: string) {
 
 
 export async function saveResume(values: ResumeValues) {
-  const { id } = values;
+  const { id } = values
 
-  console.log("received values", values);
+  console.log("received values", values)
 
-  const { photo, workExperiences, educations, ...resumeValues } =
-    resumeSchema.parse(values);
+  const { photo, workExperiences, educations, ...resumeValues } = resumeSchema.parse(values) // ? parse is a method that validates the data and returns it if it is correct
 
   //const { userId } = await auth();
   const session = await auth()
 
   if (!session) {
-    throw new Error("User not authenticated");
+    throw new Error("User not authenticated")
   }
 
   const subscriptionLevel = await getUserSubscriptionLevel(session.user?.id!);
 
   if (!id) {
-    const resumeCount = await db.resume.count({ where: { userId } });
+    const resumeCount = await db.resume.count({
+      where: {
+        userId: session.user.id
+      }
+    });
 
     if (!canCreateResume(subscriptionLevel, resumeCount)) {
       throw new Error(
-        "Maximum resume count reached for this subscription level",
-      );
+        "Alcanzaste el máximo de currículums permitidos para tu suscripción actual"
+        //"Maximum resume count reached for this subscription level",
+      )
     }
   }
 
   const existingResume = id
-    ? await db.resume.findUnique({ where: { id, userId } })
-    : null;
+    ? await db.resume.findUnique({
+      where: {
+        id,
+        userId: session.user.id
+      }
+    })
+    : null
 
   if (id && !existingResume) {
     throw new Error("Resume not found");
