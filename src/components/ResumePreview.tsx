@@ -33,6 +33,7 @@ export default function ResumePreview({ resumeData, contentRef, className }: Res
         ref={contentRef}
         id="resumePreviewContent"
       >
+        {/* <pre>{JSON.stringify(resumeData, null, 2)}</pre> */}
         <PersonalInfoHeader resumeData={resumeData} />
         <SummarySection resumeData={resumeData} />
         <WorkExperienceSection resumeData={resumeData} />

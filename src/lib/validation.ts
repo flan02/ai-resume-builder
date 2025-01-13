@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export const optionalString = z.string().trim().optional().or(z.literal(""));
+export const requiredString = z.string().trim().min(3, "Minimo requiere 3 caracteres").max(25, "Maximo 30 caracteres")
 
 export const generalInfoSchema = z.object({
   title: optionalString,
@@ -18,8 +19,8 @@ export const personalInfoSchema = z.object({
   city: optionalString,
   country: optionalString,
   phone: optionalString,
-  email: z.string().email().optional(),
-});
+  email: z.string().email().optional()
+})
 
 export type PersonalInfoValues = z.infer<typeof personalInfoSchema>;
 

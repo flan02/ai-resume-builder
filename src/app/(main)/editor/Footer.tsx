@@ -14,8 +14,8 @@ interface FooterProps {
 
 export default function Footer({ currentStep, setCurrentStep, showSmResumePreview, setShowSmResumePreview, isSaving }: FooterProps) {
 
-  const previousStep = steps.find((_, index) => steps[index + 1]?.key === currentStep)?.key;
-  const nextStep = steps.find((_, index) => steps[index - 1]?.key === currentStep)?.key;
+  const previousStep = steps.find((_, index) => steps[index + 1]?.key === currentStep)?.key
+  const nextStep = steps.find((_, index) => steps[index - 1]?.key === currentStep)?.key
 
   return (
     <footer className="w-full border-t px-3 py-5">

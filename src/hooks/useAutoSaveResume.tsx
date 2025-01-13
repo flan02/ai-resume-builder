@@ -15,8 +15,8 @@ export default function useAutoSaveResume(resumeData: ResumeValues) {
 
   const [resumeId, setResumeId] = useState(resumeData.id)
 
+  // * We need a deep clone of the resume data to compare it with the last saved data
   const [lastSavedData, setLastSavedData] = useState(structuredClone(resumeData)) // ? Clone the resume data (We dont need to import because it is a global function available in the browser)
-  // * We need a deep clone of the resume data to compare it with the last saved data.
 
   const [isSaving, setIsSaving] = useState(false)
   const [isError, setIsError] = useState(false)
@@ -33,8 +33,9 @@ export default function useAutoSaveResume(resumeData: ResumeValues) {
         // ? artificial delayer (it pretends that we are sending the data to the server)
         // await new Promise((resolve) => setTimeout(resolve, 1500))
 
-        const newData = structuredClone(debouncedResumeData)
+        const newData = structuredClone(debouncedResumeData) // ? Clone this data
 
+        // ! Check the spread operator on the photo object because we dont use a File, we use a string
         const updatedResume = await saveResume({
           ...newData,
           ...(JSON.stringify(lastSavedData.photo, fileReplacer) ===
@@ -48,13 +49,9 @@ export default function useAutoSaveResume(resumeData: ResumeValues) {
         setLastSavedData(newData)
 
         if (searchParams.get("resumeId") !== updatedResume.id) {
-          const newSearchParams = new URLSearchParams(searchParams)
-          newSearchParams.set("resumeId", updatedResume.id)
-          window.history.replaceState(
-            null,
-            "",
-            `?${newSearchParams.toString()}`
-          )
+          const newSearchParams = new URLSearchParams(searchParams) // ? Create a copy of the current search params
+          newSearchParams.set("resumeId", updatedResume.id) // ? Set the search param resumeId to the updated resume id (KV format)
+          window.history.replaceState(null, "", `?${newSearchParams.toString()}`) // ? Replace the current search params with the new search params
         }
       } catch (error) {
         setIsError(true)
@@ -63,19 +60,19 @@ export default function useAutoSaveResume(resumeData: ResumeValues) {
           variant: "destructive",
           description: (
             <div className="space-y-3">
-              <p>Could not save changes.</p>
+              <p>No se pudieron guardar los cambios.</p>
               <Button
                 variant="secondary"
                 onClick={() => {
-                  dismiss();
-                  save();
+                  dismiss()
+                  save()
                 }}
               >
-                Retry
+                Reintentar
               </Button>
             </div>
           ),
-        });
+        })
       } finally {
         setIsSaving(false)
       }
@@ -83,7 +80,7 @@ export default function useAutoSaveResume(resumeData: ResumeValues) {
 
     // ! DELETE IT LATER
     console.log("debouncedResumeData", JSON.stringify(debouncedResumeData, fileReplacer))
-    console.log("lastSavedData", JSON.stringify(lastSavedData, fileReplacer));
+    console.log("lastSavedData", JSON.stringify(lastSavedData, fileReplacer))
 
     const hasUnsavedChanges =
       JSON.stringify(debouncedResumeData, fileReplacer) !==

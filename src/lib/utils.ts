@@ -14,7 +14,7 @@ export function fileReplacer(key: unknown, value: unknown) {
       name: value.name,
       size: value.size,
       type: value.type,
-      lastModified: value.lastModified,
+      lastModified: value.lastModified
     }
     : value
 }
@@ -92,6 +92,6 @@ export function mapToResumeValues(data: ResumeServerData): ResumeValues {
     skills: data.skills,
     borderStyle: data.borderStyle,
     colorHex: data.colorHex,
-    summary: data.summary || undefined,
-  };
+    summary: data.summary || undefined
+  }
 }

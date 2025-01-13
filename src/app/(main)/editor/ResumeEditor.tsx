@@ -1,16 +1,16 @@
-"use client";
+"use client"
 
-import useUnloadWarning from "@/hooks/useUnloadWarning";
-import { ResumeServerData } from "@/lib/types";
-import { cn, mapToResumeValues } from "@/lib/utils";
-import { ResumeValues } from "@/lib/validation";
-import { useSearchParams } from "next/navigation";
-import { useState } from "react";
-import Breadcrumbs from "./Breadcrumbs";
-import Footer from "./Footer";
-import ResumePreviewSection from "./ResumePreviewSection";
-import { steps } from "./steps";
-import useAutoSaveResume from "@/hooks/useAutoSaveResume";
+import useUnloadWarning from "@/hooks/useUnloadWarning"
+import { ResumeServerData } from "@/lib/types"
+import { cn, mapToResumeValues } from "@/lib/utils"
+import { ResumeValues } from "@/lib/validation"
+import { useSearchParams } from "next/navigation"
+import { useState } from "react"
+import Breadcrumbs from "./Breadcrumbs"
+import Footer from "./Footer"
+import ResumePreviewSection from "./ResumePreviewSection"
+import { steps } from "./steps"
+import useAutoSaveResume from "@/hooks/useAutoSaveResume"
 
 interface ResumeEditorProps {
   resumeToEdit: ResumeServerData | null;
@@ -19,6 +19,25 @@ interface ResumeEditorProps {
 export default function ResumeEditor({ resumeToEdit }: ResumeEditorProps) {
   const searchParams = useSearchParams();
 
+  const emptyResume = {
+    id: '',
+    title: '',
+    description: '',
+    photo: '',
+    firstName: '',
+    lastName: '',
+    jobTitle: '',
+    city: '',
+    country: '',
+    phone: '',
+    email: '',
+    workExperiences: [],
+    educations: [],
+    skills: [],
+    borderStyle: '',
+    colorHex: '',
+    summary: ''
+  }
   const [resumeData, setResumeData] = useState<ResumeValues>(resumeToEdit ? mapToResumeValues(resumeToEdit) : {})
 
   const [showSmResumePreview, setShowSmResumePreview] = useState(false)

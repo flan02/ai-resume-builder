@@ -111,7 +111,7 @@ export async function createCheckoutSession(priceId: string) {
     throw new Error("Failed to create checkout session");
   }
 
-  return sessionBilling.url;
+  return sessionBilling.url
 }
 
 
@@ -122,7 +122,7 @@ export async function saveResume(values: ResumeValues) {
 
   console.log("received values", values)
 
-  const { photo, workExperiences, educations, ...resumeValues } = resumeSchema.parse(values) // ? parse is a method that validates the data and returns it if it is correct
+  const { photo, workExperiences, educations, title, ...resumeValues } = resumeSchema.parse(values) // ? parse is a method that validates the data and returns it if it is correct
 
   //const { userId } = await auth();
   const session = await auth()
@@ -142,8 +142,7 @@ export async function saveResume(values: ResumeValues) {
 
     if (!canCreateResume(subscriptionLevel, resumeCount)) {
       throw new Error(
-        "Alcanzaste el máximo de currículums permitidos para tu suscripción actual"
-        //"Maximum resume count reached for this subscription level",
+        "Maximum resume count reached for this subscription level",
       )
     }
   }
@@ -162,47 +161,47 @@ export async function saveResume(values: ResumeValues) {
   }
 
   const hasCustomizations =
-    (resumeValues.borderStyle &&
-      resumeValues.borderStyle !== existingResume?.borderStyle) ||
-    (resumeValues.colorHex &&
-      resumeValues.colorHex !== existingResume?.colorHex);
+    (resumeValues.borderStyle && resumeValues.borderStyle !== existingResume?.borderStyle) ||
+    (resumeValues.colorHex && resumeValues.colorHex !== existingResume?.colorHex)
 
   if (hasCustomizations && !canUseCustomizations(subscriptionLevel)) {
     throw new Error("Customizations not allowed for this subscription level");
   }
 
-  let newPhotoUrl: string | undefined | null = undefined;
+  // * We don't need that since we are not using the blob storage
+  // let newPhotoUrl: string | undefined | null = undefined
 
-  if (photo instanceof File) {
-    if (existingResume?.photoUrl) {
-      await del(existingResume.photoUrl);
-    }
+  // if (photo instanceof File) {
+  //   if (existingResume?.photoUrl) {
+  //     await del(existingResume.photoUrl)
+  //   }
 
-    const blob = await put(`resume_photos/${path.extname(photo.name)}`, photo, {
-      access: "public",
-    });
+  //   const blob = await put(`resume_photos/${path.extname(photo.name)}`, photo, {
+  //     access: "public",
+  //   });
 
-    newPhotoUrl = blob.url;
-  } else if (photo === null) {
-    if (existingResume?.photoUrl) {
-      await del(existingResume.photoUrl);
-    }
-    newPhotoUrl = null;
-  }
+  //   newPhotoUrl = blob.url;
+  // } else if (photo === null) {
+  //   if (existingResume?.photoUrl) {
+  //     await del(existingResume.photoUrl);
+  //   }
+  //   newPhotoUrl = null;
+  // }
 
   if (id) {
+    // * If the resume already exists, we update it
     return db.resume.update({
       where: { id },
       data: {
         ...resumeValues,
-        photoUrl: newPhotoUrl,
+        photoUrl: photo, // newPhotoUrl,
         workExperiences: {
           deleteMany: {},
           create: workExperiences?.map((exp) => ({
             ...exp,
             startDate: exp.startDate ? new Date(exp.startDate) : undefined,
-            endDate: exp.endDate ? new Date(exp.endDate) : undefined,
-          })),
+            endDate: exp.endDate ? new Date(exp.endDate) : undefined
+          }))
         },
         educations: {
           deleteMany: {},
@@ -210,17 +209,18 @@ export async function saveResume(values: ResumeValues) {
             ...edu,
             startDate: edu.startDate ? new Date(edu.startDate) : undefined,
             endDate: edu.endDate ? new Date(edu.endDate) : undefined,
-          })),
+          }))
         },
-        updatedAt: new Date(),
-      },
-    });
+        //updatedAt: new Date()
+      }
+    })
   } else {
+    // * If the resume doesn't exist, we create it
     return db.resume.create({
       data: {
         ...resumeValues,
-        userId,
-        photoUrl: newPhotoUrl,
+        userId: session.user.id,
+        photoUrl: photo, // newPhotoUrl,
         workExperiences: {
           create: workExperiences?.map((exp) => ({
             ...exp,
@@ -232,11 +232,11 @@ export async function saveResume(values: ResumeValues) {
           create: educations?.map((edu) => ({
             ...edu,
             startDate: edu.startDate ? new Date(edu.startDate) : undefined,
-            endDate: edu.endDate ? new Date(edu.endDate) : undefined,
-          })),
-        },
-      },
-    });
+            endDate: edu.endDate ? new Date(edu.endDate) : undefined
+          }))
+        }
+      }
+    })
   }
 }
 
