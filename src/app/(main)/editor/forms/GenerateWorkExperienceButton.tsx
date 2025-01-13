@@ -35,30 +35,25 @@ interface GenerateWorkExperienceButtonProps {
   onWorkExperienceGenerated: (workExperience: WorkExperience) => void;
 }
 
-export default function GenerateWorkExperienceButton({
-  onWorkExperienceGenerated,
-}: GenerateWorkExperienceButtonProps) {
-  const subscriptionLevel = useSubscriptionLevel();
+export default function GenerateWorkExperienceButton({ onWorkExperienceGenerated }: GenerateWorkExperienceButtonProps) {
 
-  const premiumModal = usePremiumModal();
-
-  const [showInputDialog, setShowInputDialog] = useState(false);
+  const subscriptionLevel = useSubscriptionLevel()
+  const premiumModal = usePremiumModal()
+  const [showInputDialog, setShowInputDialog] = useState(false)
 
   return (
     <>
-      <Button
-        variant="outline"
-        type="button"
+      <Button variant="outline" type="button"
         onClick={() => {
           if (!canUseAITools(subscriptionLevel)) {
             premiumModal.setOpen(true);
-            return;
+            return
           }
-          setShowInputDialog(true);
+          setShowInputDialog(true)
         }}
       >
         <WandSparklesIcon className="size-4" />
-        Smart fill (AI)
+        Autocompletado (IA)
       </Button>
       <InputDialog
         open={showInputDialog}
@@ -72,36 +67,33 @@ export default function GenerateWorkExperienceButton({
   );
 }
 
+// * Subcomponent InputDialog that we will use in GenerateWorkExperienceButton
 interface InputDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onWorkExperienceGenerated: (workExperience: WorkExperience) => void;
 }
 
-function InputDialog({
-  open,
-  onOpenChange,
-  onWorkExperienceGenerated,
-}: InputDialogProps) {
-  const { toast } = useToast();
+function InputDialog({ open, onOpenChange, onWorkExperienceGenerated }: InputDialogProps) {
+  const { toast } = useToast()
 
   const form = useForm<GenerateWorkExperienceInput>({
     resolver: zodResolver(generateWorkExperienceSchema),
     defaultValues: {
-      description: "",
-    },
-  });
+      description: ""
+    }
+  })
 
   async function onSubmit(input: GenerateWorkExperienceInput) {
     try {
-      const response = await generateWorkExperience(input);
-      onWorkExperienceGenerated(response);
+      const response = await generateWorkExperience(input)
+      onWorkExperienceGenerated(response)
     } catch (error) {
       console.error(error);
       toast({
         variant: "destructive",
-        description: "Something went wrong. Please try again.",
-      });
+        description: "Algo salio mal. Por favor intenta nuevamente.",
+      })
     }
   }
 
@@ -109,10 +101,9 @@ function InputDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Generate work experience</DialogTitle>
+          <DialogTitle>Generar experiencia laboral</DialogTitle>
           <DialogDescription>
-            Describe this work experience and the AI will generate an optimized
-            entry for you.
+            Describe esta experiencia laboral y la IA generará una entrada optimizada.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -122,11 +113,11 @@ function InputDialog({
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Description</FormLabel>
+                  <FormLabel>Descripcion</FormLabel>
                   <FormControl>
                     <Textarea
                       {...field}
-                      placeholder={`E.g. "from nov 2019 to dec 2020 I worked at google as a software engineer, my tasks were: ..."`}
+                      placeholder={`Ej: "Desde noviembre 2020 hasta diciembre 2024, trabaje en CVAI como programador, mis tareas fueron: ..."`}
                       autoFocus
                     />
                   </FormControl>
@@ -135,7 +126,7 @@ function InputDialog({
               )}
             />
             <LoadingButton type="submit" loading={form.formState.isSubmitting}>
-              Generate
+              Generar (IA)
             </LoadingButton>
           </form>
         </Form>

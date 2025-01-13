@@ -35,8 +35,8 @@ export default function GenerateSummaryButton({ resumeData, onSummaryGenerated }
       console.error(error);
       toast({
         variant: "destructive",
-        description: "Algo salio mal. Por favor intenta de nuevo.",
-      });
+        description: "Algo salio mal. Por favor intenta de nuevo."
+      })
     } finally {
       setLoading(false)
     }

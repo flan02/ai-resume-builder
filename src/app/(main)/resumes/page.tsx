@@ -22,30 +22,31 @@ export default async function Page() {
   const session = await auth();
   console.log(session);
 
-  //console.log(session);
-  // if (!session?.user?.id) {
-  //   return <p>Error</p>
-  // }
 
-  // const [resumes, totalCount, subscriptionLevel] = await Promise.all([
-  //   db.resume.findMany({
-  //     where: {
-  //       userId: session.user?.id
-  //     },
-  //     orderBy: {
-  //       updatedAt: "desc",
-  //     },
-  //     include: resumeDataInclude,
-  //   }),
-  //   db.resume.count({
-  //     where: {
-  //       userId: session.user?.id
-  //     },
-  //   }),
-  //   getUserSubscriptionLevel(session.user?.id!)
-  // ]);
+  if (!session?.user?.id) {
+    return <p>Error</p>
+  }
 
-  const totalCount = 2;
+  const [resumes, totalCount, subscriptionLevel] = await Promise.all([
+    db.resume.findMany({
+      where: {
+        userId: session.user?.id
+      },
+      orderBy: {
+        updatedAt: "desc"
+      },
+      include: resumeDataInclude
+    }),
+    db.resume.count({
+      where: {
+        userId: session.user?.id
+      }
+    }),
+    getUserSubscriptionLevel(session.user?.id!)
+  ])
+
+
+  // const totalCount = 2;
   return (
     <main className="mx-auto w-full max-w-7xl space-y-6 px-3 py-6">
       <CreateResumeButton
@@ -64,5 +65,5 @@ export default async function Page() {
         ))} */}
       </div>
     </main>
-  );
+  )
 }

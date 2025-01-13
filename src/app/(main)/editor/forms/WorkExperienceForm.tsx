@@ -160,11 +160,13 @@ function WorkExperienceItem({ id, form, index, remove }: WorkExperienceItemProps
         <span className="font-semibold">Experiencia laboral {index + 1}</span>
         <GripHorizontal className="size-5 cursor-grab text-muted-foreground focus:outline-none" {...attributes} {...listeners} />
       </div>
+
       <div className="flex justify-center">
         <GenerateWorkExperienceButton
           onWorkExperienceGenerated={(exp) => form.setValue(`workExperiences.${index}`, exp)}
         />
       </div>
+
       <FormField
         control={form.control}
         name={`workExperiences.${index}.position`}
@@ -227,10 +229,12 @@ function WorkExperienceItem({ id, form, index, remove }: WorkExperienceItemProps
           )}
         />
       </div>
+
       <FormDescription>
         Deja la <span className="font-semibold">fecha de finalizacion</span> sin completar si
         actualmente continuas en este trabajo.
       </FormDescription>
+
       <FormField
         control={form.control}
         name={`workExperiences.${index}.description`}

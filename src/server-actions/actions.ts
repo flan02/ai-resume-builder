@@ -4,17 +4,12 @@ import { db } from "@/db"
 // import { env } from "@/env";
 // import stripe from "@/lib/stripe";
 //import { del, put } from "@vercel/blob";
+//import { getUserSubscriptionLevel } from "@/lib/subscription";
 
 import { canCreateResume, canUseCustomizations } from "@/lib/permissions";
-
-//import { getUserSubscriptionLevel } from "@/lib/subscription";
 import { resumeSchema, ResumeValues } from "@/lib/validation";
-
-import path from "path";
-
 import openai from "@/lib/openai";
 import { canUseAITools } from "@/lib/permissions";
-
 import {
   GenerateSummaryInput,
   generateSummarySchema,
@@ -22,12 +17,7 @@ import {
   generateWorkExperienceSchema,
   WorkExperience,
 } from "@/lib/validation";
-
 import { revalidatePath } from "next/cache";
-
-
-
-
 
 
 export async function loggedAsAdmin(email: string) {
@@ -242,27 +232,27 @@ export async function saveResume(values: ResumeValues) {
 
 
 
-
+// TODO: This fc uses openai to generate a summary of the resume
 export async function generateSummary(input: GenerateSummaryInput) {
-  const session = await auth();
+  const session = await auth()
 
   if (!session) {
-    throw new Error("Unauthorized");
+    throw new Error("Unauthorized")
   }
 
-  const subscriptionLevel = await getUserSubscriptionLevel(session.user?.id!);
+  // * In case we want to use the subscription level
+  // const subscriptionLevel = await getUserSubscriptionLevel(session.user?.id!)
 
-  if (!canUseAITools(subscriptionLevel)) {
-    throw new Error("Upgrade your subscription to use this feature");
-  }
+  // if (!canUseAITools(subscriptionLevel)) {
+  //   throw new Error("Upgrade your subscription to use this feature");
+  // }
 
-  const { jobTitle, workExperiences, educations, skills } =
-    generateSummarySchema.parse(input);
+  const { jobTitle, workExperiences, educations, skills } = generateSummarySchema.parse(input)
 
   const systemMessage = `
     You are a job resume generator AI. Your task is to write a professional introduction summary for a resume given the user's provided data.
     Only return the summary and do not include any other information in the response. Keep it concise and professional.
-    `;
+    `
 
   const userMessage = `
     Please generate a professional resume summary from this data:
@@ -279,7 +269,8 @@ export async function generateSummary(input: GenerateSummaryInput) {
         ${exp.description || "N/A"}
         `,
       )
-      .join("\n\n")}
+      .join("\n\n")
+    }
 
       Education:
     ${educations
@@ -288,7 +279,8 @@ export async function generateSummary(input: GenerateSummaryInput) {
         Degree: ${edu.degree || "N/A"} at ${edu.school || "N/A"} from ${edu.startDate || "N/A"} to ${edu.endDate || "N/A"}
         `,
       )
-      .join("\n\n")}
+      .join("\n\n")
+    }
 
       Skills:
       ${skills}
@@ -298,7 +290,7 @@ export async function generateSummary(input: GenerateSummaryInput) {
   console.log("userMessage", userMessage);
 
   const completion = await openai.chat.completions.create({
-    model: "gpt-4o-mini",
+    model: "chatgpt-4o-latest", // "gpt-4o-mini",
     messages: [
       {
         role: "system",
@@ -307,9 +299,9 @@ export async function generateSummary(input: GenerateSummaryInput) {
       {
         role: "user",
         content: userMessage,
-      },
-    ],
-  });
+      }
+    ]
+  })
 
   const aiResponse = completion.choices[0].message.content;
 
@@ -317,7 +309,7 @@ export async function generateSummary(input: GenerateSummaryInput) {
     throw new Error("Failed to generate AI response");
   }
 
-  return aiResponse;
+  return aiResponse
 }
 
 export async function generateWorkExperience(input: GenerateWorkExperienceInput) {
@@ -327,11 +319,12 @@ export async function generateWorkExperience(input: GenerateWorkExperienceInput)
     throw new Error("Unauthorized");
   }
 
-  const subscriptionLevel = await getUserSubscriptionLevel(session.user?.id!);
+  // * In case we want to use the subscription level
+  // const subscriptionLevel = await getUserSubscriptionLevel(session.user?.id!);
 
-  if (!canUseAITools(subscriptionLevel)) {
-    throw new Error("Upgrade your subscription to use this feature");
-  }
+  // if (!canUseAITools(subscriptionLevel)) {
+  //   throw new Error("Upgrade your subscription to use this feature");
+  // }
 
   const { description } = generateWorkExperienceSchema.parse(input);
 
@@ -341,29 +334,29 @@ export async function generateWorkExperience(input: GenerateWorkExperienceInput)
 
   Job title: <job title>
   Company: <company name>
-  Start date: <format: YYYY-MM-DD> (only if provided)
-  End date: <format: YYYY-MM-DD> (only if provided)
+  Start date: <format: DD-MM-YYYY> (only if provided)
+  End date: <format: DD-MM-YYYY> (only if provided)
   Description: <an optimized description in bullet format, might be inferred from the job title>
-  `;
+  `
 
   const userMessage = `
   Please provide a work experience entry from this description:
   ${description}
-  `;
+  `
 
   const completion = await openai.chat.completions.create({
-    model: "gpt-4o-mini",
+    model: "chatgpt-4o-latest", //"gpt-4o-mini",
     messages: [
       {
         role: "system",
-        content: systemMessage,
+        content: systemMessage
       },
       {
         role: "user",
-        content: userMessage,
-      },
-    ],
-  });
+        content: userMessage
+      }
+    ]
+  })
 
   const aiResponse = completion.choices[0].message.content;
 
@@ -373,6 +366,7 @@ export async function generateWorkExperience(input: GenerateWorkExperienceInput)
 
   console.log("aiResponse", aiResponse);
 
+  // TODO: Regex to extract the fields from the AI response
   return {
     position: aiResponse.match(/Job title: (.*)/)?.[1] || "",
     company: aiResponse.match(/Company: (.*)/)?.[1] || "",

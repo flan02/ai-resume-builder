@@ -30,7 +30,7 @@ export default function CreateResumeButton({ canCreate, totalCount }: CreateResu
       className="mx-auto flex w-fit gap-2"
     >
       <PlusSquare className="size-5" />
-      New resume
+      Nuevo Curriculum
     </Button>
   );
 }
