@@ -1,6 +1,6 @@
 "use client";
 
-//import { env } from "@/env";
+import { env } from "@/env";
 import { useToast } from "@/hooks/use-toast";
 import usePremiumModal from "@/hooks/usePremiumModal";
 import { Check } from "lucide-react";
@@ -9,15 +9,14 @@ import { Button } from "../ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import { createCheckoutSession } from "@/server-actions/actions";
 
-const premiumFeatures = ["AI tools", "Up to 3 resumes"];
-const premiumPlusFeatures = ["Infinite resumes", "Design customizations"];
+const premiumFeatures = ["Herramientas IA", "Hazta 3 curriculums"]
+const premiumPlusFeatures = ["Curriculums infinitos", "Diseños personalizados"]
 
 export default function PremiumModal() {
-  const { open, setOpen } = usePremiumModal();
 
-  const { toast } = useToast();
-
-  const [loading, setLoading] = useState(false);
+  const { open, setOpen } = usePremiumModal() // ? it contains the state and the setter from the zustand store
+  const { toast } = useToast()
+  const [loading, setLoading] = useState(false)
 
   async function handlePremiumClick(priceId: string) {
     try {
@@ -28,8 +27,8 @@ export default function PremiumModal() {
       console.error(error);
       toast({
         variant: "destructive",
-        description: "Something went wrong. Please try again.",
-      });
+        description: "Algo salio mal, por favor intenta de nuevo."
+      })
     } finally {
       setLoading(false);
     }
@@ -40,42 +39,44 @@ export default function PremiumModal() {
       open={open}
       onOpenChange={(open) => {
         if (!loading) {
-          setOpen(open);
+          setOpen(open)
         }
       }}
     >
       <DialogContent className="max-w-2xl">
         <DialogHeader>
-          <DialogTitle>Resume Builder AI Premium</DialogTitle>
+          <DialogTitle>Diseña tu curriculum IA Premium</DialogTitle>
         </DialogHeader>
         <div className="space-y-6">
-          <p>Get a premium subscription to unlock more features.</p>
+          <p>Cambia tu suscripcion a premium para desbloquear mas herramientas.</p>
           <div className="flex">
             <div className="flex w-1/2 flex-col space-y-5">
               <h3 className="text-center text-lg font-bold">Premium</h3>
               <ul className="list-inside space-y-2">
-                {premiumFeatures.map((feature) => (
-                  <li key={feature} className="flex items-center gap-2">
-                    <Check className="size-4 text-green-500" />
-                    {feature}
-                  </li>
-                ))}
+                {
+                  premiumFeatures.map((feature) => (
+                    <li key={feature} className="flex items-center gap-2">
+                      <Check className="size-4 text-green-500" />
+                      {feature}
+                    </li>
+                  ))
+                }
               </ul>
               <Button
-                // onClick={() =>
-                //   handlePremiumClick(
-                //     env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_MONTHLY,
-                //   )
-                // }
+                onClick={() =>
+                  handlePremiumClick(
+                    env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_MONTHLY,
+                  )
+                }
                 disabled={loading}
               >
-                Get Premium
+                Hazte Premium
               </Button>
             </div>
             <div className="mx-6 border-l" />
             <div className="flex w-1/2 flex-col space-y-5">
               <h3 className="bg-gradient-to-r from-green-600 to-green-400 bg-clip-text text-center text-lg font-bold text-transparent">
-                Premium Plus
+                Premium +
               </h3>
               <ul className="list-inside space-y-2">
                 {premiumPlusFeatures.map((feature) => (
@@ -87,14 +88,14 @@ export default function PremiumModal() {
               </ul>
               <Button
                 variant="premium"
-                // onClick={() =>
-                //   handlePremiumClick(
-                //     env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_PLUS_MONTHLY,
-                //   )
-                // }
+                onClick={() =>
+                  handlePremiumClick(
+                    env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_PLUS_MONTHLY,
+                  )
+                }
                 disabled={loading}
               >
-                Get Premium Plus
+                Hazte Premium +
               </Button>
             </div>
           </div>

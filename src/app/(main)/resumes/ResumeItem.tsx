@@ -35,9 +35,12 @@ export default function ResumeItem({ resume }: ResumeItemProps) {
 
   const contentRef = useRef<HTMLDivElement>(null)
   // ! TODO: CHECK THIS ERROR PLEASE
-  const reactToPrintFn = useReactToPrint({ contentRef, documentTitle: resume.title || "Curriculum" })
+  const reactToPrintFn = useReactToPrint({
+    contentRef,
+    documentTitle: resume.title || "Curriculum"
+  })
 
-  const wasUpdated = resume.updatedAt !== resume.createdAt
+  const isUpdated = resume.updatedAt !== resume.createdAt
 
   return (
     <div className="group relative rounded-lg border border-transparent bg-secondary p-3 transition-colors hover:border-border">
@@ -50,7 +53,7 @@ export default function ResumeItem({ resume }: ResumeItemProps) {
             resume.description && (<p className="line-clamp-2 text-sm">{resume.description}</p>)
           }
           <p className="text-xs text-muted-foreground">
-            {wasUpdated ? "Actualizado" : "Creado"} a las{" "}
+            {isUpdated ? "Actualizado" : "Creado"} a las{" "}
             {formatDate(resume.updatedAt, "MMM d, yyyy h:mm a")}
           </p>
         </Link>
@@ -64,7 +67,7 @@ export default function ResumeItem({ resume }: ResumeItemProps) {
   )
 }
 
-// * This subcomponent is used to display a dropdown menu with options to delete or print a resume
+// * This child component is used to display a dropdown menu with options to delete or print a resume
 interface MoreMenuProps {
   resumeId: string
   onPrintClick: () => void
@@ -113,7 +116,7 @@ function MoreMenu({ resumeId, onPrintClick }: MoreMenuProps) {
   )
 }
 
-// * This subcomponent is used to display a dialog to confirm the deletion of a resume
+// * This child component is used to display a dialog to confirm the deletion of a resume
 
 interface DeleteConfirmationDialogProps {
   resumeId: string

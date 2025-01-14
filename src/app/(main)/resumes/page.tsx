@@ -14,14 +14,13 @@ import SessionInfo from "@/components/reutilizable/SessionInfo";
 
 
 export const metadata: Metadata = {
-  title: "Tus curriculums",
-};
+  title: "Tus curriculums"
+}
 
 export default async function Page() {
 
   const session = await auth()
-  console.log(session)
-
+  //console.log(session)
 
   if (!session?.user?.id) {
     return <p>Error</p>
@@ -50,8 +49,8 @@ export default async function Page() {
   return (
     <main className="mx-auto w-full max-w-7xl space-y-6 px-3 py-6">
       <CreateResumeButton
-        //  canCreate={canCreateResume(subscriptionLevel, totalCount)}
-        canCreate={true}
+        // canCreate={true}
+        canCreate={canCreateResume(subscriptionLevel, totalCount)}
         totalCount={totalCount}
       />
       <div className="space-y-1">
@@ -59,10 +58,11 @@ export default async function Page() {
         <p>Total: {totalCount}</p>
       </div>
       <div className="flex w-full grid-cols-2 flex-col gap-3 sm:grid md:grid-cols-3 lg:grid-cols-4">
-
-        {/* {resumes.map((resume) => (
-          <ResumeItem key={resume.id} resume={resume} />
-        ))} */}
+        {
+          resumes.map((resume) => (
+            <ResumeItem key={resume.id} resume={resume} />
+          ))
+        }
       </div>
     </main>
   )

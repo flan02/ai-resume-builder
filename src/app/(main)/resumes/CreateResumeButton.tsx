@@ -11,7 +11,8 @@ interface CreateResumeButtonProps {
 }
 
 export default function CreateResumeButton({ canCreate, totalCount }: CreateResumeButtonProps) {
-  const premiumModal = usePremiumModal()
+
+  const premiumModal = usePremiumModal() // ? it contains the state and the setter from the zustand store
 
   if (canCreate) {
     return (
@@ -25,10 +26,7 @@ export default function CreateResumeButton({ canCreate, totalCount }: CreateResu
   }
 
   return (
-    <Button
-      onClick={() => premiumModal.setOpen(true)}
-      className="mx-auto flex w-fit gap-2"
-    >
+    <Button onClick={() => premiumModal.setOpen(true)} className="mx-auto flex w-fit gap-2" >
       <PlusSquare className="size-5" />
       Nuevo Curriculum
     </Button>

@@ -31,7 +31,7 @@ export default function ResumePreview({ resumeData, contentRef, className }: Res
         className={cn("space-y-6 p-6", !width && "invisible")}
         style={{ zoom: (1 / 794) * width }} // ? Rezise the content to fit the A4 paper
         ref={contentRef}
-        id="resumePreviewContent"
+        id="resumePreviewContent" // ? tagged for css
       >
         {/* <pre>{JSON.stringify(resumeData, null, 2)}</pre> */}
         <PersonalInfoHeader resumeData={resumeData} />
