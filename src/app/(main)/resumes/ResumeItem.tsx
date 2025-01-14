@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import LoadingButton from "@/components/reutilizable/LoadingButton";
 import ResumePreview from "@/components/ResumePreview";
@@ -28,62 +28,51 @@ import { useReactToPrint } from "react-to-print";
 import { deleteResume } from "@/server-actions/actions";
 
 interface ResumeItemProps {
-  resume: ResumeServerData;
+  resume: ResumeServerData
 }
 
 export default function ResumeItem({ resume }: ResumeItemProps) {
-  const contentRef = useRef<HTMLDivElement>(null);
 
+  const contentRef = useRef<HTMLDivElement>(null)
   // ! TODO: CHECK THIS ERROR PLEASE
-  const reactToPrintFn = useReactToPrint({
-    contentRef,
-    documentTitle: resume.title || "Resume",
-  });
+  const reactToPrintFn = useReactToPrint({ contentRef, documentTitle: resume.title || "Curriculum" })
 
-  const wasUpdated = resume.updatedAt !== resume.createdAt;
+  const wasUpdated = resume.updatedAt !== resume.createdAt
 
   return (
     <div className="group relative rounded-lg border border-transparent bg-secondary p-3 transition-colors hover:border-border">
       <div className="space-y-3">
-        <Link
-          href={`/editor?resumeId=${resume.id}`}
-          className="inline-block w-full text-center"
-        >
+        <Link href={`/editor?resumeId=${resume.id}`} className="inline-block w-full text-center" >
           <p className="line-clamp-1 font-semibold">
-            {resume.title || "No title"}
+            {resume.title || "Sin titulo"}
           </p>
-          {resume.description && (
-            <p className="line-clamp-2 text-sm">{resume.description}</p>
-          )}
+          {
+            resume.description && (<p className="line-clamp-2 text-sm">{resume.description}</p>)
+          }
           <p className="text-xs text-muted-foreground">
-            {wasUpdated ? "Updated" : "Created"} on{" "}
+            {wasUpdated ? "Actualizado" : "Creado"} a las{" "}
             {formatDate(resume.updatedAt, "MMM d, yyyy h:mm a")}
           </p>
         </Link>
-        <Link
-          href={`/editor?resumeId=${resume.id}`}
-          className="relative inline-block w-full"
-        >
-          <ResumePreview
-            resumeData={mapToResumeValues(resume)}
-            contentRef={contentRef}
-            className="overflow-hidden shadow-sm transition-shadow group-hover:shadow-lg"
-          />
+        <Link href={`/editor?resumeId=${resume.id}`} className="relative inline-block w-full" >
+          <ResumePreview resumeData={mapToResumeValues(resume)} contentRef={contentRef} className="overflow-hidden shadow-sm transition-shadow group-hover:shadow-lg" />
           <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white to-transparent" />
         </Link>
       </div>
       <MoreMenu resumeId={resume.id} onPrintClick={reactToPrintFn} />
     </div>
-  );
+  )
 }
 
+// * This subcomponent is used to display a dropdown menu with options to delete or print a resume
 interface MoreMenuProps {
-  resumeId: string;
-  onPrintClick: () => void;
+  resumeId: string
+  onPrintClick: () => void
 }
 
 function MoreMenu({ resumeId, onPrintClick }: MoreMenuProps) {
-  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false)
 
   return (
     <>
@@ -103,79 +92,74 @@ function MoreMenu({ resumeId, onPrintClick }: MoreMenuProps) {
             onClick={() => setShowDeleteConfirmation(true)}
           >
             <Trash2 className="size-4" />
-            Delete
+            Eliminar
           </DropdownMenuItem>
           <DropdownMenuItem
             className="flex items-center gap-2"
             onClick={onPrintClick}
           >
             <Printer className="size-4" />
-            Print
+            Imprimir
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+
       <DeleteConfirmationDialog
         resumeId={resumeId}
         open={showDeleteConfirmation}
         onOpenChange={setShowDeleteConfirmation}
       />
     </>
-  );
+  )
 }
+
+// * This subcomponent is used to display a dialog to confirm the deletion of a resume
 
 interface DeleteConfirmationDialogProps {
-  resumeId: string;
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
+  resumeId: string
+  open: boolean
+  onOpenChange: (open: boolean) => void
 }
 
-function DeleteConfirmationDialog({
-  resumeId,
-  open,
-  onOpenChange,
-}: DeleteConfirmationDialogProps) {
-  const { toast } = useToast();
+function DeleteConfirmationDialog({ resumeId, open, onOpenChange }: DeleteConfirmationDialogProps) {
 
-  const [isPending, startTransition] = useTransition();
+  const { toast } = useToast()
+  const [isPending, startTransition] = useTransition()
 
   async function handleDelete() {
     startTransition(async () => {
       try {
-        await deleteResume(resumeId);
-        onOpenChange(false);
+        await deleteResume(resumeId)
+        onOpenChange(false)
       } catch (error) {
-        console.error(error);
+        console.error(error)
         toast({
           variant: "destructive",
-          description: "Something went wrong. Please try again.",
-        });
+          description: "Algo salio mal. Por favor intenta de nuevo."
+        })
       }
-    });
+    })
   }
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Delete resume?</DialogTitle>
+          <DialogTitle>Eliminar curriculum?</DialogTitle>
           <DialogDescription>
-            This will permanently delete this resume. This action cannot be
-            undone.
+            Esto eliminara permanentemente este curriculum. Esta accion no se
+            puede deshacer.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <LoadingButton
-            variant="destructive"
-            onClick={handleDelete}
-            loading={isPending}
-          >
-            Delete
+          <LoadingButton variant="destructive" onClick={handleDelete} loading={isPending}>
+            Eliminar
           </LoadingButton>
           <Button variant="secondary" onClick={() => onOpenChange(false)}>
-            Cancel
+            Cancelar
           </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  );
+  )
 }

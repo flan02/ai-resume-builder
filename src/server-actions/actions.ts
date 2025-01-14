@@ -158,7 +158,7 @@ export async function saveResume(values: ResumeValues) {
     throw new Error("Customizations not allowed for this subscription level");
   }
 
-  // * We don't need that since we are not using the blob storage
+  // ? We don't need that since we are not using the blob storage
   // let newPhotoUrl: string | undefined | null = undefined
 
   // if (photo instanceof File) {
@@ -175,7 +175,7 @@ export async function saveResume(values: ResumeValues) {
   //   if (existingResume?.photoUrl) {
   //     await del(existingResume.photoUrl);
   //   }
-  //   newPhotoUrl = null;
+  //   newPhotoUrl = null
   // }
 
   if (id) {
@@ -373,37 +373,38 @@ export async function generateWorkExperience(input: GenerateWorkExperienceInput)
     description: (aiResponse.match(/Description:([\s\S]*)/)?.[1] || "").trim(),
     startDate: aiResponse.match(/Start date: (\d{4}-\d{2}-\d{2})/)?.[1],
     endDate: aiResponse.match(/End date: (\d{4}-\d{2}-\d{2})/)?.[1],
-  } satisfies WorkExperience;
+  } satisfies WorkExperience
 }
 
 
 export async function deleteResume(id: string) {
 
   // ! TODO: We must validate the session
-  const session = await auth();
+  const session = await auth()
 
   const resume = await db.resume.findUnique({
     where: {
       id,
-      // userId, -> Use userId from our db to validate the session
-    },
-  });
+      userId: session?.user.id
+    }
+  })
 
   if (!resume) {
-    throw new Error("Resume not found");
+    throw new Error("Resume not found")
   }
 
+  // ? We don't need this since we are not using the blob storage
   // if (resume.photoUrl) {
-  //   await del(resume.photoUrl);
+  //   await del(resume.photoUrl)
   // }
 
   await db.resume.delete({
     where: {
-      id,
-    },
-  });
+      id
+    }
+  })
 
-  revalidatePath("/resumes");
+  revalidatePath("/resumes")
 }
 
 
@@ -418,7 +419,7 @@ export async function deleteResume(id: string) {
 
 //   const stripeCustomerId = user.privateMetadata.stripeCustomerId as
 //     | string
-//     | undefined;
+//     | undefined
 
 //   if (!stripeCustomerId) {
 //     throw new Error("Stripe customer ID not found");
@@ -433,5 +434,5 @@ export async function deleteResume(id: string) {
 //     throw new Error("Failed to create customer portal session");
 //   }
 
-//   return session.url;
+//   return session.url
 // }

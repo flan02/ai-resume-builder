@@ -11,7 +11,7 @@ interface CreateResumeButtonProps {
 }
 
 export default function CreateResumeButton({ canCreate, totalCount }: CreateResumeButtonProps) {
-  const premiumModal = usePremiumModal();
+  const premiumModal = usePremiumModal()
 
   if (canCreate) {
     return (

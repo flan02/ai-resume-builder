@@ -1,6 +1,6 @@
 import { canCreateResume } from "@/lib/permissions";
 import { db } from "@/db";
-//import { getUserSubscriptionLevel } from "@/lib/subscription";
+import { getUserSubscriptionLevel } from "@/lib/subscription";
 import { resumeDataInclude } from "@/lib/types";
 
 import { Metadata } from "next";
@@ -19,8 +19,8 @@ export const metadata: Metadata = {
 
 export default async function Page() {
 
-  const session = await auth();
-  console.log(session);
+  const session = await auth()
+  console.log(session)
 
 
   if (!session?.user?.id) {
