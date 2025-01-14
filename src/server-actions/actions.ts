@@ -1,15 +1,15 @@
 "use server"
 import { auth } from "@/auth"
 import { db } from "@/db"
-// import { env } from "@/env";
-// import stripe from "@/lib/stripe";
+import { env } from "@/env"
+import stripe from "@/lib/stripe"
 //import { del, put } from "@vercel/blob";
-//import { getUserSubscriptionLevel } from "@/lib/subscription";
+import { getUserSubscriptionLevel } from "@/lib/subscription"
 
-import { canCreateResume, canUseCustomizations } from "@/lib/permissions";
-import { resumeSchema, ResumeValues } from "@/lib/validation";
+import { canCreateResume, canUseCustomizations } from "@/lib/permissions"
+import { resumeSchema, ResumeValues } from "@/lib/validation"
 import openai from "@/lib/openai";
-import { canUseAITools } from "@/lib/permissions";
+import { canUseAITools } from "@/lib/permissions"
 import {
   GenerateSummaryInput,
   generateSummarySchema,
@@ -62,34 +62,32 @@ export async function createUser(name: string, email: string, image: string) {
 
 
 export async function createCheckoutSession(priceId: string) {
-  const session = auth()
+  const session = await auth()
 
-  if (!session) {
-    throw new Error("Unauthorized");
+  if (!session?.user.id) {
+    throw new Error("Unauthorized")
   }
 
-  const stripeCustomerId = user.privateMetadata.stripeCustomerId as | string | undefined;
-
+  // const stripeCustomerId = user.privateMetadata.stripeCustomerId as | string | undefined
+  const stripeCustomerId = session.user.id as | string | undefined
   const sessionBilling = await stripe.checkout.sessions.create({
     line_items: [{ price: priceId, quantity: 1 }],
     mode: "subscription",
     success_url: `${env.NEXT_PUBLIC_BASE_URL}/billing/success`,
     cancel_url: `${env.NEXT_PUBLIC_BASE_URL}/billing`,
     customer: stripeCustomerId,
-    customer_email: stripeCustomerId
-      ? undefined
-      : user.emailAddresses[0].emailAddress,
+    customer_email: session.user.email!,
     metadata: {
-      userId: user.id,
+      userId: session.user.id,
     },
     subscription_data: {
       metadata: {
-        userId: user.id,
+        userId: session.user.id,
       },
     },
     custom_text: {
       terms_of_service_acceptance: {
-        message: `I have read AI Resume Builder's [terms of service](${env.NEXT_PUBLIC_BASE_URL}/tos) and agree to them.`,
+        message: `Yo he leido los terminos de Curriculums asistido por IA [terminos de servicio](${env.NEXT_PUBLIC_BASE_URL}/tos) y estoy de acuerdo con ellos.`,
       },
     },
     consent_collection: {
@@ -410,29 +408,30 @@ export async function deleteResume(id: string) {
 
 
 
-// export async function createCustomerPortalSession() {
-//   const user = await currentUser();
+export async function createCustomerPortalSession() {
+  const session = await auth()
 
-//   if (!user) {
-//     throw new Error("Unauthorized");
-//   }
+  if (!session) {
+    throw new Error("Unauthorized");
+  }
 
-//   const stripeCustomerId = user.privateMetadata.stripeCustomerId as
-//     | string
-//     | undefined
+  // const stripeCustomerId = user.privateMetadata.stripeCustomerId as
+  //   | string
+  //   | undefined
+  const stripeCustomerId = session.user.id as | string | undefined
 
-//   if (!stripeCustomerId) {
-//     throw new Error("Stripe customer ID not found");
-//   }
+  if (!stripeCustomerId) {
+    throw new Error("Stripe customer ID not found");
+  }
 
-//   const session = await stripe.billingPortal.sessions.create({
-//     customer: stripeCustomerId,
-//     return_url: `${env.NEXT_PUBLIC_BASE_URL}/billing`,
-//   });
+  const sessionBilling = await stripe.billingPortal.sessions.create({
+    customer: stripeCustomerId,
+    return_url: `${env.NEXT_PUBLIC_BASE_URL}/billing`,
+  });
 
-//   if (!session.url) {
-//     throw new Error("Failed to create customer portal session");
-//   }
+  if (!sessionBilling.url) {
+    throw new Error("Failed to create customer portal session");
+  }
 
-//   return session.url
-// }
+  return sessionBilling.url
+}

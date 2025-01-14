@@ -20,17 +20,17 @@ export default function PremiumModal() {
 
   async function handlePremiumClick(priceId: string) {
     try {
-      setLoading(true);
-      const redirectUrl = await createCheckoutSession(priceId);
-      window.location.href = redirectUrl;
+      setLoading(true)
+      const redirectUrl = await createCheckoutSession(priceId)
+      window.location.href = redirectUrl // * redirect to the stripe checkout
     } catch (error) {
-      console.error(error);
+      console.error(error)
       toast({
         variant: "destructive",
         description: "Algo salio mal, por favor intenta de nuevo."
       })
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
   }
 
@@ -65,7 +65,7 @@ export default function PremiumModal() {
               <Button
                 onClick={() =>
                   handlePremiumClick(
-                    env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_MONTHLY,
+                    env.NEXT_PUBLIC_STRIPE_PRICE
                   )
                 }
                 disabled={loading}
@@ -76,7 +76,7 @@ export default function PremiumModal() {
             <div className="mx-6 border-l" />
             <div className="flex w-1/2 flex-col space-y-5">
               <h3 className="bg-gradient-to-r from-green-600 to-green-400 bg-clip-text text-center text-lg font-bold text-transparent">
-                Premium +
+                Premium
               </h3>
               <ul className="list-inside space-y-2">
                 {premiumPlusFeatures.map((feature) => (
@@ -88,11 +88,12 @@ export default function PremiumModal() {
               </ul>
               <Button
                 variant="premium"
-                onClick={() =>
-                  handlePremiumClick(
-                    env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_PLUS_MONTHLY,
-                  )
-                }
+                // ! Only in case we need to offer an extra plan
+                // onClick={() =>
+                //   handlePremiumClick(
+                //     env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_PLUS_MONTHLY,
+                //   )
+                // }
                 disabled={loading}
               >
                 Hazte Premium +
