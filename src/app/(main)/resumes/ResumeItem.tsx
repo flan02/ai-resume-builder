@@ -33,7 +33,8 @@ interface ResumeItemProps {
 
 export default function ResumeItem({ resume }: ResumeItemProps) {
 
-  const contentRef = useRef<HTMLDivElement>(null)
+  // const contentRef = useRef<HTMLDivElement>(null)
+  const contentRef = useRef<HTMLDivElement>(document.createElement("div"))
   // ! TODO: CHECK THIS ERROR PLEASE
   const reactToPrintFn = useReactToPrint({
     contentRef,

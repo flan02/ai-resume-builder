@@ -16,7 +16,8 @@ interface ResumePreviewProps {
 
 export default function ResumePreview({ resumeData, contentRef, className }: ResumePreviewProps) {
 
-  const containerRef = useRef<HTMLDivElement>(null) // document.createElement("div")
+  //const containerRef = useRef<HTMLDivElement>(null) // document.createElement("div")
+  const containerRef = useRef<HTMLDivElement>(document.createElement("div"))
   const { width } = useDimensions(containerRef)
 
   // | aspect ratio 210/297 = 0.7070707070707071 (A4 paper)
