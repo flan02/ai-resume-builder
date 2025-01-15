@@ -1,7 +1,6 @@
+import { db } from "@/db";
 import { env } from "@/env";
-import prisma from "@/lib/prisma";
 import stripe from "@/lib/stripe";
-import { clerkClient } from "@clerk/nextjs/server";
 import { NextRequest } from "next/server";
 import Stripe from "stripe";
 
@@ -14,15 +13,14 @@ export async function POST(req: NextRequest) {
       return new Response("Signature is missing", { status: 400 });
     }
 
-    const event = stripe.webhooks.constructEvent(
-      payload,
-      signature,
-      env.STRIPE_WEBHOOK_SECRET,
-    );
+    const event = stripe.webhooks.constructEvent(payload, signature, env.STRIPE_WEBHOOK_SECRET)
 
     console.log(`Received event: ${event.type}`, event.data.object);
 
     switch (event.type) {
+      case "payment_intent.succeeded":
+        await handlePayments(event.data.object as Stripe.PaymentIntent);
+        break;
       case "checkout.session.completed":
         await handleSessionCompleted(event.data.object);
         break;
@@ -45,20 +43,64 @@ export async function POST(req: NextRequest) {
   }
 }
 
+// * Utility functions
+
+async function handlePayments(paymentIntent: Stripe.PaymentIntent) {
+  const paymentId = paymentIntent.id
+  try {
+    const paymentIntent = await stripe.paymentIntents.retrieve(paymentId)
+    const isSuccessful = paymentIntent.status === "succeeded"
+    return {
+      success: isSuccessful,
+      amount: paymentIntent.amount_received / 100,
+      currency: paymentIntent.currency.toUpperCase()
+
+    }
+  } catch (error) {
+    console.error("Error al verificar el pago:", error);
+    return {
+      success: false,
+      amount: 0,
+      currency: null
+    }
+  }
+}
+
 async function handleSessionCompleted(session: Stripe.Checkout.Session) {
-  const userId = session.metadata?.userId;
+  const userId = session.metadata?.userId
 
   if (!userId) {
     throw new Error("User ID is missing in session metadata");
   }
 
-  await (
-    await clerkClient()
-  ).users.updateUserMetadata(userId, {
-    privateMetadata: {
-      stripeCustomerId: session.customer as string,
+  // await (
+  //   await clerkClient()
+  // ).users.updateUserMetadata(userId, {
+  //   privateMetadata: {
+  //     stripeCustomerId: session.customer as string,
+  //   },
+  // })
+  const stripeCustomerId = session.customer as string
+
+  await db.billingStripe.upsert({
+    where: { userId },
+    create: {
+      userId,
+      stripeCustomerId,
+      stripeSubscriptionId: session.subscription as string,
+      stripePriceId: session.metadata?.priceId as string, // Si incluyes priceId en metadata
+      stripeCurrentPeriodEnd: new Date(session.expires_at * 1000), // Timestamp a Date
+      // stripeCancelAtPeriodEnd: session. || false
     },
-  });
+    update: {
+      stripeCustomerId,
+      stripeSubscriptionId: session.subscription as string,
+      stripePriceId: session.metadata?.priceId as string, // Si incluyes priceId en metadata
+      stripeCurrentPeriodEnd: new Date(session.expires_at * 1000),
+      // stripeCancelAtPeriodEnd: session.cancel_at_period_end || false,
+      // updatedAt: new Date()
+    },
+  })
 }
 
 async function handleSubscriptionCreatedOrUpdated(subscriptionId: string) {
@@ -69,7 +111,7 @@ async function handleSubscriptionCreatedOrUpdated(subscriptionId: string) {
     subscription.status === "trialing" ||
     subscription.status === "past_due"
   ) {
-    await prisma.userSubscription.upsert({
+    await db.billingStripe.upsert({
       where: {
         userId: subscription.metadata.userId,
       },
@@ -92,7 +134,7 @@ async function handleSubscriptionCreatedOrUpdated(subscriptionId: string) {
       },
     });
   } else {
-    await prisma.userSubscription.deleteMany({
+    await db.billingStripe.deleteMany({
       where: {
         stripeCustomerId: subscription.customer as string,
       },
@@ -101,9 +143,9 @@ async function handleSubscriptionCreatedOrUpdated(subscriptionId: string) {
 }
 
 async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
-  await prisma.userSubscription.deleteMany({
+  await db.billingStripe.deleteMany({
     where: {
       stripeCustomerId: subscription.customer as string,
-    },
-  });
+    }
+  })
 }

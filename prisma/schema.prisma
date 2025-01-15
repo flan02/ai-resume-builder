@@ -19,6 +19,12 @@ enum Role {
   MOD
 }
 
+enum PaymentStatus {
+  succeeded
+  pending
+  failed
+}
+
 model User {
   id          String              @id @default(auto()) @map("_id") @db.ObjectId
   email       String              @unique
@@ -83,16 +89,20 @@ model Education {
 }
 
 model billingStripe {
-  id                      String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId                  String   @unique @db.ObjectId
-  user                    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  stripeCustomerId        String   @unique
-  stripeSubscriptionId    String   @unique
+  id                      String        @id @default(auto()) @map("_id") @db.ObjectId
+  userId                  String        @unique @db.ObjectId
+  user                    User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  stripeCustomerId        String        @unique
+  stripeSubscriptionId    String        @unique
   stripePriceId           String
   stripeCurrentPeriodEnd  DateTime
-  stripeCancelAtPeriodEnd Boolean  @default(false)
-  createdAt               DateTime @default(now())
-  updatedAt               DateTime @updatedAt
+  stripeCancelAtPeriodEnd Boolean       @default(false)
+  stripePaymentId         String        @unique
+  amount                  Float
+  currency                String
+  status                  PaymentStatus
+  createdAt               DateTime      @default(now())
+  updatedAt               DateTime      @updatedAt
 }
 
 model billingMercadoPago {
