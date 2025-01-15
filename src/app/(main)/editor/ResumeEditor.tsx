@@ -38,6 +38,7 @@ export default function ResumeEditor({ resumeToEdit }: ResumeEditorProps) {
     colorHex: '',
     summary: ''
   }
+
   const [resumeData, setResumeData] = useState<ResumeValues>(resumeToEdit ? mapToResumeValues(resumeToEdit) : {})
 
   const [showSmResumePreview, setShowSmResumePreview] = useState(false)

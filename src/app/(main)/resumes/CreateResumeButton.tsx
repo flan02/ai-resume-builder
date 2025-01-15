@@ -6,8 +6,8 @@ import { PlusSquare } from "lucide-react";
 import Link from "next/link";
 
 interface CreateResumeButtonProps {
-  canCreate: boolean;
-  totalCount: number;
+  canCreate: boolean
+  totalCount: number
 }
 
 export default function CreateResumeButton({ canCreate, totalCount }: CreateResumeButtonProps) {
@@ -22,7 +22,7 @@ export default function CreateResumeButton({ canCreate, totalCount }: CreateResu
           Nuevo Curriculum
         </Link>
       </Button>
-    );
+    )
   }
 
   return (

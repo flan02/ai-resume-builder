@@ -40,7 +40,7 @@ export default function BorderStyleButton({ borderStyle, onChange }: BorderStyle
       : Squircle
 
   return (
-    <Button variant="outline" size="icon" title="Change border style" onClick={handleClick} >
+    <Button variant="outline" size="icon" title="Modifica borde de la imagen" onClick={handleClick} >
       <Icon className="size-5" />
     </Button>
   )

@@ -22,10 +22,10 @@ export default function GenerateSummaryButton({ resumeData, onSummaryGenerated }
   const [loading, setLoading] = useState(false)
 
   async function handleClick() {
-    if (!canUseAITools(subscriptionLevel)) {
-      premiumModal.setOpen(true)
-      return
-    }
+    // if (!canUseAITools(subscriptionLevel)) {
+    //   premiumModal.setOpen(true)
+    //   return
+    // }
 
     try {
       setLoading(true)

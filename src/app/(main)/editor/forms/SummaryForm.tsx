@@ -53,6 +53,7 @@ export default function SummaryForm({ resumeData, setResumeData }: EditorFormPro
                   <Textarea
                     {...field}
                     placeholder="Breve, descriptivo sobre ti"
+                    rows={10}
                   />
                 </FormControl>
                 <FormMessage />

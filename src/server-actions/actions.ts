@@ -7,6 +7,7 @@ import stripe from "@/lib/stripe"
 import { getUserSubscriptionLevel } from "@/lib/subscription"
 
 import { canCreateResume, canUseCustomizations } from "@/lib/permissions"
+
 import { resumeSchema, ResumeValues } from "@/lib/validation"
 import openai from "@/lib/openai";
 import { canUseAITools } from "@/lib/permissions"
@@ -115,11 +116,11 @@ export async function saveResume(values: ResumeValues) {
   //const { userId } = await auth();
   const session = await auth()
 
-  if (!session) {
+  if (!session?.user.id) {
     throw new Error("User not authenticated")
   }
 
-  const subscriptionLevel = await getUserSubscriptionLevel(session.user?.id!);
+  const subscriptionLevel = await getUserSubscriptionLevel(session.user?.id!)
 
   if (!id) {
     const resumeCount = await db.resume.count({
@@ -145,16 +146,17 @@ export async function saveResume(values: ResumeValues) {
     : null
 
   if (id && !existingResume) {
-    throw new Error("Resume not found");
+    throw new Error("Resume not found")
   }
 
   const hasCustomizations =
     (resumeValues.borderStyle && resumeValues.borderStyle !== existingResume?.borderStyle) ||
     (resumeValues.colorHex && resumeValues.colorHex !== existingResume?.colorHex)
 
-  if (hasCustomizations && !canUseCustomizations(subscriptionLevel)) {
-    throw new Error("Customizations not allowed for this subscription level");
-  }
+
+  // if (hasCustomizations && !canUseCustomizations(subscriptionLevel)) {
+  //   throw new Error("Customizations not allowed for this subscription level");
+  // }
 
   // ? We don't need that since we are not using the blob storage
   // let newPhotoUrl: string | undefined | null = undefined

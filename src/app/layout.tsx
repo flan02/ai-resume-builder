@@ -33,15 +33,11 @@ export const metadata: Metadata = {
       url: "https://danchanivet.tech"
     }
   ]
-};
+}
 
 
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} ${roboto.variable} antialiased`} >

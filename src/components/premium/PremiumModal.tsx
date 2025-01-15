@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import { env } from "@/env";
 import { useToast } from "@/hooks/use-toast";

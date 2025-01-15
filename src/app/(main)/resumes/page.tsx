@@ -45,16 +45,14 @@ export default async function Page() {
   ])
 
 
-  // const totalCount = 2;
   return (
     <main className="mx-auto w-full max-w-7xl space-y-6 px-3 py-6">
       <CreateResumeButton
-        // canCreate={true}
         canCreate={canCreateResume(subscriptionLevel, totalCount)}
         totalCount={totalCount}
       />
       <div className="space-y-1">
-        <h1 className="text-3xl dark:text-yellow-50 font-bold text-black">Aqui estaran tus curriculums</h1>
+        <h1 className="text-3xl dark:text-yellow-50 font-bold text-black">Tus curriculums</h1>
         <p>Total: {totalCount}</p>
       </div>
       <div className="flex w-full grid-cols-2 flex-col gap-3 sm:grid md:grid-cols-3 lg:grid-cols-4">
