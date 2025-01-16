@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { db } from "@/db";
 import { env } from "@/env";
 import stripe from "@/lib/stripe";
@@ -66,42 +67,42 @@ async function handlePayments(paymentIntent: Stripe.PaymentIntent) {
   }
 }
 
-// async function handleSessionCompleted(session: Stripe.Checkout.Session) {
-//   const userId = session.metadata?.userId
+async function handleSessionCompleted(session: Stripe.Checkout.Session) {
+  const userId = session.metadata?.userId
 
-//   if (!userId) {
-//     throw new Error("User ID is missing in session metadata");
-//   }
+  if (!userId) {
+    throw new Error("User ID is missing in session metadata");
+  }
 
-//   // await (
-//   //   await clerkClient()
-//   // ).users.updateUserMetadata(userId, {
-//   //   privateMetadata: {
-//   //     stripeCustomerId: session.customer as string,
-//   //   },
-//   // })
-//   const stripeCustomerId = session.customer as string
+  // await (
+  //   await clerkClient()
+  // ).users.updateUserMetadata(userId, {
+  //   privateMetadata: {
+  //     stripeCustomerId: session.customer as string,
+  //   },
+  // })
+  const stripeCustomerId = session.customer as string
 
-//   await db.billingStripe.upsert({
-//     where: { userId },
-//     create: {
-//       userId,
-//       stripeCustomerId,
-//       stripeSubscriptionId: session.subscription as string,
-//       stripePriceId: session.metadata?.priceId as string, // Si incluyes priceId en metadata
-//       stripeCurrentPeriodEnd: new Date(session.expires_at * 1000), // Timestamp a Date
-//       stripeCancelAtPeriodEnd: session.status === "expired" || false,
-//     },
-//     update: {
-//       stripeCustomerId,
-//       stripeSubscriptionId: session.subscription as string,
-//       stripePriceId: session.metadata?.priceId as string, // Si incluyes priceId en metadata
-//       stripeCurrentPeriodEnd: new Date(session.expires_at * 1000),
-//       // stripeCancelAtPeriodEnd: session.cancel_at_period_end || false,
-//       // updatedAt: new Date()
-//     },
-//   })
-// }
+  await db.billingStripe.upsert({
+    where: { userId },
+    create: {
+      userId,
+      stripeCustomerId,
+      stripeSubscriptionId: session.subscription as string,
+      stripePriceId: session.metadata?.priceId as string, // Si incluyes priceId en metadata
+      stripeCurrentPeriodEnd: new Date(session.expires_at * 1000), // Timestamp a Date
+      stripeCancelAtPeriodEnd: session.status === "expired" || false,
+    },
+    update: {
+      stripeCustomerId,
+      stripeSubscriptionId: session.subscription as string,
+      stripePriceId: session.metadata?.priceId as string, // Si incluyes priceId en metadata
+      stripeCurrentPeriodEnd: new Date(session.expires_at * 1000),
+      // stripeCancelAtPeriodEnd: session.cancel_at_period_end || false,
+      // updatedAt: new Date()
+    },
+  })
+}
 
 async function handleSubscriptionCreatedOrUpdated(subscriptionId: string) {
   const subscription = await stripe.subscriptions.retrieve(subscriptionId);
