@@ -11,8 +11,8 @@ import { db } from './db'
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [GitHub({
-    clientId: process.env.GITHUB_ID!,
-    clientSecret: process.env.GITHUB_SECRET!,
+    clientId: process.env.AUTH_GITHUB_ID!,
+    clientSecret: process.env.AUTH_GITHUB_SECRET!,
     authorization: {
       params: { scope: 'read:user user:email' }
     }
