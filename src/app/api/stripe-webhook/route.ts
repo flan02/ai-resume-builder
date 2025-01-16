@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { db } from "@/db";
 import { env } from "@/env";
 import stripe from "@/lib/stripe";
@@ -19,12 +19,12 @@ export async function POST(req: NextRequest) {
     console.log(`Received event: ${event.type}`, event.data.object);
 
     switch (event.type) {
-      case "payment_intent.succeeded":
-        await handlePayments(event.data.object as Stripe.PaymentIntent);
-        break;
-      // case "checkout.session.completed":
-      //   await handleSessionCompleted(event.data.object);
+      // case "payment_intent.succeeded":
+      //   await handlePayments(event.data.object as Stripe.PaymentIntent);
       //   break;
+      case "checkout.session.completed":
+        await handleSessionCompleted(event.data.object);
+        break;
       case "customer.subscription.created":
       case "customer.subscription.updated":
         await handleSubscriptionCreatedOrUpdated(event.data.object.id);
@@ -46,26 +46,27 @@ export async function POST(req: NextRequest) {
 
 // * Utility functions
 
-async function handlePayments(paymentIntent: Stripe.PaymentIntent) {
-  const paymentId = paymentIntent.id
-  try {
-    const paymentIntent = await stripe.paymentIntents.retrieve(paymentId)
-    const isSuccessful = paymentIntent.status === "succeeded"
-    return {
-      success: isSuccessful,
-      amount: paymentIntent.amount_received / 100,
-      currency: paymentIntent.currency.toUpperCase()
+// ? In case you want to create payment system
+// async function handlePayments(paymentIntent: Stripe.PaymentIntent) {
+//   const paymentId = paymentIntent.id
+//   try {
+//     const paymentIntent = await stripe.paymentIntents.retrieve(paymentId)
+//     const isSuccessful = paymentIntent.status === "succeeded"
+//     return {
+//       success: isSuccessful,
+//       amount: paymentIntent.amount_received / 100,
+//       currency: paymentIntent.currency.toUpperCase()
 
-    }
-  } catch (error) {
-    console.error("Error al verificar el pago:", error);
-    return {
-      success: false,
-      amount: 0,
-      currency: null
-    }
-  }
-}
+//     }
+//   } catch (error) {
+//     console.error("Error al verificar el pago:", error);
+//     return {
+//       success: false,
+//       amount: 0,
+//       currency: null
+//     }
+//   }
+// }
 
 async function handleSessionCompleted(session: Stripe.Checkout.Session) {
   const userId = session.metadata?.userId
@@ -98,7 +99,7 @@ async function handleSessionCompleted(session: Stripe.Checkout.Session) {
       stripeSubscriptionId: session.subscription as string,
       stripePriceId: session.metadata?.priceId as string, // Si incluyes priceId en metadata
       stripeCurrentPeriodEnd: new Date(session.expires_at * 1000),
-      // stripeCancelAtPeriodEnd: session.cancel_at_period_end || false,
+      stripeCancelAtPeriodEnd: true || false
       // updatedAt: new Date()
     },
   })

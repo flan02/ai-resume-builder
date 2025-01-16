@@ -9,8 +9,8 @@ import { Button } from "../ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import { createCheckoutSession } from "@/server-actions/actions";
 
-const premiumFeatures = ["Herramientas IA", "Hazta 3 curriculums"]
-const premiumPlusFeatures = ["Curriculums infinitos", "Diseños personalizados"]
+const premiumFeatures = ["Herramientas IA", "Hasta 10 curriculums"]
+//const premiumPlusFeatures = ["Curriculums infinitos", "Diseños personalizados"]
 
 export default function PremiumModal() {
 
@@ -45,11 +45,11 @@ export default function PremiumModal() {
     >
       <DialogContent className="max-w-2xl">
         <DialogHeader>
-          <DialogTitle>Diseña tu curriculum IA Premium</DialogTitle>
+          <DialogTitle className="text-lg lg:text-2xl text-center">Diseña tu curriculum con Inteligencia Artificial</DialogTitle>
         </DialogHeader>
         <div className="space-y-6">
-          <p>Cambia tu suscripcion a premium para desbloquear mas herramientas.</p>
-          <div className="flex">
+          <p className="font-roboto text-muted-foreground text-sm lg:text-lg">Cambia tu suscripcion a premium para desbloquear mas herramientas.</p>
+          <div className="flex justify-center">
             <div className="flex w-1/2 flex-col space-y-5">
               <h3 className="text-center text-lg font-bold">Premium</h3>
               <ul className="list-inside space-y-2">
@@ -70,38 +70,40 @@ export default function PremiumModal() {
                 }
                 disabled={loading}
               >
-                Hazte Premium
+                comenzar Premium
               </Button>
             </div>
-            <div className="mx-6 border-l" />
+            {/*<div className="mx-6 border-l" />
             <div className="flex w-1/2 flex-col space-y-5">
               <h3 className="bg-gradient-to-r from-green-600 to-green-400 bg-clip-text text-center text-lg font-bold text-transparent">
                 Premium
               </h3>
               <ul className="list-inside space-y-2">
-                {premiumPlusFeatures.map((feature) => (
-                  <li key={feature} className="flex items-center gap-2">
-                    <Check className="size-4 text-green-500" />
-                    {feature}
-                  </li>
-                ))}
+                {
+                  premiumPlusFeatures.map((feature) => (
+                    <li key={feature} className="flex items-center gap-2">
+                      <Check className="size-4 text-green-500" />
+                      {feature}
+                    </li>
+                  ))
+                }
               </ul>
-              <Button
+               <Button
                 variant="premium"
-                // ! Only in case we need to offer an extra plan
-                // onClick={() =>
-                //   handlePremiumClick(
-                //     env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_PLUS_MONTHLY,
-                //   )
-                // }
+                ! Only in case we need to offer an extra plan
+                onClick={() =>
+                  handlePremiumClick(
+                    env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_PLUS_MONTHLY,
+                  )
+                }
                 disabled={loading}
               >
                 Hazte Premium +
-              </Button>
-            </div>
+              </Button> 
+          </div>*/}
           </div>
         </div>
       </DialogContent>
-    </Dialog>
+    </Dialog >
   );
 }

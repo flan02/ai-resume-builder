@@ -96,7 +96,7 @@ model billingStripe {
   stripeSubscriptionId    String         @unique
   stripePriceId           String
   stripeCurrentPeriodEnd  DateTime
-  stripeCancelAtPeriodEnd Boolean?       @default(false)
+  stripeCancelAtPeriodEnd Boolean        @default(false)
   stripePaymentId         String?        @unique
   amount                  Float?
   currency                String?

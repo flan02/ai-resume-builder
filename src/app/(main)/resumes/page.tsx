@@ -7,10 +7,7 @@ import { Metadata } from "next";
 import CreateResumeButton from "./CreateResumeButton";
 import ResumeItem from "./ResumeItem";
 import { auth } from "@/auth";
-// import logo from "../../public/logo.png";
-// import resumePreview from "../../public/resume-preview.jpg";
-// import SignIn from "@/components/reutilizable/sign-in";
-// import SessionInfo from "@/components/reutilizable/SessionInfo";
+
 
 
 export const metadata: Metadata = {

@@ -26,6 +26,12 @@ Make it free for all and other paid version using Stripe
 
 ### Utility types in Typescript
 
+### Expose local services over TLS online (and a pastebin) - testing purposes
+
+[http server to a tunnel](https://docs.srv.us/)
+
+---
+
 - `Partial<Type>`: Make all properties in T optional
 - `Required<Type>`: Make all properties in T required
 - `Readonly<Type>`: Make all properties in T readonly
