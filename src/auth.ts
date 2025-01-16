@@ -10,13 +10,7 @@ import { db } from './db'
 
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  providers: [GitHub({
-    clientId: process.env.AUTH_GITHUB_ID!,
-    clientSecret: process.env.AUTH_GITHUB_SECRET!,
-    authorization: {
-      params: { scope: 'read:user user:email' }
-    }
-  })],
+  providers: [GitHub],
   session: {
     maxAge: 1800, // 86400 = 1 day
     updateAge: 900 //60 * 60, // Opcional: actualiza la sesión cada 1 hora
@@ -28,6 +22,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async signIn({ user, account, profile }) {
       try {
         const { name, email, image } = user as User
+
+        console.log('User', user)
         // if (!name || !email) {
         //   return false;
         // }
@@ -95,3 +91,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     error: '/'
   }
 })
+
+/* 
+GitHub({
+    clientId: process.env.AUTH_GITHUB_ID!,
+    clientSecret: process.env.AUTH_GITHUB_SECRET!,
+    authorization: {
+      params: { scope: 'read:user user:email' }
+    }
+  })
+*/
