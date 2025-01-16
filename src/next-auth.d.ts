@@ -1,6 +1,7 @@
-import NextAuth, { DefaultSession, DefaultUser } from "next-auth";
+import { DefaultSession, DefaultUser } from "next-auth";
 
 // Extiende el objeto de usuario
+//declare module "next-auth" {
 declare module "next-auth" {
   interface Session {
     user: {

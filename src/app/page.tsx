@@ -13,7 +13,7 @@ import { redirect } from "next/navigation";
 
 export default async function Home() {
   const session = await auth()
-  if (session?.user?.exp && isSessionActive(parseInt(session?.user.exp!))) {
+  if (session?.user?.exp && isSessionActive(parseInt(session?.user.exp))) {
     redirect("/resumes")
   }
   return (

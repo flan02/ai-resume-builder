@@ -3,7 +3,7 @@ import SignOut from "@/components/reutilizable/sign-out";
 import logo from "../../../public/logo.png";
 import ThemeToggle from "@/components/reutilizable/ThemeToggle";
 
-import { useTheme } from "next-themes";
+//import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
 

@@ -8,7 +8,7 @@ import SubscriptionLevelProvider from "./SubscriptionLevelProvider"
 
 import { auth } from "@/auth";
 import SignIn from "@/components/reutilizable/sign-in";
-import SessionInfo from "@/components/reutilizable/SessionInfo";
+//import SessionInfo from "@/components/reutilizable/SessionInfo";
 
 export default async function Layout({ children }: { children: React.ReactNode }) {
   const session = await auth()

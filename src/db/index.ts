@@ -1,7 +1,9 @@
+/* eslint-disable no-var */
 import { PrismaClient } from '@prisma/client'
 
 // $ Singleton Pattern
 // * This configuration is to avoid creating multiple instances of the prisma client while server is running.
+
 
 declare global {
   var cachedPrisma: PrismaClient

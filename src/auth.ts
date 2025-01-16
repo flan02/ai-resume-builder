@@ -1,9 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import NextAuth from 'next-auth'
 import GitHub from 'next-auth/providers/github'
 import { createUser, loggedAsAdmin } from '@/server-actions/actions'
 
 import { User } from 'types'
 import { db } from './db'
+
 
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -19,6 +22,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async signIn({ user, account, profile }) {
       try {
         const { name, email, image } = user as User
+        if (!name || !email) {
+          return false;
+        }
         //console.log({ user, account, profile });
         //console.log('Current email', email);
         const userFound = await loggedAsAdmin(email) // We need to know if the user is an admin or not
@@ -58,7 +64,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       return token;
     },
-    async session({ session, token }) {
+    async session({ session, token }: { session: any; token: any }) {
       //Object.assign(session, { id: token.id });
       if (token) {
         session.user.id = String(token.id)

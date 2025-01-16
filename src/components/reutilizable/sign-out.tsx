@@ -1,7 +1,7 @@
 import { signOut } from "@/auth"
 
 
-type Props = {}
+//type Props = {}
 
 const SignOut = () => {
   return (

@@ -19,25 +19,25 @@ interface ResumeEditorProps {
 export default function ResumeEditor({ resumeToEdit }: ResumeEditorProps) {
   const searchParams = useSearchParams();
 
-  const emptyResume = {
-    id: '',
-    title: '',
-    description: '',
-    photo: '',
-    firstName: '',
-    lastName: '',
-    jobTitle: '',
-    city: '',
-    country: '',
-    phone: '',
-    email: '',
-    workExperiences: [],
-    educations: [],
-    skills: [],
-    borderStyle: '',
-    colorHex: '',
-    summary: ''
-  }
+  // const emptyResume = {
+  //   id: '',
+  //   title: '',
+  //   description: '',
+  //   photo: '',
+  //   firstName: '',
+  //   lastName: '',
+  //   jobTitle: '',
+  //   city: '',
+  //   country: '',
+  //   phone: '',
+  //   email: '',
+  //   workExperiences: [],
+  //   educations: [],
+  //   skills: [],
+  //   borderStyle: '',
+  //   colorHex: '',
+  //   summary: ''
+  // }
 
   const [resumeData, setResumeData] = useState<ResumeValues>(resumeToEdit ? mapToResumeValues(resumeToEdit) : {})
 

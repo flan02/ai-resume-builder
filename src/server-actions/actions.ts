@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use server"
 import { auth } from "@/auth"
 import { db } from "@/db"
@@ -120,7 +121,7 @@ export async function saveResume(values: ResumeValues) {
     throw new Error("User not authenticated")
   }
 
-  const subscriptionLevel = await getUserSubscriptionLevel(session.user?.id!)
+  const subscriptionLevel = await getUserSubscriptionLevel(session?.user?.id)
 
   if (!id) {
     const resumeCount = await db.resume.count({

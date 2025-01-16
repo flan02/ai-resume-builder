@@ -6,7 +6,12 @@ type SessionProps = {
 }
 
 const SessionInfo = ({ session }: SessionProps) => {
-  const isSession = isSessionActive(parseInt(session?.user.exp!));
+
+  if (!session.user) {
+    return null;
+  }
+
+  const isSession = session?.user.exp ? isSessionActive(parseInt(session.user.exp)) : false;
   return (
     <div className="absolute bottom-0 right-0 mr-1 mb-1 w-max bg-opacity-50 bg-black dark:text-muted-foreground text-gray-300 text-xs p-8">
       <pre className="">
@@ -24,44 +29,44 @@ const SessionInfo = ({ session }: SessionProps) => {
       </pre>
       <pre>
         {
-          `issuedAt: ${formatTimestamp(parseInt(session?.user.iat!))}`
+          `issuedAt: ${session.user.iat ? formatTimestamp(parseInt(session.user.iat)) : 'N/A'}`
         }
       </pre>
       <pre className="">
 
         {
-          `expiresAt: ${formatTimestamp(parseInt(session?.user.exp!))}`
+          `expiresAt: ${session?.user.exp ? formatTimestamp(parseInt(session.user.exp)) : 'N/A'}`
         }
       </pre>
       <pre className="">
 
         {
-          `session remaining in days: ${getTimeRemaining(parseInt(session?.user.exp!), 'd')}`
+          `session remaining in days: ${session?.user.exp ? getTimeRemaining(parseInt(session.user.exp), 'd') : 'N/A'}`
         }
       </pre>
       <pre className="">
 
         {
-          `session remaining in hours: ${getTimeRemaining(parseInt(session?.user.exp!), 'h')}`
+          `session remaining in hours: ${session?.user.exp ? getTimeRemaining(parseInt(session.user.exp), 'h') : 'N/A'}`
         }
       </pre>
       <pre className="">
 
         {
-          `session remaining in minutes: ${getTimeRemaining(parseInt(session?.user.exp!), 'm')}`
+          `session remaining in minutes: ${session?.user.exp ? getTimeRemaining(parseInt(session.user.exp), 'm') : 'N/A'}`
         }
       </pre>
       <pre className="">
 
         {
-          `session remaining in seconds: ${getTimeRemaining(parseInt(session?.user.exp!), 's')}`
+          `session remaining in seconds: ${session?.user.exp ? getTimeRemaining(parseInt(session.user.exp), 's') : 'N/A'}`
         }
       </pre>
 
       <pre className="">
 
         {
-          `total session time remaining: ${getFormattedTimeRemaining(parseInt(session?.user.exp!))}`
+          `total session time remaining: ${session?.user.exp ? getFormattedTimeRemaining(parseInt(session.user.exp)) : 'N/A'}`
         }
       </pre>
 

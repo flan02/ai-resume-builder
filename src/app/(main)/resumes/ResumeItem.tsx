@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 
 import LoadingButton from "@/components/reutilizable/LoadingButton";
@@ -34,12 +35,14 @@ interface ResumeItemProps {
 export default function ResumeItem({ resume }: ResumeItemProps) {
 
   // const contentRef = useRef<HTMLDivElement>(null)
-  const contentRef = useRef<HTMLDivElement>(document.createElement("div"))
+  const contentRef = useRef<any>(null)
   // ! TODO: CHECK THIS ERROR PLEASE
   const reactToPrintFn = useReactToPrint({
     contentRef,
     documentTitle: resume.title || "Curriculum"
   })
+
+
 
   const isUpdated = resume.updatedAt !== resume.createdAt
 

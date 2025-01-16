@@ -44,19 +44,21 @@
     "zustand": "^5.0.2"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3",
-    "@next/eslint-plugin-next": "^15.1.4",
     "@tailwindcss/typography": "^0.5.15",
+    "@types/next-auth": "^3.13.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-color": "^3.0.13",
     "@types/react-dom": "^19.0.2",
-    "eslint": "^8.57.0",
+    "eslint": "^9.18.0",
+    "eslint-config-next": "^15.1.4",
     "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-next": "^0.0.0",
     "postcss": "^8",
     "prettier": "^3.4.2",
     "prettier-plugin-tailwindcss": "^0.6.9",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "typescript": "^5",
+    "typescript-eslint": "^8.20.0"
   }
 }
