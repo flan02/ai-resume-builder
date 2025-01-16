@@ -10,7 +10,13 @@ import { db } from './db'
 
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  providers: [GitHub],
+  providers: [GitHub({
+    clientId: process.env.GITHUB_ID!,
+    clientSecret: process.env.GITHUB_SECRET!,
+    authorization: {
+      params: { scope: 'read:user user:email' }
+    }
+  })],
   session: {
     maxAge: 1800, // 86400 = 1 day
     updateAge: 900 //60 * 60, // Opcional: actualiza la sesión cada 1 hora
@@ -22,9 +28,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async signIn({ user, account, profile }) {
       try {
         const { name, email, image } = user as User
-        if (!name || !email) {
-          return false;
-        }
+        // if (!name || !email) {
+        //   return false;
+        // }
         //console.log({ user, account, profile });
         //console.log('Current email', email);
         const userFound = await loggedAsAdmin(email) // We need to know if the user is an admin or not
