@@ -21,7 +21,7 @@ export default function Navbar() {
             height={35}
             className="rounded-full"
           />
-          <h2 className="text-xl dark:td font-bold tracking-tight">
+          <h2 className="text-xl dark:td font-bold font-mono tracking-tight">
             CVAI potenciador de talentos
           </h2>
         </Link>

@@ -1,6 +1,6 @@
 import LoadingButton from "@/components/reutilizable/LoadingButton";
 import { useToast } from "@/hooks/use-toast";
-import usePremiumModal from "@/hooks/usePremiumModal";
+import { storePremiumModal } from "@/zustand/store";
 import { canUseAITools } from "@/lib/permissions";
 import { useSubscriptionLevel } from "../../SubscriptionLevelProvider";
 import { ResumeValues } from "@/lib/validation";
@@ -16,7 +16,7 @@ interface GenerateSummaryButtonProps {
 export default function GenerateSummaryButton({ resumeData, onSummaryGenerated }: GenerateSummaryButtonProps) {
 
   const subscriptionLevel = useSubscriptionLevel()
-  const premiumModal = usePremiumModal()
+  const premiumModal = storePremiumModal()
 
   const { toast } = useToast()
   const [loading, setLoading] = useState(false)

@@ -8,7 +8,7 @@ import ManageSubscriptionButton from "./ManageSubscriptionButton";
 import { auth } from "@/auth";
 
 export const metadata: Metadata = {
-  title: "Billing",
+  title: "Facturacion"
 };
 
 export default async function Page() {
@@ -18,49 +18,44 @@ export default async function Page() {
     return null
   }
 
-  // ! CHANGE TIS MODEL
-  // const subscription = await db.userSubscription.findUnique({
-  //   where: {
-  //     userId: session?.user?.id
-  //   }
-  // })
   const subscription = await db.billingStripe.findUnique({
     where: {
       userId: session?.user?.id
     }
   })
 
-
   const priceInfo = subscription
     ? await stripe.prices.retrieve(subscription.stripePriceId, {
-      expand: ["product"],
+      expand: ["product"]
     })
     : null
 
   return (
     <main className="mx-auto w-full max-w-7xl space-y-6 px-3 py-6">
-      <h1 className="text-3xl font-bold">Billing</h1>
+      <h1 className="text-3xl font-bold">Facturacion</h1>
       <p>
-        Your current plan:{" "}
+        Tu plan actual:{" "}
         <span className="font-bold">
           {priceInfo ? (priceInfo.product as Stripe.Product).name : "Free"}
         </span>
       </p>
-      {subscription ? (
-        <>
-          {
-            subscription.stripeCancelAtPeriodEnd && (
-              <p className="text-destructive">
-                Your subscription will be canceled on{" "}
-                {formatDate(subscription.stripeCurrentPeriodEnd, "MMMM dd, yyyy")}
-              </p>
-            )
-          }
-          <ManageSubscriptionButton />
-        </>
-      ) : (
-        <GetSubscriptionButton />
-      )}
+      {
+        subscription ? (
+          <>
+            {
+              subscription.stripeCancelAtPeriodEnd && (
+                <p className="text-destructive">
+                  Tu suscripcion sera cancelada en{" "}
+                  {formatDate(subscription.stripeCurrentPeriodEnd, "MMMM dd, yyyy")}
+                </p>
+              )
+            }
+            <ManageSubscriptionButton />
+          </>
+        ) : (
+          <GetSubscriptionButton />
+        )
+      }
     </main>
-  );
+  )
 }

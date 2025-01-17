@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import usePremiumModal from "@/hooks/usePremiumModal";
+import { storePremiumModal } from "@/zustand/store";
 import { PlusSquare } from "lucide-react";
 import Link from "next/link";
 
@@ -12,13 +12,13 @@ interface CreateResumeButtonProps {
 
 export default function CreateResumeButton({ canCreate, totalCount }: CreateResumeButtonProps) {
 
-  const premiumModal = usePremiumModal() // ? it contains the state and the setter from the zustand store
+  const premiumModal = storePremiumModal() // ? it contains the state and the setter from the zustand store
 
   if (canCreate) {
     return (
       <Button asChild className="mx-auto flex w-fit gap-2" disabled={totalCount > 1}>
         <Link href="/editor">
-          <PlusSquare className="size-5" />
+          <PlusSquare className="size-5 font-mono" />
           Nuevo Curriculum
         </Link>
       </Button>
@@ -27,7 +27,7 @@ export default function CreateResumeButton({ canCreate, totalCount }: CreateResu
 
   return (
     <Button onClick={() => premiumModal.setOpen(true)} className="mx-auto flex w-fit gap-2" >
-      <PlusSquare className="size-5" />
+      <PlusSquare className="size-5 font-mono" />
       Nuevo Curriculum
     </Button>
   );

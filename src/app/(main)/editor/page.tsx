@@ -34,5 +34,5 @@ export default async function Page({ searchParams }: PageProps) {
     })
     : null
 
-  return <ResumeEditor resumeToEdit={resumeToEdit} />
+  return <ResumeEditor resumeToEdit={resumeToEdit} sessionPhoto={session.user.image} />
 }

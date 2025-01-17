@@ -7,10 +7,11 @@ import ColorPicker from "./ColorPicker";
 interface ResumePreviewSectionProps {
   resumeData: ResumeValues
   setResumeData: (data: ResumeValues) => void
+  sessionPhoto: string | undefined | null
   className?: string
 }
 
-export default function ResumePreviewSection({ resumeData, setResumeData, className }: ResumePreviewSectionProps) {
+export default function ResumePreviewSection({ resumeData, setResumeData, sessionPhoto, className }: ResumePreviewSectionProps) {
 
   return (
     <div className={cn("group relative hidden w-full md:flex md:w-1/2", className)}>
@@ -25,7 +26,7 @@ export default function ResumePreviewSection({ resumeData, setResumeData, classN
         />
       </div>
       <div className="flex w-full justify-center overflow-y-auto bg-secondary p-3">
-        <ResumePreview resumeData={resumeData} className="max-w-2xl shadow-md" />
+        <ResumePreview resumeData={resumeData} className="max-w-2xl shadow-md" sessionPhoto={sessionPhoto} />
       </div>
     </div>
   )

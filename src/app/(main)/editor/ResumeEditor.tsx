@@ -13,10 +13,11 @@ import { steps } from "./steps"
 import useAutoSaveResume from "@/hooks/useAutoSaveResume"
 
 interface ResumeEditorProps {
-  resumeToEdit: ResumeServerData | null;
+  resumeToEdit: ResumeServerData | null
+  sessionPhoto: string | undefined | null
 }
 
-export default function ResumeEditor({ resumeToEdit }: ResumeEditorProps) {
+export default function ResumeEditor({ resumeToEdit, sessionPhoto }: ResumeEditorProps) {
   const searchParams = useSearchParams();
 
   // const emptyResume = {
@@ -60,8 +61,8 @@ export default function ResumeEditor({ resumeToEdit }: ResumeEditorProps) {
   return (
     <div className="flex grow flex-col">
       <header className="space-y-1.5 border-b px-3 py-5 text-center">
-        <h1 className="text-2xl font-bold">Diseña tu curriculum</h1>
-        <p className="text-sm text-muted-foreground">
+        <h1 className="text-2xl font-bold font-mono">Diseña tu curriculum</h1>
+        <p className="text-sm text-muted-foreground font-roboto">
           Sigue los pasos a continuación para crear tu curriculum. Tu progreso
           sera guardado automaticamente.
         </p>
@@ -87,6 +88,7 @@ export default function ResumeEditor({ resumeToEdit }: ResumeEditorProps) {
           <ResumePreviewSection
             resumeData={resumeData}
             setResumeData={setResumeData}
+            sessionPhoto={sessionPhoto}
             className={cn(showSmResumePreview && "flex")}
           />
         </div>

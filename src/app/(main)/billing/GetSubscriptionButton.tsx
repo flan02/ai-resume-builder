@@ -8,7 +8,7 @@ export default function GetSubscriptionButton() {
 
   return (
     <Button onClick={() => premiumModal.setOpen(true)} variant="premium">
-      Get Premium subscription
+      Hazte Premium
     </Button>
   );
 }

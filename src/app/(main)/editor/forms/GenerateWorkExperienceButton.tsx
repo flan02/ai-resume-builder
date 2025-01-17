@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import usePremiumModal from "@/hooks/usePremiumModal";
+import { storePremiumModal } from "@/zustand/store";
 import { canUseAITools } from "@/lib/permissions";
 import {
   GenerateWorkExperienceInput,
@@ -38,7 +38,7 @@ interface GenerateWorkExperienceButtonProps {
 export default function GenerateWorkExperienceButton({ onWorkExperienceGenerated }: GenerateWorkExperienceButtonProps) {
 
   const subscriptionLevel = useSubscriptionLevel()
-  const premiumModal = usePremiumModal()
+  const premiumModal = storePremiumModal()
   const [showInputDialog, setShowInputDialog] = useState(false)
 
   return (

@@ -5,17 +5,19 @@ import { cn } from "@/lib/utils";
 import { ResumeValues } from "@/lib/validation";
 import { formatDate } from "date-fns";
 import Image from "next/image";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 import { Badge } from "./ui/badge";
+import { storeAddPhoto } from "@/zustand/store";
 
 // $ This component contains the preview of the resume that the user is creating.
 interface ResumePreviewProps {
   resumeData: ResumeValues
   contentRef?: React.Ref<HTMLDivElement>
+  sessionPhoto: string | undefined | null
   className?: string
 }
 
-export default function ResumePreview({ resumeData, contentRef, className }: ResumePreviewProps) {
+export default function ResumePreview({ resumeData, contentRef, sessionPhoto, className }: ResumePreviewProps) {
 
   //const containerRef = useRef<HTMLDivElement>(null) // document.createElement("div")
   const containerRef = useRef<any>(null)
@@ -36,7 +38,7 @@ export default function ResumePreview({ resumeData, contentRef, className }: Res
         id="resumePreviewContent" // ? tagged for css
       >
         {/* <pre>{JSON.stringify(resumeData, null, 2)}</pre> */}
-        <PersonalInfoHeader resumeData={resumeData} />
+        <PersonalInfoHeader resumeData={resumeData} sessionPhoto={sessionPhoto} />
         <SummarySection resumeData={resumeData} />
         <WorkExperienceSection resumeData={resumeData} />
         <EducationSection resumeData={resumeData} />
@@ -50,29 +52,32 @@ export default function ResumePreview({ resumeData, contentRef, className }: Res
 
 interface ResumeSectionProps {
   resumeData: ResumeValues
+  sessionPhoto?: string | undefined | null
 }
 
-function PersonalInfoHeader({ resumeData }: ResumeSectionProps) {
+function PersonalInfoHeader({ resumeData, sessionPhoto }: ResumeSectionProps) {
 
-  const { photo, firstName, lastName, jobTitle, city, country, phone, email, colorHex, borderStyle } = resumeData
-  const [photoSrc, setPhotoSrc] = useState(photo instanceof File ? "" : photo) // ? Set the photo source. It can be File, String, Null, or Undefined
+  const addPhoto = storeAddPhoto()
+  const { firstName, lastName, jobTitle, city, country, phone, email, colorHex, borderStyle } = resumeData // - desestructure photo if you are using blob files
 
-  useEffect(() => {
-    const objectUrl = photo instanceof File ? URL.createObjectURL(photo) : ""
-    if (objectUrl) setPhotoSrc(objectUrl)
-    if (photo === null) setPhotoSrc("")
-    return () => URL.revokeObjectURL(objectUrl) // ? Revoke the object URL when the component is unmounted
-  }, [photo])
+  //const [photoSrc, setPhotoSrc] = useState(photo instanceof File ? "" : photo) // ? Set the photo source. It can be File, String, Null, or Undefined
+
+  // useEffect(() => {
+  //   const objectUrl = photo instanceof File ? URL.createObjectURL(photo) : ""
+  //   if (objectUrl) setPhotoSrc(objectUrl)
+  //   if (photo === null) setPhotoSrc("")
+  //   return () => URL.revokeObjectURL(objectUrl) // ? Revoke the object URL when the component is unmounted
+  // }, [photo])
 
   return (
     <div className="flex items-center gap-6">
       {
-        photoSrc && (
+        addPhoto.showImage ? (
           <Image
-            src={photoSrc}
+            src={sessionPhoto!}
             width={100}
             height={100}
-            alt="Author photo"
+            alt="Foto"
             className="aspect-square object-cover"
             style={{
               borderRadius:
@@ -83,7 +88,8 @@ function PersonalInfoHeader({ resumeData }: ResumeSectionProps) {
                     : "10%"
             }}
           />
-        )}
+        ) : null
+      }
       <div className="space-y-2.5">
         <div className="space-y-1">
           <p className="text-3xl font-bold" style={{ color: colorHex }}>

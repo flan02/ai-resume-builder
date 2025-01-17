@@ -30,13 +30,14 @@ import { deleteResume } from "@/server-actions/actions";
 
 interface ResumeItemProps {
   resume: ResumeServerData
+  sessionPhoto: string | undefined | null
 }
 
-export default function ResumeItem({ resume }: ResumeItemProps) {
+export default function ResumeItem({ resume, sessionPhoto }: ResumeItemProps) {
 
   // const contentRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<any>(null)
-  // ! TODO: CHECK THIS ERROR PLEASE
+
   const reactToPrintFn = useReactToPrint({
     contentRef,
     documentTitle: resume.title || "Curriculum"
@@ -50,22 +51,21 @@ export default function ResumeItem({ resume }: ResumeItemProps) {
     <div className="group relative rounded-lg border border-transparent bg-secondary p-3 transition-colors hover:border-border">
       <div className="space-y-3">
         <Link href={`/editor?resumeId=${resume.id}`} className="inline-block w-full text-center" >
-          <p className="line-clamp-1 font-semibold">
-            {resume.title || "Sin titulo"}
-          </p>
+          <p className="line-clamp-1 font-semibold">{resume.title || "Nuevo Curriculum"}</p>
           {
             resume.description && (<p className="line-clamp-2 text-sm">{resume.description}</p>)
           }
-          <p className="text-xs text-muted-foreground">
-            {isUpdated ? "Actualizado" : "Creado"} a las{" "}
-            {formatDate(resume.updatedAt, "MMM d, yyyy h:mm a")}
-          </p>
+
         </Link>
         <Link href={`/editor?resumeId=${resume.id}`} className="relative inline-block w-full" >
-          <ResumePreview resumeData={mapToResumeValues(resume)} contentRef={contentRef} className="overflow-hidden shadow-sm transition-shadow group-hover:shadow-lg" />
+          <ResumePreview resumeData={mapToResumeValues(resume)} contentRef={contentRef} sessionPhoto={sessionPhoto} className="overflow-hidden shadow-sm transition-shadow group-hover:shadow-lg" />
           <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white to-transparent" />
         </Link>
       </div>
+      <p className="text-xs text-muted-foreground">
+        {isUpdated ? "Actualizado" : "Creado"} a las{" "}
+        {formatDate(resume.updatedAt, "MMM d, yyyy h:mm a")}
+      </p>
       <MoreMenu resumeId={resume.id} onPrintClick={reactToPrintFn} />
     </div>
   )
@@ -152,17 +152,17 @@ function DeleteConfirmationDialog({ resumeId, open, onOpenChange }: DeleteConfir
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Eliminar curriculum?</DialogTitle>
-          <DialogDescription>
+          <DialogTitle className="font-roboto">Eliminar curriculum?</DialogTitle>
+          <DialogDescription className="font-roboto">
             Esto eliminara permanentemente este curriculum. Esta accion no se
             puede deshacer.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <LoadingButton variant="destructive" onClick={handleDelete} loading={isPending}>
+          <LoadingButton variant="destructive" onClick={handleDelete} loading={isPending} className="font-roboto">
             Eliminar
           </LoadingButton>
-          <Button variant="secondary" onClick={() => onOpenChange(false)}>
+          <Button variant="secondary" onClick={() => onOpenChange(false)} className="font-roboto">
             Cancelar
           </Button>
         </DialogFooter>

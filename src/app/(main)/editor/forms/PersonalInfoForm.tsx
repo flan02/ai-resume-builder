@@ -11,14 +11,17 @@ import {
 import { Input } from "@/components/ui/input";
 import { EditorFormProps } from "@/lib/types";
 import { personalInfoSchema, PersonalInfoValues } from "@/lib/validation";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useRef } from "react";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 export default function PersonalInfoForm({ resumeData, setResumeData }: EditorFormProps) {
+
+
   const form = useForm<PersonalInfoValues>({
     resolver: zodResolver(personalInfoSchema),
     defaultValues: {
+      //photoUrl: resumeData.photoUrl || "",
       firstName: resumeData.firstName || "",
       lastName: resumeData.lastName || "",
       jobTitle: resumeData.jobTitle || "",
@@ -39,7 +42,7 @@ export default function PersonalInfoForm({ resumeData, setResumeData }: EditorFo
     return unsubscribe // ? unsubscribe from the watch before the component unmounts and create a new one
   }, [form, resumeData, setResumeData])
 
-  const photoInputRef = useRef<HTMLInputElement>(null)
+  // const photoInputRef = useRef<HTMLInputElement>(null) // - in case you need to add a file input field
 
   return (
     <div className="mx-auto max-w-xl space-y-6">
@@ -49,42 +52,6 @@ export default function PersonalInfoForm({ resumeData, setResumeData }: EditorFo
       </div>
       <Form {...form}>
         <form className="space-y-3">
-          <FormField
-            control={form.control}
-            name="photo"
-            render={({ field: { value, ...fieldValues } }) => (
-              <FormItem>
-                <FormLabel>Tu imagen</FormLabel>
-                <div className="flex items-center gap-2">
-                  <FormControl>
-                    <Input
-                      {...fieldValues}
-                      type="file"
-                      accept="image/*"
-                      onChange={(e) => {
-                        const file = e.target.files?.[0]
-                        fieldValues.onChange(file)
-                      }}
-                      ref={photoInputRef}
-                    />
-                  </FormControl>
-                  <Button
-                    variant="secondary"
-                    type="button"
-                    onClick={() => {
-                      fieldValues.onChange(null)
-                      if (photoInputRef.current) {
-                        photoInputRef.current.value = ""
-                      }
-                    }}
-                  >
-                    Eliminar
-                  </Button>
-                </div>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
           <div className="grid grid-cols-2 gap-3">
             <FormField
               control={form.control}
@@ -185,3 +152,41 @@ export default function PersonalInfoForm({ resumeData, setResumeData }: EditorFo
     </div>
   )
 }
+
+// - In case you need to add a file input field, you can use the following code:
+{/* <FormField
+            control={form.control}
+            name="photo"
+            render={({ field: { value, ...fieldValues } }) => (
+              <FormItem>
+                <FormLabel>Tu imagen</FormLabel>
+                <div className="flex items-center gap-2">
+                  <FormControl>
+                    <Input
+                      {...fieldValues}
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0]
+                        fieldValues.onChange(file)
+                      }}
+                      ref={photoInputRef}
+                    />
+                  </FormControl>
+                  <Button
+                    variant="secondary"
+                    type="button"
+                    onClick={() => {
+                      fieldValues.onChange(null)
+                      if (photoInputRef.current) {
+                        photoInputRef.current.value = ""
+                      }
+                    }}
+                  >
+                    Eliminar
+                  </Button>
+                </div>
+                <FormMessage />
+              </FormItem>
+            )}
+          /> */}

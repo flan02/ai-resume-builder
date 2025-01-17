@@ -112,7 +112,7 @@ export async function saveResume(values: ResumeValues) {
 
   console.log("received values", values)
 
-  const { photo, workExperiences, educations, title, ...resumeValues } = resumeSchema.parse(values) // ? parse is a method that validates the data and returns it if it is correct
+  const { photoUrl, workExperiences, educations, ...resumeValues } = resumeSchema.parse(values) // ? parse is a method that validates the data and returns it if it is correct
 
   //const { userId } = await auth();
   const session = await auth()
@@ -185,7 +185,7 @@ export async function saveResume(values: ResumeValues) {
       where: { id },
       data: {
         ...resumeValues,
-        photoUrl: photo, // newPhotoUrl,
+        photoUrl: session.user.image!, // newPhotoUrl,
         workExperiences: {
           deleteMany: {},
           create: workExperiences?.map((exp) => ({
@@ -207,11 +207,12 @@ export async function saveResume(values: ResumeValues) {
     })
   } else {
     // * If the resume doesn't exist, we create it
+
     return db.resume.create({
       data: {
         ...resumeValues,
         userId: session.user.id,
-        photoUrl: photo, // newPhotoUrl,
+        photoUrl: session.user.image!,
         workExperiences: {
           create: workExperiences?.map((exp) => ({
             ...exp,
@@ -418,9 +419,6 @@ export async function createCustomerPortalSession() {
     throw new Error("Unauthorized");
   }
 
-  // const stripeCustomerId = user.privateMetadata.stripeCustomerId as
-  //   | string
-  //   | undefined
   const stripeCustomerId = session.user.id as | string | undefined
 
   if (!stripeCustomerId) {

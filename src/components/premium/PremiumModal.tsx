@@ -2,19 +2,19 @@
 
 import { env } from "@/env";
 import { useToast } from "@/hooks/use-toast";
-import usePremiumModal from "@/hooks/usePremiumModal";
+import { storePremiumModal } from "@/zustand/store";
 import { Check } from "lucide-react";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import { createCheckoutSession } from "@/server-actions/actions";
 
-const premiumFeatures = ["Herramientas IA", "Hasta 10 curriculums"]
+const premiumFeatures = ["Asistencia IA", "Autocompletado Inteligente", "Diseños Premium", "Hasta 10 curriculums"]
 //const premiumPlusFeatures = ["Curriculums infinitos", "Diseños personalizados"]
 
 export default function PremiumModal() {
 
-  const { open, setOpen } = usePremiumModal() // ? it contains the state and the setter from the zustand store
+  const { open, setOpen } = storePremiumModal() // ? it contains the state and the setter from the zustand store
   const { toast } = useToast()
   const [loading, setLoading] = useState(false)
 
@@ -70,7 +70,7 @@ export default function PremiumModal() {
                 }
                 disabled={loading}
               >
-                comenzar Premium
+                Hazte Premium
               </Button>
             </div>
             {/*<div className="mx-6 border-l" />

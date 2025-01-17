@@ -108,11 +108,7 @@ async function handleSessionCompleted(session: Stripe.Checkout.Session) {
 async function handleSubscriptionCreatedOrUpdated(subscriptionId: string) {
   const subscription = await stripe.subscriptions.retrieve(subscriptionId);
 
-  if (
-    subscription.status === "active" ||
-    subscription.status === "trialing" ||
-    subscription.status === "past_due"
-  ) {
+  if (subscription.status === "active" || subscription.status === "trialing" || subscription.status === "past_due") {
     await db.billingStripe.upsert({
       where: {
         userId: subscription.metadata.userId,

@@ -12,14 +12,14 @@ export type GeneralInfoValues = z.infer<typeof generalInfoSchema>;
 
 export const personalInfoSchema = z.object({
   //photo: z.custom<File | undefined>().refine((file) => !file || (file instanceof File && file.type.startsWith("image/")), "Must be an image file").refine((file) => !file || file.size <= 1024 * 1024 * 4, "File must be less than 4MB"),
-  photo: optionalString,
+  photoUrl: optionalString,
   firstName: optionalString,
   lastName: optionalString,
   jobTitle: optionalString,
   city: optionalString,
   country: optionalString,
   phone: optionalString,
-  email: z.string().email().optional()
+  email: optionalString
 })
 
 export type PersonalInfoValues = z.infer<typeof personalInfoSchema>;
@@ -76,9 +76,9 @@ export const resumeSchema = z.object({
   borderStyle: optionalString
 })
 
-export type ResumeValues = Omit<z.infer<typeof resumeSchema>, "photo"> & {
+export type ResumeValues = Omit<z.infer<typeof resumeSchema>, "photoUrl"> & {
   id?: string
-  photo?: File | string | null
+  photoUrl?: string | null
 }
 
 export const generateWorkExperienceSchema = z.object({

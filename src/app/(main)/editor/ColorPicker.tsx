@@ -4,7 +4,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import usePremiumModal from "@/hooks/usePremiumModal"
+import { storePremiumModal } from "@/zustand/store"
 import { canUseCustomizations } from "@/lib/permissions"
 import { PaletteIcon } from "lucide-react"
 import { useState } from "react";
@@ -19,7 +19,7 @@ interface ColorPickerProps {
 export default function ColorPicker({ color, onChange }: ColorPickerProps) {
 
   const subscriptionLevel = useSubscriptionLevel()
-  const premiumModal = usePremiumModal()
+  const premiumModal = storePremiumModal()
   const [showPopover, setShowPopover] = useState(false)
 
   return (

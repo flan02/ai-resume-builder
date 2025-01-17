@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -10,11 +11,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { EditorFormProps } from "@/lib/types";
 import { generalInfoSchema, GeneralInfoValues } from "@/lib/validation";
+import { storeAddPhoto } from "@/zustand/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 export default function GeneralInfoForm({ resumeData, setResumeData }: EditorFormProps) {
+  const addPhoto = storeAddPhoto();
   const form = useForm<GeneralInfoValues>({
     resolver: zodResolver(generalInfoSchema),
     defaultValues: {
@@ -35,7 +38,7 @@ export default function GeneralInfoForm({ resumeData, setResumeData }: EditorFor
   return (
     <div className="mx-auto max-w-xl space-y-6">
       <div className="space-y-1.5 text-center">
-        <h2 className="text-2xl font-semibold">Informacion General</h2>
+        <h2 className="text-2xl font-semibold font-mono">Informacion General</h2>
         <p className="text-sm text-muted-foreground">
           Estos datos no apareceran en tu curriculum.
         </p>
@@ -47,9 +50,9 @@ export default function GeneralInfoForm({ resumeData, setResumeData }: EditorFor
             name="title"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Nombre del Proyecto</FormLabel>
+                <FormLabel className="font-bold font-roboto">Nombre del Proyecto</FormLabel>
                 <FormControl>
-                  <Input {...field} placeholder="my curriculum vitae" autoFocus />
+                  <Input {...field} placeholder="mi curriculum" autoFocus />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -60,11 +63,11 @@ export default function GeneralInfoForm({ resumeData, setResumeData }: EditorFor
             name="description"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Descripcion</FormLabel>
+                <FormLabel className="font-bold font-roboto">Descripcion</FormLabel>
                 <FormControl>
-                  <Input {...field} placeholder="A resume for my next job" />
+                  <Input {...field} placeholder="mi formacion academica y laboral" />
                 </FormControl>
-                <FormDescription>
+                <FormDescription className="pt-2 font-roboto">
                   Describe para que posiciones utilizaras este curriculum.
                 </FormDescription>
                 <FormMessage />
@@ -73,6 +76,17 @@ export default function GeneralInfoForm({ resumeData, setResumeData }: EditorFor
           />
         </form>
       </Form>
+      <div className="flex flex-col space-y-2">
+        <p className="font-bold font-roboto text-sm">Imagen</p>
+        <Button className="text-sm w-min" variant={addPhoto.showImage ? "default" : "premium"} onClick={() => addPhoto.setShowImage(!addPhoto.showImage)}>
+          {
+            addPhoto.showImage
+              ? "Ocultar"
+              : "Agregar"
+          }
+        </Button>
+        <h6 className="text-xs text-muted-foreground font-roboto">Generada via Google o Github al iniciar sesion.</h6>
+      </div>
     </div>
   );
 }
