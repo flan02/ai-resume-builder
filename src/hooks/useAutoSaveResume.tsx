@@ -38,8 +38,8 @@ export default function useAutoSaveResume(resumeData: ResumeValues) {
         // ! Check the spread operator on the photo object because we dont use a File, we use a string
         const updatedResume = await saveResume({
           ...newData,
-          ...(JSON.stringify(lastSavedData.photo, fileReplacer) ===
-            JSON.stringify(newData.photo, fileReplacer) && {
+          ...(JSON.stringify(lastSavedData.photoUrl, fileReplacer) ===
+            JSON.stringify(newData.photoUrl, fileReplacer) && {
             photo: undefined
           }),
           id: resumeId
