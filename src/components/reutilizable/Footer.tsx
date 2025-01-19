@@ -67,7 +67,7 @@ const socialMediaUrl: string[] = [
 ]
 
 const Footer = (props: Props) => {
-  const siteUrl = 'http://localhost:3000'
+  const siteUrl = 'https://www.cvai.online'
   return (
     <footer className="relative py-20 flex flex-col items-center bg-yellow-50/50 dark:bg-gray-900/50 overflow-hidden md:py-40">
       <div className="relative z-[1] m-auto px-6 md:px-12 lg:px-0">
