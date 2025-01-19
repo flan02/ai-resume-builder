@@ -1,34 +1,33 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import NextAuth from 'next-auth'
-import GitHub from 'next-auth/providers/github'
+import Github from 'next-auth/providers/github'
+import Google from 'next-auth/providers/google'
 import { createUser, loggedAsAdmin } from '@/server-actions/actions'
 
 import { User } from 'types'
 import { db } from './db'
 
+// ? To see the current providers
+// $ http://localhost:3000/api/auth/providers  
 
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  providers: [GitHub],
+  providers: [Github, Google],
   session: {
-    maxAge: 1800, // 86400 = 1 day
-    updateAge: 900 //60 * 60, // Opcional: actualiza la sesión cada 1 hora
+    maxAge: 86400, // 86400 = 1 day
+    updateAge: 43200 //60 * 60, // Opcional: actualiza la sesión cada 1 hora
   },
   jwt: {
-    maxAge: 10 * 180, // 30 minutes
+    maxAge: 86400 // 10 * 180 // 30 minutes
   },
   callbacks: {
     async signIn({ user, account, profile }) {
       try {
         const { name, email, image } = user as User
 
-        console.log('User', user)
-        // if (!name || !email) {
-        //   return false;
-        // }
-        //console.log({ user, account, profile });
-        //console.log('Current email', email);
+        // console.log('User', user)
+
         const userFound = await loggedAsAdmin(email) // We need to know if the user is an admin or not
 
         if (!userFound) {
@@ -56,7 +55,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (user) {
           token.id = user?.id
           token.iat = Math.floor(Date.now() / 1000)
-          token.exp = Math.floor(Date.now() / 1000) + 1800
+          token.exp = Math.floor(Date.now() / 1000) + 86400
 
           // const now = Math.floor(Date.now() / 1000);
           // const timeUntilExpiration = token.exp - now; // Si el token tiene menos de 5 minutos antes de expirar, renovarlo

@@ -86,9 +86,9 @@ export default function WorkExperienceForm({ resumeData, setResumeData }: Editor
   return (
     <div className="mx-auto max-w-xl space-y-6">
       <div className="space-y-1.5 text-center">
-        <h2 className="text-2xl font-semibold">Experiencia Laboral</h2>
-        <p className="text-sm text-muted-foreground">
-          Agrega todas los trabajos previos que necesites.
+        <h2 className="text-2xl font-semibold font-mono">Experiencia Laboral</h2>
+        <p className="text-sm text-muted-foreground font-roboto">
+          Agrega todos los trabajos que hayas realizado.
         </p>
       </div>
       <Form {...form}>
@@ -116,6 +116,7 @@ export default function WorkExperienceForm({ resumeData, setResumeData }: Editor
 
           <div className="flex justify-center">
             <Button
+              className="font-roboto"
               type="button"
               onClick={() =>
                 append({
@@ -127,7 +128,7 @@ export default function WorkExperienceForm({ resumeData, setResumeData }: Editor
                 })
               }
             >
-              Agrega una experiencia laboral
+              Agregar
             </Button>
           </div>
         </form>
@@ -157,7 +158,7 @@ function WorkExperienceItem({ id, form, index, remove }: WorkExperienceItemProps
       style={{ transform: CSS.Transform.toString(transform), transition }}
     >
       <div className="flex justify-between gap-2">
-        <span className="font-semibold">Experiencia laboral {index + 1}</span>
+        <span className="font-semibold font-mono">Experiencia laboral {index + 1}</span>
         <GripHorizontal className="size-5 cursor-grab text-muted-foreground focus:outline-none" {...attributes} {...listeners} />
       </div>
 
@@ -172,9 +173,9 @@ function WorkExperienceItem({ id, form, index, remove }: WorkExperienceItemProps
         name={`workExperiences.${index}.position`}
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Titulo del Puesto</FormLabel>
+            <FormLabel className="font-roboto font-bold td">Titulo del Puesto</FormLabel>
             <FormControl>
-              <Input {...field} autoFocus />
+              <Input {...field} autoFocus className="text-muted-foreground" />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -185,9 +186,9 @@ function WorkExperienceItem({ id, form, index, remove }: WorkExperienceItemProps
         name={`workExperiences.${index}.company`}
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Empresa</FormLabel>
+            <FormLabel className="font-roboto font-bold td">Empresa</FormLabel>
             <FormControl>
-              <Input {...field} />
+              <Input {...field} className="text-muted-foreground" />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -199,12 +200,13 @@ function WorkExperienceItem({ id, form, index, remove }: WorkExperienceItemProps
           name={`workExperiences.${index}.startDate`}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Fecha de Inicio</FormLabel>
+              <FormLabel className="font-roboto font-bold td">Fecha de Inicio</FormLabel>
               <FormControl>
                 <Input
                   {...field}
                   type="date"
                   value={field.value?.slice(0, 10)}
+                  className="text-muted-foreground"
                 />
               </FormControl>
               <FormMessage />
@@ -216,12 +218,13 @@ function WorkExperienceItem({ id, form, index, remove }: WorkExperienceItemProps
           name={`workExperiences.${index}.endDate`}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Fecha de Finalizacion</FormLabel>
+              <FormLabel className="font-roboto font-bold td">Fecha de Finalizacion</FormLabel>
               <FormControl>
                 <Input
                   {...field}
                   type="date"
                   value={field.value?.slice(0, 10)}
+                  className="text-muted-foreground"
                 />
               </FormControl>
               <FormMessage />
@@ -230,7 +233,7 @@ function WorkExperienceItem({ id, form, index, remove }: WorkExperienceItemProps
         />
       </div>
 
-      <FormDescription>
+      <FormDescription className="font-roboto text-muted-foreground">
         Deja la <span className="font-semibold">fecha de finalizacion</span> sin completar si
         actualmente continuas en este trabajo.
       </FormDescription>
@@ -240,15 +243,15 @@ function WorkExperienceItem({ id, form, index, remove }: WorkExperienceItemProps
         name={`workExperiences.${index}.description`}
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Descripcion</FormLabel>
+            <FormLabel className="td font-bold">Descripcion</FormLabel>
             <FormControl>
-              <Textarea {...field} />
+              <Textarea {...field} className="text-muted-foreground font-roboto" rows={6} />
             </FormControl>
             <FormMessage />
           </FormItem>
         )}
       />
-      <Button variant="destructive" type="button" onClick={() => remove(index)}>
+      <Button className="text-xs px-1.5" variant="destructive" type="button" onClick={() => remove(index)}>
         Eliminar
       </Button>
     </div>

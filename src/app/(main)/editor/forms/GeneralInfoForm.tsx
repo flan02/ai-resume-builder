@@ -38,8 +38,8 @@ export default function GeneralInfoForm({ resumeData, setResumeData }: EditorFor
   return (
     <div className="mx-auto max-w-xl space-y-6">
       <div className="space-y-1.5 text-center">
-        <h2 className="text-2xl font-semibold font-mono">Informacion General</h2>
-        <p className="text-sm text-muted-foreground">
+        <h2 className="text-2xl font-semibold font-mono td">Informacion General</h2>
+        <p className="text-sm text-muted-foreground font-roboto">
           Estos datos no apareceran en tu curriculum.
         </p>
       </div>
@@ -50,9 +50,9 @@ export default function GeneralInfoForm({ resumeData, setResumeData }: EditorFor
             name="title"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-bold font-roboto">Nombre del Proyecto</FormLabel>
+                <FormLabel className="font-bold font-roboto td">Nombre del Proyecto</FormLabel>
                 <FormControl>
-                  <Input {...field} placeholder="mi curriculum" autoFocus />
+                  <Input {...field} placeholder="mi curriculum" autoFocus className="text-muted-foreground" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -63,9 +63,9 @@ export default function GeneralInfoForm({ resumeData, setResumeData }: EditorFor
             name="description"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-bold font-roboto">Descripcion</FormLabel>
+                <FormLabel className="font-bold font-roboto td">Descripcion</FormLabel>
                 <FormControl>
-                  <Input {...field} placeholder="mi formacion academica y laboral" />
+                  <Input {...field} placeholder="ej: curriculum para trabajos part-time" className="text-muted-foreground" />
                 </FormControl>
                 <FormDescription className="pt-2 font-roboto">
                   Describe para que posiciones utilizaras este curriculum.
@@ -77,8 +77,8 @@ export default function GeneralInfoForm({ resumeData, setResumeData }: EditorFor
         </form>
       </Form>
       <div className="flex flex-col space-y-2">
-        <p className="font-bold font-roboto text-sm">Imagen</p>
-        <Button className="text-sm w-min" variant={addPhoto.showImage ? "default" : "premium"} onClick={() => addPhoto.setShowImage(!addPhoto.showImage)}>
+        <p className="font-bold font-roboto text-sm td">Imagen</p>
+        <Button className="text-sm w-min px-1.5" variant={addPhoto.showImage ? "default" : "premium"} onClick={() => addPhoto.setShowImage(!addPhoto.showImage)}>
           {
             addPhoto.showImage
               ? "Ocultar"

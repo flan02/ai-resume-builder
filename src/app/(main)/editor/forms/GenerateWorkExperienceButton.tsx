@@ -44,6 +44,7 @@ export default function GenerateWorkExperienceButton({ onWorkExperienceGenerated
   return (
     <>
       <Button variant="outline" type="button"
+        className="bg-[#0969da] hover:bg-[#0969da] hover:opacity-90 text-white hover:text-white text-xs"
         onClick={() => {
           if (!canUseAITools(subscriptionLevel)) {
             premiumModal.setOpen(true);

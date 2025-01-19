@@ -44,8 +44,8 @@ export default function SkillsForm({ resumeData, setResumeData }: EditorFormProp
   return (
     <div className="mx-auto max-w-xl space-y-6">
       <div className="space-y-1.5 text-center">
-        <h2 className="text-2xl font-semibold">Habilidades</h2>
-        <p className="text-sm text-muted-foreground">Cuales son tus cualidades?</p>
+        <h2 className="text-2xl font-semibold td font-mono">Habilidades</h2>
+        <p className="text-sm text-muted-foreground font-roboto">Cuales son tus cualidades?</p>
       </div>
       <Form {...form}>
         <form className="space-y-3">
@@ -63,10 +63,12 @@ export default function SkillsForm({ resumeData, setResumeData }: EditorFormProp
                       const skills = e.target.value.split(",") // ? Split the skills by commas
                       field.onChange(skills)
                     }}
+                    rows={3}
+                    className="text-muted-foreground"
                   />
                 </FormControl>
-                <FormDescription>
-                  Separa cada habilidad con una coma (,).
+                <FormDescription className="">
+                  Separa cada habilidad con una coma (,)
                 </FormDescription>
                 <FormMessage />
               </FormItem>

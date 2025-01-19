@@ -129,7 +129,7 @@ body {
   }
 
   .td {
-    @apply text-yellow-50;
+    @apply dark:text-yellow-50;
   }
 }
 
@@ -147,4 +147,20 @@ body {
 @page {
   size: A4;
   margin: 0.6cm;
+}
+
+/* Chrome styling for scrollbar */
+::-webkit-scrollbar {
+  width: 10px; /* Ancho del scroll */
+}
+
+/* bar styling */
+::-webkit-scrollbar-thumb {
+  background-color: rgb(114, 114, 114);
+  border-radius: 5px; /* Borde redondeado */
+}
+
+/* track bar styling */
+::-webkit-scrollbar-track {
+  background-color: rgb(15, 23, 42);
 }

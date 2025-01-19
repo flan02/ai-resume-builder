@@ -48,12 +48,12 @@ export default function ResumeItem({ resume, sessionPhoto }: ResumeItemProps) {
   const isUpdated = resume.updatedAt !== resume.createdAt
 
   return (
-    <div className="group relative rounded-lg border border-transparent bg-secondary p-3 transition-colors hover:border-border">
+    <div className="group relative rounded-lg border border-gray-200 dark:border-transparent bg-secondary p-3 transition-colors hover:border-border">
       <div className="space-y-3">
         <Link href={`/editor?resumeId=${resume.id}`} className="inline-block w-full text-center" >
-          <p className="line-clamp-1 font-semibold">{resume.title || "Nuevo Curriculum"}</p>
+          <p className="line-clamp-1 font-semibold td font-mono pr-4">{resume.title || "Nuevo Curriculum"}</p>
           {
-            resume.description && (<p className="line-clamp-2 text-sm">{resume.description}</p>)
+            resume.description && (<p className="line-clamp-1 font-roboto text-xs text-muted-foreground">{resume.description}</p>)
           }
 
         </Link>

@@ -25,7 +25,7 @@ export default function Breadcrumbs({ currentStep, setCurrentStep }: Breadcrumbs
                 <BreadcrumbItem>
                   {
                     step.key === currentStep
-                      ? (<BreadcrumbPage>{step.title}</BreadcrumbPage>)
+                      ? (<BreadcrumbPage className="font-bold">{step.title}</BreadcrumbPage>)
                       : (
                         <BreadcrumbLink asChild>
                           <button onClick={() => setCurrentStep(step.key)}>

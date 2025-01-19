@@ -44,6 +44,7 @@ export default function GenerateSummaryButton({ resumeData, onSummaryGenerated }
 
   return (
     <LoadingButton
+      className="bg-[#0969da] hover:bg-[#0969da] hover:opacity-90 text-white hover:text-white"
       variant="outline"
       type="button"
       onClick={handleClick}

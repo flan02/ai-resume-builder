@@ -43,12 +43,17 @@ export default function PersonalInfoForm({ resumeData, setResumeData }: EditorFo
   }, [form, resumeData, setResumeData])
 
   // const photoInputRef = useRef<HTMLInputElement>(null) // - in case you need to add a file input field
-
+  const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+    e.target.setAttribute("readonly", "true");
+    setTimeout(() => {
+      e.target.removeAttribute("readonly");
+    }, 100); // Esto evita que el autocompletado se active
+  };
   return (
     <div className="mx-auto max-w-xl space-y-6">
       <div className="space-y-1.5 text-center">
-        <h2 className="text-2xl font-semibold">Informacion Personal</h2>
-        <p className="text-sm text-muted-foreground">Escribe sobre ti mismo.</p>
+        <h2 className="text-2xl font-semibold td font-mono">Informacion Personal</h2>
+        <p className="text-sm text-muted-foreground font-roboto">Escribe sobre ti mismo.</p>
       </div>
       <Form {...form}>
         <form className="space-y-3">
@@ -58,9 +63,9 @@ export default function PersonalInfoForm({ resumeData, setResumeData }: EditorFo
               name="firstName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Nombre</FormLabel>
+                  <FormLabel className="font-bold td">Nombre</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} className="text-muted-foreground" onFocus={handleFocus} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -71,9 +76,9 @@ export default function PersonalInfoForm({ resumeData, setResumeData }: EditorFo
               name="lastName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Apellido</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
+                  <FormLabel className="td font-bold">Apellido</FormLabel>
+                  <FormControl aria-autocomplete="none">
+                    <Input {...field} className="text-muted-foreground" onFocus={handleFocus} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -85,9 +90,9 @@ export default function PersonalInfoForm({ resumeData, setResumeData }: EditorFo
             name="jobTitle"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Titulo del Trabajo</FormLabel>
+                <FormLabel className="td font-bold">Titulo del puesto</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input {...field} className="text-muted-foreground" onFocus={handleFocus} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -99,9 +104,9 @@ export default function PersonalInfoForm({ resumeData, setResumeData }: EditorFo
               name="city"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Ciudad</FormLabel>
+                  <FormLabel className="font-bold td">Provincia</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} onFocus={handleFocus} className="text-muted-foreground" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -112,9 +117,9 @@ export default function PersonalInfoForm({ resumeData, setResumeData }: EditorFo
               name="country"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Pais</FormLabel>
+                  <FormLabel className="font-bold td">Pais</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} onFocus={handleFocus} className="text-muted-foreground" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -126,9 +131,9 @@ export default function PersonalInfoForm({ resumeData, setResumeData }: EditorFo
             name="phone"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Telefono</FormLabel>
+                <FormLabel className="font-bold td">Telefono</FormLabel>
                 <FormControl>
-                  <Input {...field} type="tel" />
+                  <Input {...field} type="tel" className="text-muted-foreground" onFocus={handleFocus} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -139,9 +144,9 @@ export default function PersonalInfoForm({ resumeData, setResumeData }: EditorFo
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel className="font-bold td">Email</FormLabel>
                 <FormControl>
-                  <Input {...field} type="email" />
+                  <Input {...field} type="email" onFocus={handleFocus} className="text-muted-foreground" />
                 </FormControl>
                 <FormMessage />
               </FormItem>

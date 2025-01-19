@@ -81,8 +81,8 @@ export default function EducationForm({ resumeData, setResumeData }: EditorFormP
   return (
     <div className="mx-auto max-w-xl space-y-6">
       <div className="space-y-1.5 text-center">
-        <h2 className="text-2xl font-semibold">Educacion</h2>
-        <p className="text-sm text-muted-foreground">
+        <h2 className="text-2xl font-semibold td font-mono">Educación</h2>
+        <p className="text-sm text-muted-foreground font-roboto">
           Agrega todas las formaciones academicas que necesites.
         </p>
       </div>
@@ -111,6 +111,7 @@ export default function EducationForm({ resumeData, setResumeData }: EditorFormP
           </DndContext>
           <div className="flex justify-center">
             <Button
+              className="px-1.5 font-roboto"
               type="button"
               onClick={() =>
                 append({
@@ -121,7 +122,7 @@ export default function EducationForm({ resumeData, setResumeData }: EditorFormP
                 })
               }
             >
-              Agregar Educacion
+              Agregar
             </Button>
           </div>
         </form>
@@ -141,6 +142,13 @@ function EducationItem({ id, form, index, remove }: EducationItemProps) {
 
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id })
 
+  // const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+  //   e.target.setAttribute("readonly", "true");
+  //   setTimeout(() => {
+  //     e.target.removeAttribute("readonly");
+  //   }, 100); // Esto evita que el autocompletado se active
+  // }
+
   return (
     <div
       className={cn(
@@ -151,7 +159,7 @@ function EducationItem({ id, form, index, remove }: EducationItemProps) {
       style={{ transform: CSS.Transform.toString(transform), transition }}
     >
       <div className="flex justify-between gap-2">
-        <span className="font-semibold">Educacion {index + 1}</span>
+        <span className="font-semibold td font-mono">Educación {index + 1}</span>
         <GripHorizontal className="size-5 cursor-grab text-muted-foreground focus:outline-none" {...attributes} {...listeners} />
       </div>
       <FormField
@@ -159,9 +167,9 @@ function EducationItem({ id, form, index, remove }: EducationItemProps) {
         name={`educations.${index}.degree`}
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Grado</FormLabel>
+            <FormLabel className="td font-bold">Nivel</FormLabel>
             <FormControl>
-              <Input {...field} autoFocus />
+              <Input {...field} placeholder="Primario, Secundario, Universitario" className="text-muted-foreground" />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -172,9 +180,9 @@ function EducationItem({ id, form, index, remove }: EducationItemProps) {
         name={`educations.${index}.school`}
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Escuela/Instituto</FormLabel>
+            <FormLabel className="td font-bold">Escuela / Instituto</FormLabel>
             <FormControl>
-              <Input {...field} />
+              <Input {...field} placeholder="Universidad de la Vida" className="text-muted-foreground" />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -186,12 +194,13 @@ function EducationItem({ id, form, index, remove }: EducationItemProps) {
           name={`educations.${index}.startDate`}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Fecha de Inicio</FormLabel>
+              <FormLabel className="font-bold td">Fecha de Inicio</FormLabel>
               <FormControl>
                 <Input
                   {...field}
                   type="date"
                   value={field.value?.slice(0, 10)}
+                  className="text-muted-foreground"
                 />
               </FormControl>
               <FormMessage />
@@ -203,12 +212,13 @@ function EducationItem({ id, form, index, remove }: EducationItemProps) {
           name={`educations.${index}.endDate`}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Fecha de Finalizacion</FormLabel>
+              <FormLabel className="font-bold td">Fecha de Finalizacion</FormLabel>
               <FormControl>
                 <Input
                   {...field}
                   type="date"
                   value={field.value?.slice(0, 10)}
+                  className="text-muted-foreground"
                 />
               </FormControl>
               <FormMessage />

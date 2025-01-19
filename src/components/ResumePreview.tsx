@@ -70,7 +70,7 @@ function PersonalInfoHeader({ resumeData, sessionPhoto }: ResumeSectionProps) {
   // }, [photo])
 
   return (
-    <div className="flex items-center gap-6">
+    <div className="flex items-center gap-6 ">
       {
         addPhoto.showImage ? (
           <Image
@@ -78,7 +78,7 @@ function PersonalInfoHeader({ resumeData, sessionPhoto }: ResumeSectionProps) {
             width={100}
             height={100}
             alt="Foto"
-            className="aspect-square object-cover"
+            className="aspect-square object-cover border border-black"
             style={{
               borderRadius:
                 borderStyle === BorderStyles.SQUARE
@@ -92,20 +92,29 @@ function PersonalInfoHeader({ resumeData, sessionPhoto }: ResumeSectionProps) {
       }
       <div className="space-y-2.5">
         <div className="space-y-1">
-          <p className="text-3xl font-bold" style={{ color: colorHex }}>
+          <p className="text-3xl font-mono font-bold" style={{ color: colorHex }}>
             {firstName} {lastName}
           </p>
-          <p className="font-medium" style={{ color: colorHex }}>
+          <p className="text-xl font-serif font-medium" style={{ color: colorHex }}>
             {jobTitle}
           </p>
         </div>
-        <p className="text-xs text-gray-500">
-          {city}
-          {city && country ? ", " : ""}
-          {country}
-          {(city || country) && (phone || email) ? " • " : ""}
-          {[phone, email].filter(Boolean).join(" • ")}
-        </p>
+        <div className="flex space-x-2 font-roboto">
+          <p className="text-md text-blue-950 font-bold">
+            {city}
+            {city && country ? ", " : ""}
+          </p>
+          <p className="text-md text-blue-950 font-bold">
+            {country}
+          </p>
+          <p className="text-md text-blue-950 font-bold">
+            {(city || country) && (phone || email) ? " •" : ""}
+          </p>
+          <p className="text-md text-blue-950 font-bold">
+            {[phone, email].filter(Boolean).join(" • ")}
+
+          </p>
+        </div>
       </div>
     </div>
   );
@@ -120,10 +129,10 @@ function SummarySection({ resumeData }: ResumeSectionProps) {
     <>
       <hr className="border-2" style={{ borderColor: colorHex }} />
       <div className="break-inside-avoid space-y-3">
-        <p className="text-lg font-semibold" style={{ color: colorHex }} >
+        <p className="text-2xl font-mono font-semibold" style={{ color: colorHex }} >
           Perfil Profesional
         </p>
-        <div className="whitespace-pre-line text-sm">{summary}</div>
+        <div className="whitespace-pre-line text-md text-gray-700 font-roboto font-normal">{summary}</div>
       </div>
     </>
   )
@@ -140,7 +149,7 @@ function WorkExperienceSection({ resumeData }: ResumeSectionProps) {
     <>
       <hr className="border-2" style={{ borderColor: colorHex }} />
       <div className="space-y-3">
-        <p className="text-lg font-semibold" style={{ color: colorHex }} >
+        <p className="text-2xl font-mono font-semibold" style={{ color: colorHex }} >
           Experiencia Laboral
         </p>
         {
@@ -152,18 +161,18 @@ function WorkExperienceSection({ resumeData }: ResumeSectionProps) {
                   color: colorHex
                 }}
               >
-                <span>{exp.position}</span>
+                <span className="font-mono text-base font-bold">{exp.position}</span>
                 {
                   exp.startDate && (
-                    <span>
-                      {formatDate(exp.startDate, "MM/aaaa")} -{" "}
-                      {exp.endDate ? formatDate(exp.endDate, "MM/aaaa") : "Present"}
+                    <span className="font-mono text-base font-bold">
+                      {formatDate(exp.startDate, "dd/MM/yyyy")} -{" "}
+                      {exp.endDate ? formatDate(exp.endDate, "dd/MM/yyyy") : "Present"}
                     </span>
                   )
                 }
               </div>
-              <p className="text-xs font-semibold">{exp.company}</p>
-              <div className="whitespace-pre-line text-xs">{exp.description}</div>
+              <p className="text-xl font-bold">{exp.company}</p>
+              <p className="whitespace-pre-line text-md text-gray-700 font-roboto font-normal">{exp.description}</p>
             </div>
           ))
         }
@@ -184,12 +193,12 @@ function EducationSection({ resumeData }: ResumeSectionProps) {
       <hr className="border-2" style={{ borderColor: colorHex }} />
       <div className="space-y-3">
         <p
-          className="text-lg font-semibold"
+          className="text-2xl font-mono font-semibold"
           style={{
             color: colorHex
           }}
         >
-          Educacion
+          Educación
         </p>
         {
           educationsNotEmpty.map((edu, index) => (
@@ -200,18 +209,18 @@ function EducationSection({ resumeData }: ResumeSectionProps) {
                   color: colorHex
                 }}
               >
-                <span>{edu.degree}</span>
+                <span className="font-mono text-base font-bold">{edu.degree}</span>
                 {
                   edu.startDate && (
-                    <span>
+                    <span className="font-mono text-base font-bold">
                       {
-                        edu.startDate && `${formatDate(edu.startDate, "MM/aaaa")} ${edu.endDate ? `- ${formatDate(edu.endDate, "MM/aaaa")}` : ""}`
+                        edu.startDate && `${formatDate(edu.startDate, "dd/MM/yyyy")} ${edu.endDate ? `- ${formatDate(edu.endDate, "dd/MM/yyyy")}` : ""}`
                       }
                     </span>
                   )
                 }
               </div>
-              <p className="text-xs font-semibold">{edu.school}</p>
+              <p className="whitespace-pre-line text-md text-gray-700 font-roboto font-normal">{edu.school}</p>
             </div>
           ))
         }
@@ -229,7 +238,7 @@ function SkillsSection({ resumeData }: ResumeSectionProps) {
     <>
       <hr className="border-2" style={{ borderColor: colorHex }} />
       <div className="break-inside-avoid space-y-3">
-        <p className="text-lg font-semibold" style={{ color: colorHex }} >
+        <p className="text-2xl font-mono font-semibold" style={{ color: colorHex }} >
           Habilidades
         </p>
         <div className="flex break-inside-avoid flex-wrap gap-2">
@@ -237,7 +246,7 @@ function SkillsSection({ resumeData }: ResumeSectionProps) {
             skills.map((skill, index) => (
               <Badge
                 key={index}
-                className="rounded-md bg-black text-white hover:bg-black"
+                className="rounded-md bg-black text-white hover:bg-black text-md font-mono"
                 style={{
                   backgroundColor: colorHex,
                   borderRadius:

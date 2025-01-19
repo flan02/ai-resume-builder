@@ -6,10 +6,10 @@ import { storePremiumModal } from "@/zustand/store";
 import { Check } from "lucide-react";
 import { useState } from "react";
 import { Button } from "../ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "../ui/dialog";
 import { createCheckoutSession } from "@/server-actions/actions";
 
-const premiumFeatures = ["Asistencia IA", "Autocompletado Inteligente", "Diseños Premium", "Hasta 10 curriculums"]
+const premiumFeatures = ["Asistencia IA", "Autocompletado Inteligente", "Diseños Premium", "Hasta 6 plantillas", "Libre de anuncios", "Acceso a nuevas funciones"]
 //const premiumPlusFeatures = ["Curriculums infinitos", "Diseños personalizados"]
 
 export default function PremiumModal() {
@@ -43,19 +43,22 @@ export default function PremiumModal() {
         }
       }}
     >
-      <DialogContent className="max-w-2xl">
+      <DialogContent className="py-8 max-w-2xl">
         <DialogHeader>
-          <DialogTitle className="text-lg lg:text-2xl text-center">Diseña tu curriculum con Inteligencia Artificial</DialogTitle>
+          <DialogTitle className="text-md lg:text-xl text-center td font-mono underline-offset-4 underline" >Crea tu curriculum con Inteligencia Artificial</DialogTitle>
+          <DialogDescription className="font-roboto text-muted-foreground text-xs lg:text-sm">
+            Cambia tu suscripción a premium para desbloquear más herramientas y mejorar tu experiencia.
+          </DialogDescription>
         </DialogHeader>
         <div className="space-y-6">
-          <p className="font-roboto text-muted-foreground text-sm lg:text-lg">Cambia tu suscripcion a premium para desbloquear mas herramientas.</p>
+
           <div className="flex justify-center">
             <div className="flex w-1/2 flex-col space-y-5">
-              <h3 className="text-center text-lg font-bold">Premium</h3>
+              <h3 className="text-center font-mono text-lg lg:text-xl font-bold">Premium</h3>
               <ul className="list-inside space-y-2">
                 {
                   premiumFeatures.map((feature) => (
-                    <li key={feature} className="flex items-center gap-2">
+                    <li key={feature} className="flex items-center text-sm gap-2 text-blue-950 dark:td font-roboto">
                       <Check className="size-4 text-green-500" />
                       {feature}
                     </li>
@@ -73,37 +76,10 @@ export default function PremiumModal() {
                 Hazte Premium
               </Button>
             </div>
-            {/*<div className="mx-6 border-l" />
-            <div className="flex w-1/2 flex-col space-y-5">
-              <h3 className="bg-gradient-to-r from-green-600 to-green-400 bg-clip-text text-center text-lg font-bold text-transparent">
-                Premium
-              </h3>
-              <ul className="list-inside space-y-2">
-                {
-                  premiumPlusFeatures.map((feature) => (
-                    <li key={feature} className="flex items-center gap-2">
-                      <Check className="size-4 text-green-500" />
-                      {feature}
-                    </li>
-                  ))
-                }
-              </ul>
-               <Button
-                variant="premium"
-                ! Only in case we need to offer an extra plan
-                onClick={() =>
-                  handlePremiumClick(
-                    env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_PLUS_MONTHLY,
-                  )
-                }
-                disabled={loading}
-              >
-                Hazte Premium +
-              </Button> 
-          </div>*/}
+
           </div>
         </div>
       </DialogContent>
     </Dialog >
-  );
+  )
 }

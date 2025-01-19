@@ -1,10 +1,11 @@
 //'use client'
 import SignOut from "@/components/reutilizable/sign-out";
-import logo from "../../../public/logo.png";
+//import logo from "../../../public/logo.png";
 import ThemeToggle from "@/components/reutilizable/ThemeToggle";
+import { BrainIcon } from "lucide-react";
 
 //import { useTheme } from "next-themes";
-import Image from "next/image";
+//import Image from "next/image";
 import Link from "next/link";
 
 export default function Navbar() {
@@ -13,15 +14,16 @@ export default function Navbar() {
   return (
     <header className="shadow-sm">
       <div className="mx-auto flex max-w-7xl items-end justify-between gap-3 p-3">
-        <Link href="/resumes" className="flex items-center gap-2">
-          <Image
+        <Link href="/resumes" className="flex items-center gap-2 dark:td">
+          {/* <Image
             src={logo}
             alt="Logo"
             width={35}
             height={35}
             className="rounded-full"
-          />
-          <h2 className="text-xl dark:td font-bold font-mono tracking-tight">
+          /> */}
+          <BrainIcon />
+          <h2 className="text-sm lg:text-xl dark:td font-bold font-mono tracking-tight">
             CVAI potenciador de talentos
           </h2>
         </Link>

@@ -30,6 +30,10 @@ Make it free for all and other paid version using Stripe
 
 [http server to a tunnel](https://docs.srv.us/)
 
+### Google OAuth2.0
+
+[docs](https://developers.google.com/identity/protocols/oauth2)
+
 ---
 
 - `Partial<Type>`: Make all properties in T optional

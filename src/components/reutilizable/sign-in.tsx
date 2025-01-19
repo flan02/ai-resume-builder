@@ -15,9 +15,9 @@ export default function SignIn() {
         }}
       >
 
-        <button type="submit" className="flex space-x-5 items-center justify-center w-full px-4 py-3 text-white text-md bg-gray-900 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2 transition">
+        <button type="submit" className="flex space-x-5 items-center justify-center w-full px-4 py-3 text-white text-md bg-gray-900 hover:bg-gray-900/70 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2 transition">
           <Github />
-          <span className="mt-0.5">
+          <span className="mt-0.5 lg:text-base">
             Inicia sesion con Github
           </span>
         </button>
