@@ -53,7 +53,7 @@ export default function GenerateWorkExperienceButton({ onWorkExperienceGenerated
           setShowInputDialog(true)
         }}
       >
-        <WandSparklesIcon className="size-4" />
+        <WandSparklesIcon className="size-4 text-xs lg:text-md" />
         Autocompletado (IA)
       </Button>
       <InputDialog

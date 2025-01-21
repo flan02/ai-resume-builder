@@ -50,7 +50,7 @@ export default async function Home() {
 
         <SignIn />
       </div>
-      <div>
+      <div className="hidden lg:block">
         <Image
           src={resumePreview}
           alt="Resume preview"

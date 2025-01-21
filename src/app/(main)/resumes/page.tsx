@@ -48,12 +48,12 @@ export default async function Page() {
         canCreate={canCreateResume(subscriptionLevel, totalCount)}
         totalCount={totalCount}
       />
-      <div className="space-y-1">
-        <h1 className="text-3xl font-mono dark:text-yellow-50 font-bold text-black">Tus curriculums</h1>
-        <br />
-        <p className="font-roboto underline text-muted-foreground">Total: {totalCount}</p>
+      <div className="space-y-2">
+        <h1 className="text-xl sm:text-2xl lg:text-3xl font-mono dark:text-yellow-50 font-bold text-black">Tus curriculums</h1>
+
+        <p className="text-xs lg:text-md font-roboto underline text-muted-foreground">Total: {totalCount}</p>
       </div>
-      <div className="flex w-full grid-cols-2 flex-col gap-3 sm:grid md:grid-cols-3 lg:grid-cols-4">
+      <div className="flex w-full pb-12 space-y-2 md:pb-0 grid-cols-2 flex-col gap-3 sm:grid md:grid-cols-3 lg:grid-cols-4">
         {
           resumes.map((resume) => (
             <ResumeItem key={resume.id} resume={resume} sessionPhoto={session.user.image} />

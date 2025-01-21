@@ -50,9 +50,9 @@ export default function GeneralInfoForm({ resumeData, setResumeData }: EditorFor
             name="title"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-bold font-roboto td">Nombre del Proyecto</FormLabel>
+                <FormLabel className="font-bold font-roboto td text-xs lg:text-md">Nombre del Proyecto</FormLabel>
                 <FormControl>
-                  <Input {...field} placeholder="mi curriculum" autoFocus className="text-muted-foreground" />
+                  <Input {...field} placeholder="mi curriculum" autoFocus className="text-muted-foreground text-xs lg:text-md" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -63,11 +63,11 @@ export default function GeneralInfoForm({ resumeData, setResumeData }: EditorFor
             name="description"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-bold font-roboto td">Descripcion</FormLabel>
+                <FormLabel className="font-bold font-roboto td text-xs lg:text-md">Descripcion</FormLabel>
                 <FormControl>
-                  <Input {...field} placeholder="ej: curriculum para trabajos part-time" className="text-muted-foreground" />
+                  <Input {...field} placeholder="ej: curriculum para trabajos part-time" className="text-muted-foreground text-xs lg:text-md" />
                 </FormControl>
-                <FormDescription className="pt-2 font-roboto">
+                <FormDescription className="pt-2 font-roboto text-xs lg:text-md">
                   Describe para que posiciones utilizaras este curriculum.
                 </FormDescription>
                 <FormMessage />
@@ -77,8 +77,8 @@ export default function GeneralInfoForm({ resumeData, setResumeData }: EditorFor
         </form>
       </Form>
       <div className="flex flex-col space-y-2">
-        <p className="font-bold font-roboto text-sm td">Imagen</p>
-        <Button className="text-sm w-min px-1.5" variant={addPhoto.showImage ? "default" : "premium"} onClick={() => addPhoto.setShowImage(!addPhoto.showImage)}>
+        <p className="font-bold font-roboto text-xs lg:text-md td ">Imagen</p>
+        <Button className="text-xs lg:text-sm w-min px-1" variant={addPhoto.showImage ? "default" : "premium"} onClick={() => addPhoto.setShowImage(!addPhoto.showImage)}>
           {
             addPhoto.showImage
               ? "Ocultar"

@@ -29,7 +29,7 @@ export default function Breadcrumbs({ currentStep, setCurrentStep }: Breadcrumbs
                       : (
                         <BreadcrumbLink asChild>
                           <button onClick={() => setCurrentStep(step.key)}>
-                            <span className="font-roboto">{step.title}</span>
+                            <span className="text-xs lg:text:md font-roboto">{step.title}</span>
                           </button>
                         </BreadcrumbLink>
                       )

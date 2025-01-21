@@ -79,8 +79,8 @@ export default function useAutoSaveResume(resumeData: ResumeValues) {
     }
 
     // ! DELETE IT LATER
-    console.log("debouncedResumeData", JSON.stringify(debouncedResumeData, fileReplacer))
-    console.log("lastSavedData", JSON.stringify(lastSavedData, fileReplacer))
+    //console.log("debouncedResumeData", JSON.stringify(debouncedResumeData, fileReplacer))
+    //console.log("lastSavedData", JSON.stringify(lastSavedData, fileReplacer))
 
     const hasUnsavedChanges =
       JSON.stringify(debouncedResumeData, fileReplacer) !==

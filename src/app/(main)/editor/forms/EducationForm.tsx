@@ -111,7 +111,7 @@ export default function EducationForm({ resumeData, setResumeData }: EditorFormP
           </DndContext>
           <div className="flex justify-center">
             <Button
-              className="px-1.5 font-roboto"
+              className="px-1.5 font-roboto text-xs lg:text-md"
               type="button"
               onClick={() =>
                 append({
@@ -159,7 +159,7 @@ function EducationItem({ id, form, index, remove }: EducationItemProps) {
       style={{ transform: CSS.Transform.toString(transform), transition }}
     >
       <div className="flex justify-between gap-2">
-        <span className="font-semibold td font-mono">Educación {index + 1}</span>
+        <span className="font-semibold td font-mono text-xs lg:text-md">Educación {index + 1}</span>
         <GripHorizontal className="size-5 cursor-grab text-muted-foreground focus:outline-none" {...attributes} {...listeners} />
       </div>
       <FormField
@@ -167,9 +167,9 @@ function EducationItem({ id, form, index, remove }: EducationItemProps) {
         name={`educations.${index}.degree`}
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="td font-bold">Nivel</FormLabel>
+            <FormLabel className="td font-bold text-xs lg:text-md">Nivel</FormLabel>
             <FormControl>
-              <Input {...field} placeholder="Primario, Secundario, Universitario" className="text-muted-foreground" />
+              <Input {...field} placeholder="Primario, Secundario, Universitario" className="text-xs lg:text-md text-muted-foreground" />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -180,9 +180,9 @@ function EducationItem({ id, form, index, remove }: EducationItemProps) {
         name={`educations.${index}.school`}
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="td font-bold">Escuela / Instituto</FormLabel>
+            <FormLabel className="td font-bold text-xs lg:text-md">Escuela / Instituto</FormLabel>
             <FormControl>
-              <Input {...field} placeholder="Universidad de la Vida" className="text-muted-foreground" />
+              <Input {...field} placeholder="Universidad de la Vida" className="text-xs lg:text-md text-muted-foreground" />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -194,13 +194,13 @@ function EducationItem({ id, form, index, remove }: EducationItemProps) {
           name={`educations.${index}.startDate`}
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="font-bold td">Fecha de Inicio</FormLabel>
+              <FormLabel className="font-bold td text-xs lg:text-md">Fecha de Inicio</FormLabel>
               <FormControl>
                 <Input
                   {...field}
                   type="date"
                   value={field.value?.slice(0, 10)}
-                  className="text-muted-foreground"
+                  className="text-muted-foreground text-xs lg:text-md"
                 />
               </FormControl>
               <FormMessage />
@@ -212,13 +212,13 @@ function EducationItem({ id, form, index, remove }: EducationItemProps) {
           name={`educations.${index}.endDate`}
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="font-bold td">Fecha de Finalizacion</FormLabel>
+              <FormLabel className="font-bold td text-xs lg:text-md">Fecha de Finalizacion</FormLabel>
               <FormControl>
                 <Input
                   {...field}
                   type="date"
                   value={field.value?.slice(0, 10)}
-                  className="text-muted-foreground"
+                  className="text-muted-foreground text-xs lg:text-md"
                 />
               </FormControl>
               <FormMessage />
@@ -226,7 +226,7 @@ function EducationItem({ id, form, index, remove }: EducationItemProps) {
           )}
         />
       </div>
-      <Button variant="destructive" type="button" onClick={() => remove(index)}>
+      <Button className="text-xs lg:text-md" variant="destructive" type="button" onClick={() => remove(index)}>
         Eliminar
       </Button>
     </div>

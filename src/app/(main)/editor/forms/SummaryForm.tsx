@@ -36,7 +36,7 @@ export default function SummaryForm({ resumeData, setResumeData }: EditorFormPro
     <div className="mx-auto max-w-xl space-y-6">
       <div className="space-y-1.5 text-center">
         <h2 className="text-2xl font-semibold font-mono">Sumario Profesional</h2>
-        <p className="text-sm font-roboto text-muted-foreground">
+        <p className="text-xs lg:text-md font-roboto text-muted-foreground">
           Escribe una breve introduccion para tu curriculum o permite que la IA
           genere uno a partir de tus datos ingresados.
         </p>
@@ -54,7 +54,7 @@ export default function SummaryForm({ resumeData, setResumeData }: EditorFormPro
                     {...field}
                     placeholder="Breve, descriptivo sobre ti"
                     rows={10}
-                    className="text-muted-foreground"
+                    className="text-xs lg:text-md text-muted-foreground"
                   />
                 </FormControl>
                 <FormMessage />

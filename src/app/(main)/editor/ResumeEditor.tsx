@@ -62,7 +62,7 @@ export default function ResumeEditor({ resumeToEdit, sessionPhoto }: ResumeEdito
     <div className="flex grow flex-col">
       <header className="space-y-1.5 border-b px-3 py-5 text-center">
         <h1 className="text-2xl lg:text-3xl font-bold font-mono td">Diseña tu curriculum</h1>
-        <p className="text-sm text-muted-foreground font-roboto">
+        <p className="text-xs lg:text-sm text-muted-foreground font-roboto">
           Sigue los pasos a continuación para crear tu curriculum. Tu progreso
           sera guardado automaticamente.
         </p>

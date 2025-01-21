@@ -54,7 +54,7 @@ export default function SkillsForm({ resumeData, setResumeData }: EditorFormProp
             name="skills"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="sr-only">Habilidades</FormLabel>
+                <FormLabel className="sr-only ">Habilidades</FormLabel>
                 <FormControl>
                   <Textarea
                     {...field}
@@ -64,10 +64,10 @@ export default function SkillsForm({ resumeData, setResumeData }: EditorFormProp
                       field.onChange(skills)
                     }}
                     rows={3}
-                    className="text-muted-foreground"
+                    className="text-muted-foreground text-xs lg:text-md"
                   />
                 </FormControl>
-                <FormDescription className="">
+                <FormDescription className="text-xs lg:text-md pt-2">
                   Separa cada habilidad con una coma (,)
                 </FormDescription>
                 <FormMessage />

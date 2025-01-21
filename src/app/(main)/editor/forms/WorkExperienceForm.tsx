@@ -158,7 +158,7 @@ function WorkExperienceItem({ id, form, index, remove }: WorkExperienceItemProps
       style={{ transform: CSS.Transform.toString(transform), transition }}
     >
       <div className="flex justify-between gap-2">
-        <span className="font-semibold font-mono">Experiencia laboral {index + 1}</span>
+        <span className="font-semibold font-mono text-xs lg:text-md">Experiencia laboral {index + 1}</span>
         <GripHorizontal className="size-5 cursor-grab text-muted-foreground focus:outline-none" {...attributes} {...listeners} />
       </div>
 
@@ -173,9 +173,9 @@ function WorkExperienceItem({ id, form, index, remove }: WorkExperienceItemProps
         name={`workExperiences.${index}.position`}
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="font-roboto font-bold td">Titulo del Puesto</FormLabel>
+            <FormLabel className="font-roboto font-bold td text-xs lg:text-md">Titulo del Puesto</FormLabel>
             <FormControl>
-              <Input {...field} autoFocus className="text-muted-foreground" />
+              <Input {...field} autoFocus className="text-muted-foreground text-xs lg:text-md" />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -186,9 +186,9 @@ function WorkExperienceItem({ id, form, index, remove }: WorkExperienceItemProps
         name={`workExperiences.${index}.company`}
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="font-roboto font-bold td">Empresa</FormLabel>
+            <FormLabel className="font-roboto font-bold td text-xs lg:text-md">Empresa</FormLabel>
             <FormControl>
-              <Input {...field} className="text-muted-foreground" />
+              <Input {...field} className="text-muted-foreground text-xs lg:text-md" />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -200,13 +200,13 @@ function WorkExperienceItem({ id, form, index, remove }: WorkExperienceItemProps
           name={`workExperiences.${index}.startDate`}
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="font-roboto font-bold td">Fecha de Inicio</FormLabel>
+              <FormLabel className="font-roboto font-bold td text-xs lg:text-md">Fecha de Inicio</FormLabel>
               <FormControl>
                 <Input
                   {...field}
                   type="date"
                   value={field.value?.slice(0, 10)}
-                  className="text-muted-foreground"
+                  className="text-muted-foreground text-xs lg:text-md"
                 />
               </FormControl>
               <FormMessage />
@@ -218,13 +218,13 @@ function WorkExperienceItem({ id, form, index, remove }: WorkExperienceItemProps
           name={`workExperiences.${index}.endDate`}
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="font-roboto font-bold td">Fecha de Finalizacion</FormLabel>
+              <FormLabel className="font-roboto font-bold td text-xs lg:text-md">Fecha de Finalizacion</FormLabel>
               <FormControl>
                 <Input
                   {...field}
                   type="date"
                   value={field.value?.slice(0, 10)}
-                  className="text-muted-foreground"
+                  className="text-muted-foreground text-xs lg:text-md"
                 />
               </FormControl>
               <FormMessage />
@@ -233,7 +233,7 @@ function WorkExperienceItem({ id, form, index, remove }: WorkExperienceItemProps
         />
       </div>
 
-      <FormDescription className="font-roboto text-muted-foreground">
+      <FormDescription className="font-roboto text-muted-foreground text-xs lg:text-md">
         Deja la <span className="font-semibold">fecha de finalizacion</span> sin completar si
         actualmente continuas en este trabajo.
       </FormDescription>
@@ -243,9 +243,9 @@ function WorkExperienceItem({ id, form, index, remove }: WorkExperienceItemProps
         name={`workExperiences.${index}.description`}
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="td font-bold">Descripcion</FormLabel>
+            <FormLabel className="td font-bold text-xs lg:text-md">Descripcion</FormLabel>
             <FormControl>
-              <Textarea {...field} className="text-muted-foreground font-roboto" rows={6} />
+              <Textarea {...field} className="text-muted-foreground font-roboto text-xs lg:text-md" rows={6} />
             </FormControl>
             <FormMessage />
           </FormItem>

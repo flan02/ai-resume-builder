@@ -63,9 +63,9 @@ export default function PersonalInfoForm({ resumeData, setResumeData }: EditorFo
               name="firstName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="font-bold td">Nombre</FormLabel>
+                  <FormLabel className="font-bold td text-xs lg:text-md">Nombre</FormLabel>
                   <FormControl>
-                    <Input {...field} className="text-muted-foreground" onFocus={handleFocus} />
+                    <Input {...field} className="text-muted-foreground text-xs lg:text-md" onFocus={handleFocus} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -76,9 +76,9 @@ export default function PersonalInfoForm({ resumeData, setResumeData }: EditorFo
               name="lastName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="td font-bold">Apellido</FormLabel>
+                  <FormLabel className="td font-bold text-xs lg:text-md">Apellido</FormLabel>
                   <FormControl aria-autocomplete="none">
-                    <Input {...field} className="text-muted-foreground" onFocus={handleFocus} />
+                    <Input {...field} className="text-muted-foreground text-xs lg:text-md" onFocus={handleFocus} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -90,9 +90,9 @@ export default function PersonalInfoForm({ resumeData, setResumeData }: EditorFo
             name="jobTitle"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="td font-bold">Titulo del puesto</FormLabel>
+                <FormLabel className="td font-bold text-xs lg:text-md">Titulo del puesto</FormLabel>
                 <FormControl>
-                  <Input {...field} className="text-muted-foreground" onFocus={handleFocus} />
+                  <Input {...field} className="text-muted-foreground text-xs lg:text-md" onFocus={handleFocus} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -104,9 +104,9 @@ export default function PersonalInfoForm({ resumeData, setResumeData }: EditorFo
               name="city"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="font-bold td">Provincia</FormLabel>
+                  <FormLabel className="font-bold td text-xs lg:text-md">Provincia</FormLabel>
                   <FormControl>
-                    <Input {...field} onFocus={handleFocus} className="text-muted-foreground" />
+                    <Input {...field} onFocus={handleFocus} className="text-muted-foreground text-xs lg:text-md" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -117,9 +117,9 @@ export default function PersonalInfoForm({ resumeData, setResumeData }: EditorFo
               name="country"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="font-bold td">Pais</FormLabel>
+                  <FormLabel className="font-bold td text-xs lg:text-md">Pais</FormLabel>
                   <FormControl>
-                    <Input {...field} onFocus={handleFocus} className="text-muted-foreground" />
+                    <Input {...field} onFocus={handleFocus} className="text-xs lg:text-md text-muted-foreground" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -131,9 +131,9 @@ export default function PersonalInfoForm({ resumeData, setResumeData }: EditorFo
             name="phone"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-bold td">Telefono</FormLabel>
+                <FormLabel className="font-bold td text-xs lg:text-md">Telefono</FormLabel>
                 <FormControl>
-                  <Input {...field} type="tel" className="text-muted-foreground" onFocus={handleFocus} />
+                  <Input {...field} type="tel" className="text-muted-foreground text-xs lg:text-md" onFocus={handleFocus} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -144,9 +144,9 @@ export default function PersonalInfoForm({ resumeData, setResumeData }: EditorFo
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-bold td">Email</FormLabel>
+                <FormLabel className="font-bold td text-xs lg:text-md">Email</FormLabel>
                 <FormControl>
-                  <Input {...field} type="email" onFocus={handleFocus} className="text-muted-foreground" />
+                  <Input {...field} type="email" onFocus={handleFocus} className="text-xs lg:text-md text-muted-foreground" />
                 </FormControl>
                 <FormMessage />
               </FormItem>

@@ -23,7 +23,7 @@ export default function Navbar() {
             className="rounded-full"
           /> */}
           <BrainIcon />
-          <h2 className="text-sm lg:text-xl dark:td font-bold font-mono tracking-tight">
+          <h2 className="text-xs lg:text-xl dark:td font-bold font-mono tracking-tight">
             CVAI potenciador de talentos
           </h2>
         </Link>

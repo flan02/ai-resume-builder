@@ -45,7 +45,7 @@ export default function PremiumModal() {
     >
       <DialogContent className="py-8 max-w-2xl">
         <DialogHeader>
-          <DialogTitle className="text-md lg:text-xl text-center td font-mono underline-offset-4 underline" >Crea tu curriculum con Inteligencia Artificial</DialogTitle>
+          <DialogTitle className="text-sm lg:text-xl text-center td font-mono underline-offset-4 underline" >Crea tu curriculum con Inteligencia Artificial</DialogTitle>
           <DialogDescription className="font-roboto text-muted-foreground text-xs lg:text-sm">
             Cambia tu suscripción a premium para desbloquear más herramientas y mejorar tu experiencia.
           </DialogDescription>
@@ -58,7 +58,7 @@ export default function PremiumModal() {
               <ul className="list-inside space-y-2">
                 {
                   premiumFeatures.map((feature) => (
-                    <li key={feature} className="flex items-center text-sm gap-2 text-blue-950 dark:td font-roboto">
+                    <li key={feature} className="flex items-center text-xs lg:text-sm gap-2 text-blue-950 dark:td font-roboto">
                       <Check className="size-4 text-green-500" />
                       {feature}
                     </li>
@@ -66,6 +66,7 @@ export default function PremiumModal() {
                 }
               </ul>
               <Button
+                className="text-xs lg:text-md"
                 onClick={() =>
                   handlePremiumClick(
                     env.NEXT_PUBLIC_STRIPE_PRICE
