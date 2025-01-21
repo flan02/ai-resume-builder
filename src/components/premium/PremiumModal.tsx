@@ -71,7 +71,8 @@ export default function PremiumModal() {
                     env.NEXT_PUBLIC_STRIPE_PRICE
                   )
                 }
-                disabled={loading}
+                // disabled={loading}
+                disabled={true}
               >
                 Hazte Premium
               </Button>

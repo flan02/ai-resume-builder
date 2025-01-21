@@ -25,16 +25,16 @@ import { revalidatePath } from "next/cache";
 export async function loggedAsAdmin(email: string) {
   //console.log("loggedAsAdmin", id);
   try {
-    const isAdmin = await db.user.findFirst({
+    const userFound = await db.user.findFirst({
       where: {
         email
       }
     })
 
     //console.log('isAdmin', isAdmin);
-    if (!isAdmin) return null
+    if (!userFound) return null
 
-    return isAdmin
+    return userFound
   } catch (error) {
     console.error("We found the following error: ", error)
     return null

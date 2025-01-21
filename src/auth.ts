@@ -82,21 +82,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async redirect({ url, baseUrl }: { url: string; baseUrl: string }) {
       if (url?.startsWith(baseUrl)) return url
       return '/resumes'
-    }
+    },
   },
   pages: {
     signIn: '/resumes',
-    signOut: '/',
+    signOut: '',
     error: '/'
   }
 })
 
-/* 
-GitHub({
-    clientId: process.env.AUTH_GITHUB_ID!,
-    clientSecret: process.env.AUTH_GITHUB_SECRET!,
-    authorization: {
-      params: { scope: 'read:user user:email' }
-    }
-  })
-*/
