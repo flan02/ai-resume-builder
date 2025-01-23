@@ -53,7 +53,7 @@ export default async function Page() {
 
         <p className="text-xs lg:text-md font-roboto underline text-muted-foreground">Total: {totalCount}</p>
       </div>
-      <div className="flex w-full pb-12 space-y-2 md:pb-0 grid-cols-2 flex-col gap-3 sm:grid md:grid-cols-3 lg:grid-cols-4">
+      <div className="flex w-full pb-12 md:pb-0 grid-cols-2 flex-col gap-3 sm:grid md:grid-cols-3 lg:grid-cols-4">
         {
           resumes.map((resume) => (
             <ResumeItem key={resume.id} resume={resume} sessionPhoto={session.user.image} />
