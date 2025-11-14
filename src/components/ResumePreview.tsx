@@ -7,7 +7,7 @@ import { formatDate } from "date-fns";
 import Image from "next/image";
 import React, { useRef } from "react";
 import { Badge } from "./ui/badge";
-import { storeAddPhoto } from "@/zustand/store";
+import { storeAddPhoto, storeLanguagePicker } from "@/zustand/store";
 
 // $ This component contains the preview of the resume that the user is creating.
 interface ResumePreviewProps {
@@ -22,6 +22,7 @@ export default function ResumePreview({ resumeData, contentRef, sessionPhoto, cl
   //const containerRef = useRef<HTMLDivElement>(null) // document.createElement("div")
   const containerRef = useRef<any>(null)
   const { width } = useDimensions(containerRef)
+
 
   // | aspect ratio 210/297 = 0.7070707070707071 (A4 paper)
   return (
@@ -92,25 +93,25 @@ function PersonalInfoHeader({ resumeData, sessionPhoto }: ResumeSectionProps) {
       }
       <div className="space-y-2.5">
         <div className="space-y-1">
-          <p className="text-3xl font-mono font-bold" style={{ color: colorHex }}>
+          <p className="text-4xl font-mono font-bold" style={{ color: colorHex }}>
             {firstName} {lastName}
           </p>
-          <p className="text-xl font-serif font-medium" style={{ color: colorHex }}>
+          <p className="text-base tracking-wider font-serif font-medium" style={{ color: colorHex }}>
             {jobTitle}
           </p>
         </div>
         <div className="flex space-x-2 font-roboto">
-          <p className="text-md text-blue-950 font-bold">
+          <p className="text-sm text-blue-950 font-bold">
             {city}
             {city && country ? ", " : ""}
           </p>
-          <p className="text-md text-blue-950 font-bold">
+          <p className="text-sm text-blue-950 font-bold">
             {country}
           </p>
-          <p className="text-md text-blue-950 font-bold">
+          <p className="text-sm text-blue-950 font-bold">
             {(city || country) && (phone || email) ? " •" : ""}
           </p>
-          <p className="text-md text-blue-950 font-bold">
+          <p className="text-sm text-blue-950 font-bold">
             {[phone, email].filter(Boolean).join(" • ")}
 
           </p>
@@ -121,24 +122,28 @@ function PersonalInfoHeader({ resumeData, sessionPhoto }: ResumeSectionProps) {
 }
 
 function SummarySection({ resumeData }: ResumeSectionProps) {
+  const { language } = storeLanguagePicker()
   const { summary, colorHex } = resumeData;
 
   if (!summary) return null
 
   return (
     <>
-      <hr className="border-2" style={{ borderColor: colorHex }} />
+      {/* <hr className="border-2" style={{ borderColor: colorHex }} /> */}
       <div className="break-inside-avoid space-y-3">
-        <p className="text-2xl font-mono font-semibold" style={{ color: colorHex }} >
-          Perfil Profesional
+        <p className="text-xl tracking-wider font-mono font-semibold" style={{ color: colorHex }} >
+          {
+            language === "es" ? "Perfil Profesional" : "Professional Profile"
+          }
         </p>
-        <div className="whitespace-pre-line text-md text-gray-700 font-roboto font-normal">{summary}</div>
+        <div className="whitespace-pre-line text-sm text-gray-700 font-roboto font-normal">{summary}</div>
       </div>
     </>
   )
 }
 
 function WorkExperienceSection({ resumeData }: ResumeSectionProps) {
+  const { language } = storeLanguagePicker()
   const { workExperiences, colorHex } = resumeData;
 
   const workExperiencesNotEmpty = workExperiences?.filter((exp) => Object.values(exp).filter(Boolean).length > 0) // ? Check all values at the same time guarantees that the object is not empty
@@ -149,8 +154,10 @@ function WorkExperienceSection({ resumeData }: ResumeSectionProps) {
     <>
       <hr className="border-2" style={{ borderColor: colorHex }} />
       <div className="space-y-3">
-        <p className="text-2xl font-mono font-semibold" style={{ color: colorHex }} >
-          Experiencia Laboral
+        <p className="text-xl tracking-wider font-mono font-semibold" style={{ color: colorHex }} >
+          {
+            language === "es" ? "Experiencia Laboral" : "Work Experience"
+          }
         </p>
         {
           workExperiencesNotEmpty.map((exp, index) => (
@@ -171,8 +178,8 @@ function WorkExperienceSection({ resumeData }: ResumeSectionProps) {
                   )
                 }
               </div>
-              <p className="text-xl font-bold">{exp.company}</p>
-              <p className="whitespace-pre-line text-md text-gray-700 font-roboto font-normal">{exp.description}</p>
+              <p className="text-base font-bold">{exp.company}</p>
+              <p className="whitespace-pre-line text-sm text-gray-700 font-roboto font-normal">{exp.description}</p>
             </div>
           ))
         }
@@ -182,6 +189,7 @@ function WorkExperienceSection({ resumeData }: ResumeSectionProps) {
 }
 
 function EducationSection({ resumeData }: ResumeSectionProps) {
+  const { language } = storeLanguagePicker()
   const { educations, colorHex } = resumeData
 
   const educationsNotEmpty = educations?.filter((edu) => Object.values(edu).filter(Boolean).length > 0)
@@ -193,12 +201,12 @@ function EducationSection({ resumeData }: ResumeSectionProps) {
       <hr className="border-2" style={{ borderColor: colorHex }} />
       <div className="space-y-3">
         <p
-          className="text-2xl font-mono font-semibold"
+          className="text-xl tracking-wider font-mono font-semibold"
           style={{
             color: colorHex
           }}
         >
-          Educación
+          {language === "es" ? "Educación" : "Education"}
         </p>
         {
           educationsNotEmpty.map((edu, index) => (
@@ -220,7 +228,7 @@ function EducationSection({ resumeData }: ResumeSectionProps) {
                   )
                 }
               </div>
-              <p className="whitespace-pre-line text-md text-gray-700 font-roboto font-normal">{edu.school}</p>
+              <p className="whitespace-pre-line text-sm text-gray-700 font-roboto font-normal">{edu.school}</p>
             </div>
           ))
         }
@@ -230,6 +238,7 @@ function EducationSection({ resumeData }: ResumeSectionProps) {
 }
 
 function SkillsSection({ resumeData }: ResumeSectionProps) {
+  const { language } = storeLanguagePicker()
   const { skills, colorHex, borderStyle } = resumeData
 
   if (!skills?.length) return null
@@ -238,8 +247,8 @@ function SkillsSection({ resumeData }: ResumeSectionProps) {
     <>
       <hr className="border-2" style={{ borderColor: colorHex }} />
       <div className="break-inside-avoid space-y-3">
-        <p className="text-2xl font-mono font-semibold" style={{ color: colorHex }} >
-          Habilidades
+        <p className="text-xl tracking-wider font-mono font-semibold" style={{ color: colorHex }} >
+          {language === "es" ? "Habilidades" : "Skills"}
         </p>
         <div className="flex break-inside-avoid flex-wrap gap-2">
           {

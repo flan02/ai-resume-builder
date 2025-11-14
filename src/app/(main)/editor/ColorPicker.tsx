@@ -4,7 +4,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { storePremiumModal } from "@/zustand/store"
+import { storeLanguagePicker, storePremiumModal } from "@/zustand/store"
 import { canUseCustomizations } from "@/lib/permissions"
 import { PaletteIcon } from "lucide-react"
 import { useState } from "react";
@@ -21,7 +21,7 @@ export default function ColorPicker({ color, onChange }: ColorPickerProps) {
   const subscriptionLevel = useSubscriptionLevel()
   const premiumModal = storePremiumModal()
   const [showPopover, setShowPopover] = useState(false)
-
+  const { language, setLanguage } = storeLanguagePicker()
   return (
     <Popover open={showPopover} onOpenChange={setShowPopover}>
       <PopoverTrigger asChild>
@@ -43,6 +43,9 @@ export default function ColorPicker({ color, onChange }: ColorPickerProps) {
       <PopoverContent className="border-none bg-transparent shadow-none" align="end" >
         <TwitterPicker color={color} onChange={onChange} triangle="top-right" />
       </PopoverContent>
+      <Popover>
+        <button className="border dark:bg-[#111] dark:text-white rounded-md px-2 py-1.5 bg-transparent uppercase text-sm" onClick={() => setLanguage(language === "en" ? "es" : "en")}>{language}</button>
+      </Popover>
     </Popover>
   );
 }
