@@ -75,7 +75,8 @@ function PersonalInfoHeader({ resumeData, sessionPhoto }: ResumeSectionProps) {
       {
         addPhoto.showImage ? (
           <Image
-            src={sessionPhoto!}
+            // src={sessionPhoto!}
+            src="https://res.cloudinary.com/dhbig9jt8/image/upload/v1764525203/yo-gemini-lacoste-removebg-preview_m4l4zd.png"
             width={100}
             height={100}
             alt="Foto"
